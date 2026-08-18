@@ -320,7 +320,7 @@ submitBtn.onclick = async () => {
     });
     const data = await res.json();
     if (res.ok && data.ok) {
-      resultMsg.innerHTML = `<div class="msg success">予約が確定しました。ご入力いただいたメールアドレス宛のご連絡は届きませんが、こちらで内容を確認のうえ改めてご連絡いたします。</div>`;
+      resultMsg.innerHTML = `<div class="msg success">予約が確定しました。ご入力いただいたメールアドレス宛に確認メールをお送りしました。</div>`;
       submitBtn.style.display = "none";
       await loadAvailability();
     } else {
