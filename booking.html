@@ -208,9 +208,24 @@ function fmtTime(iso) {
   return d.toLocaleTimeString("ja-JP", { hour: "2-digit", minute: "2-digit", timeZone: "Asia/Tokyo", hour12: false });
 }
 
+async function fetchWithRetry(url, options, attempts = 4) {
+  let lastErr;
+  for (let i = 0; i < attempts; i++) {
+    try {
+      const res = await fetch(url, options);
+      if (res.ok || res.status < 500) return res;
+      lastErr = new Error(`HTTP ${res.status}`);
+    } catch (e) {
+      lastErr = e;
+    }
+    await new Promise(r => setTimeout(r, 700 * (i + 1)));
+  }
+  throw lastErr;
+}
+
 async function loadAvailability() {
   try {
-    const res = await fetch(`${API_BASE}/booking/availability`, {
+    const res = await fetchWithRetry(`${API_BASE}/booking/availability`, {
       headers: { "ngrok-skip-browser-warning": "true" },
     });
     const data = await res.json();
@@ -291,7 +306,7 @@ submitBtn.onclick = async () => {
   submitBtn.textContent = "予約中…";
 
   try {
-    const res = await fetch(`${API_BASE}/booking/confirm`, {
+    const res = await fetchWithRetry(`${API_BASE}/booking/confirm`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
