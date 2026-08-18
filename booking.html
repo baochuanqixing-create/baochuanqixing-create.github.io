@@ -210,7 +210,9 @@ function fmtTime(iso) {
 
 async function loadAvailability() {
   try {
-    const res = await fetch(`${API_BASE}/booking/availability`);
+    const res = await fetch(`${API_BASE}/booking/availability`, {
+      headers: { "ngrok-skip-browser-warning": "true" },
+    });
     const data = await res.json();
     slotsByDate = data.slots || {};
     const dates = Object.keys(slotsByDate).sort();
@@ -291,7 +293,10 @@ submitBtn.onclick = async () => {
   try {
     const res = await fetch(`${API_BASE}/booking/confirm`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "ngrok-skip-browser-warning": "true",
+      },
       body: JSON.stringify({
         name, email, purpose,
         start: selectedSlot.start,
