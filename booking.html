@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>面談予約｜保川七星</title>
+<style>
+  :root {
+    --bg: #0f1115;
+    --panel: #171a21;
+    --panel-border: #262b36;
+    --accent: #5ee6c4;
+    --accent-soft: rgba(94,230,196,0.12);
+    --text: #eef1f6;
+    --text-dim: #9aa3b2;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Segoe UI", sans-serif;
+    line-height: 1.75;
+  }
+  .wrap { max-width: 640px; margin: 0 auto; padding: 0 24px 80px; }
+
+  header.hero {
+    padding: 64px 0 40px;
+    border-bottom: 1px solid var(--panel-border);
+    background: radial-gradient(circle at 15% 0%, rgba(94,230,196,0.08), transparent 55%);
+  }
+  .eyebrow {
+    display: inline-block;
+    font-size: 12.5px;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    background: var(--accent-soft);
+    border: 1px solid rgba(94,230,196,0.35);
+    border-radius: 999px;
+    padding: 5px 14px;
+    margin-bottom: 18px;
+  }
+  h1 { font-size: 26px; margin: 0 0 12px; }
+  .lead { font-size: 14.5px; color: var(--text-dim); margin: 0; }
+
+  section { padding: 32px 0; }
+
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--panel-border);
+    border-radius: 14px;
+    padding: 22px;
+    margin-bottom: 18px;
+  }
+
+  .date-picker {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    margin-bottom: 18px;
+  }
+  .date-btn {
+    flex: 0 0 auto;
+    background: var(--panel);
+    border: 1px solid var(--panel-border);
+    color: var(--text);
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 13px;
+    text-align: center;
+    cursor: pointer;
+    min-width: 64px;
+  }
+  .date-btn .num { display: block; font-size: 17px; font-weight: 700; }
+  .date-btn.active {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+    color: var(--accent);
+  }
+
+  .slot-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  .slot-btn {
+    background: var(--panel);
+    border: 1px solid var(--panel-border);
+    color: var(--text);
+    border-radius: 8px;
+    padding: 10px 4px;
+    font-size: 13px;
+    cursor: pointer;
+  }
+  .slot-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .slot-btn.selected {
+    background: var(--accent);
+    color: #06231c;
+    border-color: var(--accent);
+    font-weight: 700;
+  }
+
+  .empty-note { color: var(--text-dim); font-size: 13.5px; padding: 12px 0; }
+
+  label { display: block; font-size: 13px; color: var(--text-dim); margin: 14px 0 6px; }
+  input, textarea {
+    width: 100%;
+    background: #10131a;
+    border: 1px solid var(--panel-border);
+    border-radius: 8px;
+    color: var(--text);
+    padding: 11px 12px;
+    font-size: 14px;
+    font-family: inherit;
+  }
+  textarea { min-height: 72px; resize: vertical; }
+  input:focus, textarea:focus { outline: none; border-color: var(--accent); }
+
+  .cta {
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+    padding: 13px;
+    border-radius: 10px;
+    background: var(--accent);
+    color: #06231c;
+    font-weight: 700;
+    font-size: 14.5px;
+    border: none;
+    cursor: pointer;
+  }
+  .cta:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .msg { font-size: 13.5px; margin-top: 12px; padding: 10px 12px; border-radius: 8px; }
+  .msg.error { background: rgba(255,100,100,0.1); color: #ff8f8f; border: 1px solid rgba(255,100,100,0.3); }
+  .msg.success { background: var(--accent-soft); color: var(--accent); border: 1px solid rgba(94,230,196,0.35); }
+
+  .selected-summary {
+    font-size: 13.5px;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+
+  #loading { color: var(--text-dim); font-size: 13.5px; }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="eyebrow">面談予約</span>
+    <h1>保川七星との打ち合わせを予約</h1>
+    <p class="lead">下記から空いている日時を選び、必要事項を入力してください。予約が確定すると担当のGoogleカレンダーに直接登録されます。</p>
+  </div>
+</header>
+
+<div class="wrap">
+  <section>
+    <div class="card" id="step1">
+      <div id="loading">空き状況を確認しています…</div>
+      <div id="dateArea" style="display:none;">
+        <div class="date-picker" id="datePicker"></div>
+        <div class="slot-grid" id="slotGrid"></div>
+        <div class="empty-note" id="emptyNote" style="display:none;">この日は空き枠がありません。</div>
+      </div>
+    </div>
+
+    <div class="card" id="step2" style="display:none;">
+      <div class="selected-summary" id="selectedSummary"></div>
+      <label>お名前 <span style="color:#ff8f8f;">*</span></label>
+      <input type="text" id="nameInput" placeholder="山田 太郎">
+      <label>メールアドレス <span style="color:#ff8f8f;">*</span></label>
+      <input type="email" id="emailInput" placeholder="you@example.com">
+      <label>ご相談内容（任意）</label>
+      <textarea id="purposeInput" placeholder="ご相談したい内容を簡単にご記入ください"></textarea>
+      <button class="cta" id="submitBtn">この日時で予約する</button>
+      <div id="resultMsg"></div>
+    </div>
+  </section>
+</div>
+
+<script>
+const API_BASE = "https://mannish-seventeen-haste.ngrok-free.dev";
+
+let slotsByDate = {};
+let selectedDate = null;
+let selectedSlot = null;
+
+const dateArea = document.getElementById("dateArea");
+const loading = document.getElementById("loading");
+const datePicker = document.getElementById("datePicker");
+const slotGrid = document.getElementById("slotGrid");
+const emptyNote = document.getElementById("emptyNote");
+const step2 = document.getElementById("step2");
+const selectedSummary = document.getElementById("selectedSummary");
+const resultMsg = document.getElementById("resultMsg");
+const submitBtn = document.getElementById("submitBtn");
+
+function fmtDateLabel(dateStr) {
+  const d = new Date(dateStr + "T00:00:00+09:00");
+  const days = ["日","月","火","水","木","金","土"];
+  return { num: d.getDate(), dow: days[d.getDay()] };
+}
+
+function fmtTime(iso) {
+  const d = new Date(iso);
+  return d.toLocaleTimeString("ja-JP", { hour: "2-digit", minute: "2-digit", timeZone: "Asia/Tokyo", hour12: false });
+}
+
+async function loadAvailability() {
+  try {
+    const res = await fetch(`${API_BASE}/booking/availability`);
+    const data = await res.json();
+    slotsByDate = data.slots || {};
+    const dates = Object.keys(slotsByDate).sort();
+    loading.style.display = "none";
+    dateArea.style.display = "block";
+
+    if (dates.length === 0) {
+      emptyNote.style.display = "block";
+      emptyNote.textContent = "現在予約可能な空き枠がありません。しばらくしてから再度お試しください。";
+      return;
+    }
+
+    datePicker.innerHTML = "";
+    dates.forEach((dateStr, i) => {
+      const { num, dow } = fmtDateLabel(dateStr);
+      const btn = document.createElement("div");
+      btn.className = "date-btn" + (i === 0 ? " active" : "");
+      btn.innerHTML = `<span class="num">${num}</span>${dow}`;
+      btn.onclick = () => selectDate(dateStr, btn);
+      datePicker.appendChild(btn);
+    });
+    selectDate(dates[0], datePicker.children[0]);
+  } catch (e) {
+    loading.textContent = "空き状況の取得に失敗しました。時間をおいて再度お試しください。";
+  }
+}
+
+function selectDate(dateStr, btnEl) {
+  selectedDate = dateStr;
+  [...datePicker.children].forEach(c => c.classList.remove("active"));
+  btnEl.classList.add("active");
+
+  const slots = slotsByDate[dateStr] || [];
+  slotGrid.innerHTML = "";
+  emptyNote.style.display = slots.length === 0 ? "block" : "none";
+  if (slots.length === 0) emptyNote.textContent = "この日は空き枠がありません。";
+
+  slots.forEach(slot => {
+    const btn = document.createElement("div");
+    btn.className = "slot-btn";
+    btn.textContent = fmtTime(slot.start);
+    btn.onclick = () => selectSlot(slot, btn);
+    slotGrid.appendChild(btn);
+  });
+
+  step2.style.display = "none";
+}
+
+function selectSlot(slot, btnEl) {
+  selectedSlot = slot;
+  [...slotGrid.children].forEach(c => c.classList.remove("selected"));
+  btnEl.classList.add("selected");
+
+  const { num, dow } = fmtDateLabel(selectedDate);
+  selectedSummary.textContent = `選択中: ${selectedDate.replace(/-/g,"/")}(${dow}) ${fmtTime(slot.start)}〜${fmtTime(slot.end)}`;
+  step2.style.display = "block";
+  resultMsg.innerHTML = "";
+  step2.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+submitBtn.onclick = async () => {
+  const name = document.getElementById("nameInput").value.trim();
+  const email = document.getElementById("emailInput").value.trim();
+  const purpose = document.getElementById("purposeInput").value.trim();
+
+  if (!name || !email) {
+    resultMsg.innerHTML = `<div class="msg error">お名前とメールアドレスは必須です。</div>`;
+    return;
+  }
+  if (!selectedSlot) {
+    resultMsg.innerHTML = `<div class="msg error">日時を選択してください。</div>`;
+    return;
+  }
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = "予約中…";
+
+  try {
+    const res = await fetch(`${API_BASE}/booking/confirm`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name, email, purpose,
+        start: selectedSlot.start,
+        end: selectedSlot.end,
+      }),
+    });
+    const data = await res.json();
+    if (res.ok && data.ok) {
+      resultMsg.innerHTML = `<div class="msg success">予約が確定しました。ご入力いただいたメールアドレス宛のご連絡は届きませんが、こちらで内容を確認のうえ改めてご連絡いたします。</div>`;
+      submitBtn.style.display = "none";
+      await loadAvailability();
+    } else {
+      resultMsg.innerHTML = `<div class="msg error">${data.error || "予約に失敗しました。"}</div>`;
+      submitBtn.disabled = false;
+      submitBtn.textContent = "この日時で予約する";
+    }
+  } catch (e) {
+    resultMsg.innerHTML = `<div class="msg error">通信エラーが発生しました。時間をおいて再度お試しください。</div>`;
+    submitBtn.disabled = false;
+    submitBtn.textContent = "この日時で予約する";
+  }
+};
+
+loadAvailability();
+</script>
+
+</body>
+</html>
