@@ -5,219 +5,221 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>保川七星｜AI自動化エンジニア ポートフォリオ</title>
 <style>
-  :root {
-    --bg: #0f1115;
-    --panel: #171a21;
-    --panel-border: #262b36;
-    --accent: #5ee6c4;
-    --accent-soft: rgba(94,230,196,0.12);
-    --text: #eef1f6;
-    --text-dim: #9aa3b2;
-  }
-  * { box-sizing: border-box; }
-  body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--text);
-    font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Segoe UI", sans-serif;
-    line-height: 1.75;
-  }
-  .wrap { max-width: 880px; margin: 0 auto; padding: 0 24px; }
+:root {
+--bg: #0f1115;
+--panel: #171a21;
+--panel-border: #262b36;
+--accent: #5ee6c4;
+--accent-soft: rgba(94,230,196,0.12);
+--text: #eef1f6;
+--text-dim: #9aa3b2;
+}
+* { box-sizing: border-box; }
+body {
+margin: 0;
+background: var(--bg);
+color: var(--text);
+font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Segoe UI", sans-serif;
+line-height: 1.75;
+}
+.wrap { max-width: 880px; margin: 0 auto; padding: 0 24px; }
 
-  header.hero {
-    padding: 88px 0 64px;
-    border-bottom: 1px solid var(--panel-border);
-    background: radial-gradient(circle at 15% 0%, rgba(94,230,196,0.08), transparent 55%);
-  }
-  .eyebrow {
-    display: inline-block;
-    font-size: 12.5px;
-    letter-spacing: 0.08em;
-    color: var(--accent);
-    background: var(--accent-soft);
-    border: 1px solid rgba(94,230,196,0.35);
-    border-radius: 999px;
-    padding: 5px 14px;
-    margin-bottom: 22px;
-  }
-  h1 { font-size: 34px; margin: 0 0 14px; letter-spacing: 0.01em; }
-  h1 span { color: var(--accent); }
-  .lead { font-size: 16px; color: var(--text-dim); max-width: 620px; margin: 0 0 28px; }
-  .tags { display: flex; flex-wrap: wrap; gap: 8px; }
-  .tag {
-    font-size: 12.5px; color: var(--text-dim);
-    border: 1px solid var(--panel-border); border-radius: 6px;
-    padding: 5px 10px; background: var(--panel);
-  }
+header.hero {
+padding: 88px 0 64px;
+border-bottom: 1px solid var(--panel-border);
+background: radial-gradient(circle at 15% 0%, rgba(94,230,196,0.08), transparent 55%);
+}
+.eyebrow {
+display: inline-block;
+font-size: 12.5px;
+letter-spacing: 0.08em;
+color: var(--accent);
+background: var(--accent-soft);
+border: 1px solid rgba(94,230,196,0.35);
+border-radius: 999px;
+padding: 5px 14px;
+margin-bottom: 22px;
+}
+h1 { font-size: 34px; margin: 0 0 14px; letter-spacing: 0.01em; }
+h1 span { color: var(--accent); }
+.lead { font-size: 16px; color: var(--text-dim); max-width: 620px; margin: 0 0 28px; }
+.tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.tag {
+font-size: 12.5px; color: var(--text-dim);
+border: 1px solid var(--panel-border); border-radius: 6px;
+padding: 5px 10px; background: var(--panel);
+}
 
-  section { padding: 56px 0; border-bottom: 1px solid var(--panel-border); }
-  section:last-of-type { border-bottom: none; }
-  .section-head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 30px; }
-  .section-num { font-size: 13px; color: var(--accent); font-weight: 600; }
-  h2 { font-size: 21px; margin: 0; }
-  .section-note { color: var(--text-dim); font-size: 14px; margin: -18px 0 30px; }
+section { padding: 56px 0; border-bottom: 1px solid var(--panel-border); }
+section:last-of-type { border-bottom: none; }
+.section-head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 30px; }
+.section-num { font-size: 13px; color: var(--accent); font-weight: 600; }
+h2 { font-size: 21px; margin: 0; }
+.section-note { color: var(--text-dim); font-size: 14px; margin: -18px 0 30px; }
 
-  .card {
-    background: var(--panel);
-    border: 1px solid var(--panel-border);
-    border-radius: 14px;
-    padding: 28px 30px;
-    margin-bottom: 22px;
-  }
-  .card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; margin-bottom: 12px; }
-  .card h3 { font-size: 17px; margin: 0; }
-  .badge {
-    font-size: 11.5px; color: var(--accent); background: var(--accent-soft);
-    border: 1px solid rgba(94,230,196,0.3); border-radius: 999px; padding: 4px 11px;
-    white-space: nowrap;
-  }
-  .badge.muted { color: var(--text-dim); background: rgba(255,255,255,0.04); border-color: var(--panel-border); }
-  .card p { color: #cdd3de; font-size: 14.5px; margin: 0 0 10px; }
-  .card p:last-child { margin-bottom: 0; }
-  .card .caveat { color: var(--text-dim); font-size: 13px; border-left: 2px solid var(--panel-border); padding-left: 12px; margin-top: 14px; }
-  .stat-row { display: flex; gap: 22px; flex-wrap: wrap; margin-top: 16px; }
-  .stat { min-width: 120px; }
-  .stat .num { font-size: 20px; color: var(--accent); font-weight: 700; display: block; }
-  .stat .label { font-size: 12px; color: var(--text-dim); }
+.card {
+background: var(--panel);
+border: 1px solid var(--panel-border);
+border-radius: 14px;
+padding: 28px 30px;
+margin-bottom: 22px;
+}
+.card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; margin-bottom: 12px; }
+.card h3 { font-size: 17px; margin: 0; }
+.badge {
+font-size: 11.5px; color: var(--accent); background: var(--accent-soft);
+border: 1px solid rgba(94,230,196,0.3); border-radius: 999px; padding: 4px 11px;
+white-space: nowrap;
+}
+.badge.muted { color: var(--text-dim); background: rgba(255,255,255,0.04); border-color: var(--panel-border); }
+.card p { color: #cdd3de; font-size: 14.5px; margin: 0 0 10px; }
+.card p:last-child { margin-bottom: 0; }
+.card .caveat { color: var(--text-dim); font-size: 13px; border-left: 2px solid var(--panel-border); padding-left: 12px; margin-top: 14px; }
+.stat-row { display: flex; gap: 22px; flex-wrap: wrap; margin-top: 16px; }
+.stat { min-width: 120px; }
+.stat .num { font-size: 20px; color: var(--accent); font-weight: 700; display: block; }
+.stat .label { font-size: 12px; color: var(--text-dim); }
 
-  .skill-grid { display: flex; flex-wrap: wrap; gap: 10px; }
-  .skill {
-    font-size: 13.5px; padding: 9px 14px; border-radius: 9px;
-    background: var(--panel); border: 1px solid var(--panel-border); color: var(--text);
-  }
-  .skill b { color: var(--accent); font-weight: 600; margin-right: 6px; }
+.skill-grid { display: flex; flex-wrap: wrap; gap: 10px; }
+.skill {
+font-size: 13.5px; padding: 9px 14px; border-radius: 9px;
+background: var(--panel); border: 1px solid var(--panel-border); color: var(--text);
+}
+.skill b { color: var(--accent); font-weight: 600; margin-right: 6px; }
 
-  footer { padding: 56px 0 80px; text-align: center; }
-  footer .lead { margin: 0 auto 22px; }
-  .cta {
-    display: inline-block; padding: 12px 28px; border-radius: 10px;
-    background: var(--accent); color: #06231c; font-weight: 700; font-size: 14.5px;
-    text-decoration: none;
-  }
-  footer .foot-note { margin-top: 22px; font-size: 12.5px; color: var(--text-dim); }
+footer { padding: 56px 0 80px; text-align: center; }
+footer .lead { margin: 0 auto 22px; }
+.cta {
+display: inline-block; padding: 12px 28px; border-radius: 10px;
+background: var(--accent); color: #06231c; font-weight: 700; font-size: 14.5px;
+text-decoration: none;
+}
+footer .foot-note { margin-top: 22px; font-size: 12.5px; color: var(--text-dim); }
 
-  @media (max-width: 600px) {
-    header.hero { padding: 64px 0 48px; }
-    h1 { font-size: 27px; }
-  }
+@media (max-width: 600px) {
+header.hero { padding: 64px 0 48px; }
+h1 { font-size: 27px; }
+}
 </style>
 </head>
 <body>
 
 <header class="hero">
-  <div class="wrap">
-    <span class="eyebrow">AI自動化エンジニア</span>
-    <h1>LINEひとつで、<span>AIが実務を代行する</span>仕組みを作ります</h1>
-    <p class="lead">
-      実店舗・小売業を中心に、LINE公式アカウント×AI（Claude）×自動化ツールで
-      「電話・手作業でやっていたこと」を仕組み化する開発者です。
-      実際に自分自身の営業・運用も、この仕組みで動かしています。
-    </p>
-    <div class="tags">
-      <span class="tag">LINE公式アカウント連携</span>
-      <span class="tag">n8n / 業務自動化</span>
-      <span class="tag">Claude / Claude Code</span>
-      <span class="tag">実店舗・小売特化</span>
-    </div>
-  </div>
+<div class="wrap">
+<span class="eyebrow">AI自動化エンジニア</span>
+<h1>LINEひとつで、<span>AIが実務を代行する</span>仕組みを作ります</h1>
+<p class="lead">
+実店舗・小売業を中心に、LINE公式アカウント×AI（Claude）×自動化ツールで
+「電話・手作業でやっていたこと」を仕組み化する開発者です。
+実際に自分自身の営業・運用も、この仕組みで動かしています。
+</p>
+<div class="tags">
+<span class="tag">LINE公式アカウント連携</span>
+<span class="tag">n8n / 業務自動化</span>
+<span class="tag">Claude / Claude Code</span>
+<span class="tag">実店舗・小売特化</span>
+</div>
+</div>
 </header>
 
 <section>
-  <div class="wrap">
-    <div class="section-head"><span class="section-num">01</span><h2>実績</h2></div>
-    <p class="section-note">誇張のない範囲で、実際にやったことだけを書いています。</p>
+<div class="wrap">
+<div class="section-head"><span class="section-num">01</span><h2>実績</h2></div>
+<p class="section-note">誇張のない範囲で、実際にやったことだけを書いています。</p>
 
-    <div class="card">
-      <div class="card-top">
-        <h3>ガソリンスタンドの来店予約・記録の自動化</h3>
-        <span class="badge">実店舗・小売</span>
-      </div>
-      <p>知人が経営するガソリンスタンドで、LINE公式アカウント×n8nを使い、来店予約の自動応答・記録システムを構築（無償対応）。</p>
-      <p>それまで電話のみで受けていた予約対応を自動化し、日次の記録・売上管理もLINE経由に一本化しました。</p>
-      <div class="stat-row">
-        <div class="stat"><span class="num">約3ヶ月</span><span class="label">実運用期間</span></div>
-        <div class="stat"><span class="num">LINE × n8n</span><span class="label">使用技術</span></div>
-      </div>
-      <p class="caveat">体感ベースで対応工数の削減は実感できましたが、正確な計測はしておらず数値化した削減率はありません。導入から約3ヶ月後、先方の事業状況により運用終了しています。</p>
-    </div>
+<div class="card">
+<div class="card-top">
+<h3>ガソリンスタンドの来店予約・記録の自動化</h3>
+<span class="badge">実店舗・小売</span>
+</div>
+<p>知人が経営するガソリンスタンドで、LINE公式アカウント×n8nを使い、来店予約の自動応答・記録システムを構築（無償対応）。</p>
+<p>それまで電話のみで受けていた予約対応を自動化し、日次の記録・売上管理もLINE経由に一本化しました。</p>
+<div class="stat-row">
+<div class="stat"><span class="num">約3ヶ月</span><span class="label">実運用期間</span></div>
+<div class="stat"><span class="num">LINE × n8n</span><span class="label">使用技術</span></div>
+</div>
+<p class="caveat">体感ベースで対応工数の削減は実感できましたが、正確な計測はしておらず数値化した削減率はありません。導入から約3ヶ月後、先方の事業状況により運用終了しています。</p>
+</div>
 
-    <div class="card">
-      <div class="card-top">
-        <h3>LINE常駐AIエージェント基盤</h3>
-        <span class="badge">自社開発・運用中</span>
-      </div>
-      <p>LINEでメッセージを送るだけで、AI（Claude）が実務システム（クラウドソーシングの案件確認・応募、メール確認、各種調査など）を直接操作して代行する仕組みを、ゼロから設計・構築しました。</p>
-      <p>24時間の監視・障害発生時の自動復旧を組み込み、稼働開始から無停止で安定運用しています。YouTube新着動画の自動チェックなど、必要な情報だけを能動的に通知する機能も統合しています。</p>
-      <div class="stat-row">
-        <div class="stat"><span class="num">26日間+</span><span class="label">無停止運用</span></div>
-        <div class="stat"><span class="num">6時間おき</span><span class="label">動画新着監視</span></div>
-      </div>
-    </div>
+<div class="card">
+<div class="card-top">
+<h3>LINE常駐AIエージェント基盤</h3>
+<span class="badge">自社開発・運用中</span>
+</div>
+<p>LINEでメッセージを送るだけで、AI（Claude）が実務システム（クラウドソーシングの案件確認・応募、メール確認、各種調査など）を直接操作して代行する仕組みを、ゼロから設計・構築しました。</p>
+<p>24時間の監視・障害発生時の自動復旧を組み込み、稼働開始から無停止で安定運用しています。YouTube新着動画の自動チェックなど、必要な情報だけを能動的に通知する機能も統合しています。</p>
+<div class="stat-row">
+<div class="stat"><span class="num">26日間+</span><span class="label">無停止運用</span></div>
+<div class="stat"><span class="num">6時間おき</span><span class="label">動画新着監視</span></div>
+</div>
+<p class="caveat">本番のAIエージェントは実データにフルアクセスしているため非公開ですが、実データに一切アクセスしない隔離環境のデモ版で、実際の会話体験だけをお試しいただけます。</p>
+<p><a href="https://line.me/R/ti/p/@364hixkh" target="_blank" rel="noopener" style="color:var(--accent); font-size:13.5px;">実際にLINEで体験する →</a></p>
+</div>
 
-    <div class="card">
-      <div class="card-top">
-        <h3>クラウドソーシングでの営業・応募プロセスの自動化</h3>
-        <span class="badge">自社運用</span>
-      </div>
-      <p>CrowdWorks・ランサーズでの案件リサーチ、クライアント審査、提案文の作成、案件ごとのデモ作成、提出、フォローアップまでを、AIエージェントが一貫して代行する仕組みを構築・運用しています。</p>
-      <p>加えて、CrowdWorks・ランサーズのメッセージや応募ステータス、Gmailの新着メールを毎日定時（朝8時・昼13時）に自動チェックし、変化があった時だけ知らせる仕組みも統合し、対応漏れを防いでいます。</p>
-      <div class="stat-row">
-        <div class="stat"><span class="num">57件</span><span class="label">応募・追跡件数</span></div>
-        <div class="stat"><span class="num">4件</span><span class="label">有償契約完了</span></div>
-        <div class="stat"><span class="num">複数件</span><span class="label">面談・選考進行中</span></div>
-      </div>
-    </div>
+<div class="card">
+<div class="card-top">
+<h3>クラウドソーシングでの営業・応募プロセスの自動化</h3>
+<span class="badge">自社運用</span>
+</div>
+<p>CrowdWorks・ランサーズでの案件リサーチ、クライアント審査、提案文の作成、案件ごとのデモ作成、提出、フォローアップまでを、AIエージェントが一貫して代行する仕組みを構築・運用しています。</p>
+<p>加えて、CrowdWorks・ランサーズのメッセージや応募ステータス、Gmailの新着メールを毎日定時（朝8時・昼13時）に自動チェックし、変化があった時だけ知らせる仕組みも統合し、対応漏れを防いでいます。</p>
+<div class="stat-row">
+<div class="stat"><span class="num">57件</span><span class="label">応募・追跡件数</span></div>
+<div class="stat"><span class="num">4件</span><span class="label">有償契約完了</span></div>
+<div class="stat"><span class="num">複数件</span><span class="label">面談・選考進行中</span></div>
+</div>
+</div>
 
-    <div class="card">
-      <div class="card-top">
-        <h3>問い合わせ〜予約〜確認メール送信までの一貫自動化</h3>
-        <span class="badge">自社開発・運用中</span>
-      </div>
-      <p>クライアントからの問い合わせをGmail自動チェックで検知する仕組みと連動する形で、Web上で日時を選ぶだけでその場で予約が確定するシステムを構築しました。</p>
-      <p>Googleカレンダーの実際の空き状況と営業時間設定から予約可能枠を自動計算し、予約が確定するとカレンダーへの登録・クライアントへの確認メール送信・自分への通知までを自動で行います。二重予約防止のチェック機能も実装しています。</p>
-      <div class="stat-row">
-        <div class="stat"><span class="num">Calendar API</span><span class="label">空き枠自動計算</span></div>
-        <div class="stat"><span class="num">Gmail API</span><span class="label">確認メール自動送信</span></div>
-      </div>
-      <p><a href="booking.html" style="color:var(--accent); font-size:13.5px;">実際の予約ページを見る →</a></p>
-    </div>
-  </div>
+<div class="card">
+<div class="card-top">
+<h3>問い合わせ〜予約〜確認メール送信までの一貫自動化</h3>
+<span class="badge">自社開発・運用中</span>
+</div>
+<p>クライアントからの問い合わせをGmail自動チェックで検知する仕組みと連動する形で、Web上で日時を選ぶだけでその場で予約が確定するシステムを構築しました。</p>
+<p>Googleカレンダーの実際の空き状況と営業時間設定から予約可能枠を自動計算し、予約が確定するとカレンダーへの登録・クライアントへの確認メール送信・自分への通知までを自動で行います。二重予約防止のチェック機能も実装しています。</p>
+<div class="stat-row">
+<div class="stat"><span class="num">Calendar API</span><span class="label">空き枠自動計算</span></div>
+<div class="stat"><span class="num">Gmail API</span><span class="label">確認メール自動送信</span></div>
+</div>
+<p><a href="booking.html" style="color:var(--accent); font-size:13.5px;">実際の予約ページを見る →</a></p>
+</div>
+</div>
 </section>
 
 <section>
-  <div class="wrap">
-    <div class="section-head"><span class="section-num">02</span><h2>使えるツール・技術</h2></div>
-    <div class="skill-grid">
-      <span class="skill"><b>Claude / Claude Code</b>日常的に使用・エージェント基盤の中核</span>
-      <span class="skill"><b>n8n</b>実案件でのワークフロー構築経験あり</span>
-      <span class="skill"><b>Python</b>自動化スクリプト・サーバー実装</span>
-      <span class="skill"><b>LINE Messaging API</b>公式アカウント連携の構築・運用</span>
-      <span class="skill"><b>API連携</b>複数サービスの連携実装</span>
-      <span class="skill"><b>Googleスプレッドシート</b>自動化の記録先として実用</span>
-    </div>
-  </div>
+<div class="wrap">
+<div class="section-head"><span class="section-num">02</span><h2>使えるツール・技術</h2></div>
+<div class="skill-grid">
+<span class="skill"><b>Claude / Claude Code</b>日常的に使用・エージェント基盤の中核</span>
+<span class="skill"><b>n8n</b>実案件でのワークフロー構築経験あり</span>
+<span class="skill"><b>Python</b>自動化スクリプト・サーバー実装</span>
+<span class="skill"><b>LINE Messaging API</b>公式アカウント連携の構築・運用</span>
+<span class="skill"><b>API連携</b>複数サービスの連携実装</span>
+<span class="skill"><b>Googleスプレッドシート</b>自動化の記録先として実用</span>
+</div>
+</div>
 </section>
 
 <section>
-  <div class="wrap">
-    <div class="section-head"><span class="section-num">03</span><h2>対応スタイル</h2></div>
-    <p style="color:#cdd3de; font-size:14.5px; max-width:620px;">
-      専門用語を使わずに説明することを心がけています。まずは「今どこに時間がかかっているか」をヒアリングし、
-      本当にAIで解決すべき課題かどうかを見極めたうえで、必要な分だけ自動化します。
-      小さなご相談からでも構いません。
-    </p>
-  </div>
+<div class="wrap">
+<div class="section-head"><span class="section-num">03</span><h2>対応スタイル</h2></div>
+<p style="color:#cdd3de; font-size:14.5px; max-width:620px;">
+専門用語を使わずに説明することを心がけています。まずは「今どこに時間がかかっているか」をヒアリングし、
+本当にAIで解決すべき課題かどうかを見極めたうえで、必要な分だけ自動化します。
+小さなご相談からでも構いません。
+</p>
+</div>
 </section>
 
 <footer>
-  <div class="wrap">
-    <p class="lead" style="margin:0 auto 22px;">まずはお気軽にご相談ください。</p>
-    <a class="cta" href="booking.html">面談を予約する</a>
-    <div style="margin-top:14px;">
-      <a href="https://crowdworks.jp/public/employees/6933635" target="_blank" rel="noopener" style="color:var(--text-dim); font-size:13px;">CrowdWorksプロフィールを見る</a>
-    </div>
-    <div class="foot-note">保川七星（NANASE）｜AI自動化エンジニア</div>
-  </div>
+<div class="wrap">
+<p class="lead" style="margin:0 auto 22px;">まずはお気軽にご相談ください。</p>
+<a class="cta" href="booking.html">面談を予約する</a>
+<div style="margin-top:14px;">
+<a href="https://crowdworks.jp/public/employees/6933635" target="_blank" rel="noopener" style="color:var(--text-dim); font-size:13px;">CrowdWorksプロフィールを見る</a>
+</div>
+<div class="foot-note">保川七星（NANASE）｜AI自動化エンジニア</div>
+</div>
 </footer>
 
 </body>
