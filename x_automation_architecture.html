@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>X（Twitter）自動投稿・プロフィール更新システム</title>
+<style>
+  body { font-family: "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif; background:#f4f5f7; margin:0; padding:36px; }
+  .board { background:#fff; width:960px; margin:0 auto; padding:32px 40px 40px; border-radius:8px; box-shadow:0 2px 14px rgba(0,0,0,0.10); }
+  h1 { font-size:21px; color:#1f2430; margin:0 0 4px; }
+  .sub { color:#777; font-size:12.5px; margin-bottom:26px; }
+  .flow { display:flex; align-items:center; justify-content:space-between; margin-bottom:26px; }
+  .box { flex:1; background:#eef3ff; border:1.5px solid #7ea3ff; border-radius:8px; padding:14px 10px; text-align:center; font-size:12.5px; color:#1f3a70; line-height:1.6; min-height:60px; display:flex; align-items:center; justify-content:center; }
+  .box.accent { background:#e9fbf1; border-color:#4fbf7d; color:#1a5c37; }
+  .arrow { color:#98a2b3; font-size:20px; padding:0 6px; }
+  .cols { display:flex; gap:16px; }
+  .col { flex:1; background:#f7f8fa; border-radius:8px; padding:16px 18px; }
+  .col h2 { font-size:13px; margin:0 0 8px; color:#333; }
+  .col ul { margin:0; padding-left:18px; font-size:12px; color:#555; line-height:1.8; }
+  .foot { margin-top:20px; font-size:11.5px; color:#666; background:#fff7e8; border:1px solid #e3a63a; border-radius:6px; padding:12px 16px; line-height:1.7; }
+</style>
+</head>
+<body>
+  <div class="board">
+    <h1>コード一つでX（Twitter）投稿・プロフィール更新を自動化</h1>
+    <div class="sub">X API v2 + Python（Tweepy）実装</div>
+
+    <div class="flow">
+      <div class="box">📝<br>投稿文・プロフィール文を<br>スクリプトに記述</div>
+      <div class="arrow">→</div>
+      <div class="box">🐍<br>Python（Tweepy）が<br>X API v2を呼び出し</div>
+      <div class="arrow">→</div>
+      <div class="box accent">✅<br>投稿・プロフィール更新が<br>ブラウザ操作なしで完了</div>
+    </div>
+
+    <div class="cols">
+      <div class="col">
+        <h2>できること</h2>
+        <ul>
+          <li>ツイート本文を投稿</li>
+          <li>表示名・自己紹介文（Bio）の一括更新</li>
+          <li>投稿成功時はツイートURLを自動出力</li>
+          <li>失敗時はエラー内容を出力し原因特定しやすく</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h2>活用イメージ</h2>
+        <ul>
+          <li>毎回ブラウザを開いて投稿する手間をゼロに</li>
+          <li>複数アカウントの定型運用・一斉更新</li>
+          <li>他の自動化スクリプトと組み合わせて定期実行</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="foot"><b>実績：</b>実際にX運用アカウントで稼働・投稿実績あり。</div>
+  </div>
+</body>
+</html>

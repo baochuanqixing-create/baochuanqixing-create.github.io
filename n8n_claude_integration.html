@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>n8n × Claude APIでノーコード自動化にAIを組み込む</title>
+<style>
+  body { font-family: "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif; background:#f4f5f7; margin:0; padding:36px; }
+  .board { background:#fff; width:960px; margin:0 auto; padding:32px 40px 40px; border-radius:8px; box-shadow:0 2px 14px rgba(0,0,0,0.10); }
+  h1 { font-size:21px; color:#1f2430; margin:0 0 4px; }
+  .sub { color:#777; font-size:12.5px; margin-bottom:26px; }
+  .flow { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+  .box { flex:1; background:#eef3ff; border:1.5px solid #7ea3ff; border-radius:8px; padding:14px 10px; text-align:center; font-size:12.5px; color:#1f3a70; line-height:1.6; min-height:60px; display:flex; align-items:center; justify-content:center; }
+  .box.accent { background:#e9fbf1; border-color:#4fbf7d; color:#1a5c37; }
+  .arrow { color:#98a2b3; font-size:20px; padding:0 6px; }
+  .row-label { font-size:11px; color:#9aa2b0; margin:22px 0 8px; letter-spacing:0.5px; }
+  .cards { display:flex; gap:12px; }
+  .card { flex:1; background:#fff7e8; border:1.5px solid #e3a63a; border-radius:8px; padding:12px 14px; font-size:11.5px; color:#7a4e05; line-height:1.6; }
+  .card b { display:block; font-size:12.5px; margin-bottom:4px; color:#5c3a00; }
+  .foot { margin-top:20px; font-size:11.5px; color:#666; background:#f7f8fa; border-radius:6px; padding:12px 16px; line-height:1.7; }
+</style>
+</head>
+<body>
+  <div class="board">
+    <h1>n8n（ノーコード自動化）に、Claude APIでAIの判断・文章生成を組み込む</h1>
+    <div class="sub">検証済みの技術構成</div>
+
+    <div class="flow">
+      <div class="box">⚙️<br>n8nの<br>ワークフロー</div>
+      <div class="arrow">→</div>
+      <div class="box">🔗<br>HTTPリクエストノードで<br>Claude APIを呼び出し</div>
+      <div class="arrow">→</div>
+      <div class="box accent">🤖<br>AIの回答を抽出し<br>後続の処理に利用</div>
+    </div>
+
+    <div class="row-label">この構成をそのまま応用できる業務例</div>
+    <div class="cards">
+      <div class="card"><b>問い合わせの自動振り分け</b>受信内容をAIが要約・分類してから担当者へ</div>
+      <div class="card"><b>メール・返信の下書き作成</b>フォーム入力や受信メールにAIが下書き回答を生成</div>
+      <div class="card"><b>データの自動整形・要約</b>スプレッドシートの内容をAIが整理・レポート化</div>
+    </div>
+
+    <div class="foot"><b>ポイント：</b>n8nは請求書処理・問い合わせ対応・データ連携など、ノーコードで業務フローを組める人気の自動化ツールです。ここにClaude APIを組み込む技術的な土台を検証済みのため、「判断」や「文章生成」が必要な工程まで自動化の対象を広げられます。</div>
+  </div>
+</body>
+</html>

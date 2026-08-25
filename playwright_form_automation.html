@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>Playwrightによるブラウザフォーム自動化</title>
+<style>
+  body { font-family: "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif; background:#f4f5f7; margin:0; padding:36px; }
+  .board { background:#fff; width:960px; margin:0 auto; padding:32px 40px 40px; border-radius:8px; box-shadow:0 2px 14px rgba(0,0,0,0.10); }
+  h1 { font-size:21px; color:#1f2430; margin:0 0 4px; }
+  .sub { color:#777; font-size:12.5px; margin-bottom:26px; }
+  .flow { display:flex; align-items:center; justify-content:space-between; margin-bottom:26px; }
+  .box { flex:1; background:#eef3ff; border:1.5px solid #7ea3ff; border-radius:8px; padding:14px 10px; text-align:center; font-size:12.5px; color:#1f3a70; line-height:1.6; min-height:64px; display:flex; align-items:center; justify-content:center; }
+  .box.accent { background:#e9fbf1; border-color:#4fbf7d; color:#1a5c37; }
+  .arrow { color:#98a2b3; font-size:20px; padding:0 6px; }
+  .row-label { font-size:11px; color:#9aa2b0; margin:6px 0 8px; letter-spacing:0.5px; }
+  .cards { display:flex; gap:12px; }
+  .card { flex:1; background:#fff7e8; border:1.5px solid #e3a63a; border-radius:8px; padding:12px 14px; font-size:11.5px; color:#7a4e05; line-height:1.6; }
+  .card b { display:block; font-size:12.5px; margin-bottom:4px; color:#5c3a00; }
+</style>
+</head>
+<body>
+  <div class="board">
+    <h1>ログインし直さずに、定型フォーム入力・送信を自動化</h1>
+    <div class="sub">Playwright + pycookiecheat 実装</div>
+
+    <div class="flow">
+      <div class="box">🍪<br>pycookiecheatでChromeの<br>ログインCookieを取得</div>
+      <div class="arrow">→</div>
+      <div class="box">🎭<br>Playwrightがそのセッションで<br>ページを自動操作</div>
+      <div class="arrow">→</div>
+      <div class="box accent">📤<br>フォーム入力〜送信まで<br>ノーログインで完了</div>
+    </div>
+
+    <div class="row-label">単純なfill()だけでは対応できなかった実装ポイント</div>
+    <div class="cards">
+      <div class="card"><b>JS製の日付ピッカー</b>react-datepicker等はfill()が効かないため、keyboard.typeでのキー入力エミュレートに切り替えて対応</div>
+      <div class="card"><b>ファイル添付フォーム</b>multipart/form-data形式は通常のrequestsベースでは失敗。ブラウザ経由の送信で確実に対応</div>
+      <div class="card"><b>文字数制限のある入力欄</b>タイトル・本文それぞれの上限を踏まえ、送信前に文字数チェックを組み込みバリデーションエラーを防止</div>
+    </div>
+  </div>
+</body>
+</html>
