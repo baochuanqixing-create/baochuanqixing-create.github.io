@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>AIで経理の仕訳・領収書整理を効率化（検証済み）</title>
+<style>
+  body { font-family: "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif; background:#f4f5f7; margin:0; padding:36px; }
+  .board { background:#fff; width:980px; margin:0 auto; padding:32px 40px 40px; border-radius:8px; box-shadow:0 2px 14px rgba(0,0,0,0.10); }
+  h1 { font-size:21px; color:#1f2430; margin:0 0 4px; }
+  .sub { color:#777; font-size:12.5px; margin-bottom:22px; }
+  .flow { display:flex; align-items:center; justify-content:space-between; margin-bottom:22px; }
+  .box { flex:1; background:#eef3ff; border:1.5px solid #7ea3ff; border-radius:8px; padding:14px 10px; text-align:center; font-size:12.5px; color:#1f3a70; line-height:1.6; min-height:64px; display:flex; align-items:center; justify-content:center; }
+  .box.accent { background:#e9fbf1; border-color:#4fbf7d; color:#1a5c37; }
+  .arrow { color:#98a2b3; font-size:20px; padding:0 6px; }
+  table { width:100%; border-collapse: collapse; margin-top:8px;}
+  th { background:#b08d57; color:#fff; font-size:11.5px; padding:7px; text-align:left; }
+  td { border-bottom:1px solid #eee; padding:7px; font-size:11.5px; }
+  .flag { color:#c0392b; font-weight:bold; }
+  .row-label { font-size:11px; color:#9aa2b0; margin:20px 0 8px; letter-spacing:0.5px; }
+  .foot { margin-top:16px; font-size:11.5px; color:#666; background:#fff7e8; border:1px solid #e3a63a; border-radius:6px; padding:12px 16px; line-height:1.7; }
+  .note { margin-top:10px; font-size:11px; color:#8a5a00; }
+</style>
+</head>
+<body>
+  <div class="board">
+    <h1>領収書・請求書をAIが読み取り、仕訳の下書きを自動作成</h1>
+    <div class="sub">8種類の「読み取りにくい実データ」（電子マネー・サブスク請求・返金・軽減税率混在・情報不足等）で検証済み</div>
+
+    <div class="flow">
+      <div class="box">🧾<br>領収書・請求書<br>（多少崩れたテキストでも可）</div>
+      <div class="arrow">→</div>
+      <div class="box">🤖<br>AIが仕訳データを<br>下書き作成</div>
+      <div class="arrow">→</div>
+      <div class="box accent">✅<br>判断に迷う項目だけ<br>「確認要」フラグで人に渡す</div>
+    </div>
+
+    <div class="row-label">出力イメージ（判断が分かれるケースはAIが断定せず、必ずフラグを立てる）</div>
+    <table>
+      <tr><th>取引日</th><th>借方科目</th><th>金額</th><th>取引先</th><th>確認要否</th><th>確認理由</th></tr>
+      <tr><td>07/10</td><td>消耗品費</td><td>800円</td><td>ファミリーマート</td><td>要</td><td>支払方法の記載なし</td></tr>
+      <tr><td>07/15</td><td>接待交際費</td><td>12,000円</td><td>○○レストラン</td><td class="flag">要</td><td>1人当たり4,000円のため交際費除外特例に該当する可能性</td></tr>
+      <tr><td>07/18</td><td>消耗品費/雑費</td><td>260円+430円</td><td>スーパー△△</td><td class="flag">要</td><td>軽減税率・標準税率が混在、2行に分割済み</td></tr>
+    </table>
+
+    <div class="foot"><b>ポイント：</b>「AIが全部自動で断定する」設計は誤仕訳のリスクが高いため、あえて逆の設計にしています。税率混在・返金・サブスク費用・情報不足のレシートなど、実務でよくある判断の分かれるケースを洗い出し、AIが自信のない項目は必ず人の確認に回す仕組みにしました。出力はfreee・マネーフォワード等への取込形式に調整可能です。</div>
+    <div class="note">※税理士資格を要する税務相談・申告代行は行いません。あくまで仕訳下書き作成・入力時短のご支援です。</div>
+  </div>
+</body>
+</html>

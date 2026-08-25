@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>字幕なし動画・音声ファイルをAIが自動で文字起こし</title>
+<style>
+  body { font-family: "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif; background:#f4f5f7; margin:0; padding:36px; }
+  .board { background:#fff; width:980px; margin:0 auto; padding:32px 40px 40px; border-radius:8px; box-shadow:0 2px 14px rgba(0,0,0,0.10); }
+  h1 { font-size:21px; color:#1f2430; margin:0 0 4px; }
+  .sub { color:#777; font-size:12.5px; margin-bottom:22px; }
+  .flow { display:flex; align-items:center; justify-content:space-between; margin-bottom:22px; }
+  .box { flex:1; background:#eef3ff; border:1.5px solid #7ea3ff; border-radius:8px; padding:14px 10px; text-align:center; font-size:12.5px; color:#1f3a70; line-height:1.6; min-height:64px; display:flex; align-items:center; justify-content:center; }
+  .box.accent { background:#e9fbf1; border-color:#4fbf7d; color:#1a5c37; }
+  .arrow { color:#98a2b3; font-size:20px; padding:0 6px; }
+  .row-label { font-size:11px; color:#9aa2b0; margin:20px 0 8px; letter-spacing:0.5px; }
+  .cards { display:flex; gap:12px; }
+  .card { flex:1; background:#f7f8fa; border-radius:8px; padding:12px 14px; font-size:11.5px; color:#555; line-height:1.7; }
+  .card b { display:block; font-size:12.5px; margin-bottom:4px; color:#333; }
+  .foot { margin-top:16px; font-size:11.5px; color:#666; background:#fff7e8; border:1px solid #e3a63a; border-radius:6px; padding:12px 16px; line-height:1.7; }
+</style>
+</head>
+<body>
+  <div class="board">
+    <h1>字幕なしのYouTube動画・音声ファイルをAIが自動で文字起こし</h1>
+    <div class="sub">実際に約27分・字幕なしの日本語動画で検証済み（yt-dlp + faster-whisper構成）</div>
+
+    <div class="flow">
+      <div class="box">🎬<br>YouTube URL<br>または音声ファイル</div>
+      <div class="arrow">→</div>
+      <div class="box">🎙️<br>音声のみを抽出</div>
+      <div class="arrow">→</div>
+      <div class="box accent">📝<br>タイムスタンプ付きで<br>全文を文字起こし</div>
+    </div>
+
+    <div class="row-label">実際にできること</div>
+    <div class="cards">
+      <div class="card"><b>字幕未設定の動画にも対応</b>YouTube側の自動字幕・手動字幕が無い動画でも、音声から直接文字起こしできる</div>
+      <div class="card"><b>長尺でも処理可能</b>実測で約27分の対談動画を最後まで文字起こしできることを確認済み</div>
+      <div class="card"><b>要約・分析への展開</b>文字起こし結果をもとに、内容要約・議事録化・レポート化まで一貫して対応できる</div>
+    </div>
+
+    <div class="foot"><b>正直なところ：</b>これは音声認識（Speech-to-Text）の仕組みであり、映像に映っている図・テロップ等の「視覚情報」までは読み取れません。あくまで話されている内容のテキスト化が対象です。また使用モデルの特性上、同音異義語の誤変換が稀に発生するため（例：「受託」を「自宅」と誤認識）、精度が重要な用途では人によるチェックを併用することを推奨しています。</div>
+  </div>
+</body>
+</html>
