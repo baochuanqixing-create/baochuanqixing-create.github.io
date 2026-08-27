@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>会議・商談の録音をAIが分析し「次にやること」まで整理する仕組み</title>
+<style>
+  body { font-family: "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif; background:#f4f5f7; margin:0; padding:36px; }
+  .board { background:#fff; width:960px; margin:0 auto; padding:32px 40px 40px; border-radius:8px; box-shadow:0 2px 14px rgba(0,0,0,0.10); }
+  h1 { font-size:21px; color:#1f2430; margin:0 0 4px; }
+  .sub { color:#777; font-size:12.5px; margin-bottom:26px; }
+  .flow { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+  .box { flex:1; background:#eef3ff; border:1.5px solid #7ea3ff; border-radius:8px; padding:12px 10px; text-align:center; font-size:11.5px; color:#1f3a70; line-height:1.5; min-height:64px; display:flex; align-items:center; justify-content:center; }
+  .box.accent { background:#e9fbf1; border-color:#4fbf7d; color:#1a5c37; }
+  .arrow { color:#98a2b3; font-size:20px; padding:0 5px; }
+  .row-label { font-size:11px; color:#9aa2b0; margin:22px 0 8px; letter-spacing:0.5px; }
+  .steps { display:flex; gap:12px; margin-top:6px; }
+  .step { flex:1; background:#f0f4ff; border:1.5px solid #7ea3ff; border-radius:8px; padding:12px; font-size:11.5px; color:#1f3a70; line-height:1.55; }
+  .step b { display:block; font-size:12.5px; margin-bottom:4px; color:#12235c; }
+  .cards { display:flex; gap:12px; }
+  .card { flex:1; background:#fff7e8; border:1.5px solid #e3a63a; border-radius:8px; padding:12px 14px; font-size:11.5px; color:#7a4e05; line-height:1.6; }
+  .card b { display:block; font-size:12.5px; margin-bottom:4px; color:#5c3a00; }
+  .foot { margin-top:20px; font-size:11.5px; color:#666; background:#f7f8fa; border-radius:6px; padding:12px 16px; line-height:1.7; }
+  .foot b { color:#333; }
+</style>
+</head>
+<body>
+  <div class="board">
+    <h1>会議・商談の録音を渡すだけで、AIが分析し「次にやること」まで整理する</h1>
+    <div class="sub">自社の商談・打ち合わせの振り返り用に構築（2026年8月）</div>
+
+    <div class="flow">
+      <div class="box">🎙️<br>会議を録音<br>（ICレコーダー等）</div>
+      <div class="arrow">→</div>
+      <div class="box accent">📝<br>文字起こしを<br>自動取得</div>
+      <div class="arrow">→</div>
+      <div class="box accent">🤖<br>AIが内容を分析<br>要約・決定事項・ToDo</div>
+      <div class="arrow">→</div>
+      <div class="box accent">📅<br>予定・締切を<br>カレンダー自動登録</div>
+      <div class="arrow">→</div>
+      <div class="box accent">📚<br>相手ごとの台帳に<br>継続記録</div>
+    </div>
+
+    <div class="row-label">録音1件から自動で出てくるもの</div>
+    <div class="steps">
+      <div class="step"><b>要約・決定事項</b>「何の打ち合わせで、何が決まったか」を3行のサマリーと決定事項リストに整理</div>
+      <div class="step"><b>アクションアイテム表</b>「誰が・何を・いつまでに」を表形式で抽出。自分の担当分は期限付きでカレンダーへ登録</div>
+      <div class="step"><b>論点・重要事項</b>未合意の論点、相手の懸念、予算・決裁・締切など、次の提案に効く情報を抽出</div>
+    </div>
+
+    <div class="row-label">精度と正確さのための設計</div>
+    <div class="cards">
+      <div class="card"><b>文字起こしは2系統</b>クラウド文字起こしとローカル処理（Whisper）の両方に対応。録音条件に応じて精度の高い方を採用</div>
+      <div class="card"><b>創作しない設計</b>金額・日付・人名・約束など、録音に無い情報はAIに作らせない。発言に忠実に整理</div>
+      <div class="card"><b>資産として蓄積</b>商談相手ごとに時系列で記録が残り、次回打ち合わせ前にこれまでの経緯をすぐ確認できる</div>
+    </div>
+
+    <div class="foot">
+      <b>使用技術：</b>Claude / Claude Code、文字起こしAPI・Whisper（音声→テキスト）、Google Calendar API、Python。<br>
+      <b>用途例：</b>商談の振り返りと議事録作成、対応漏れ・フォロー漏れの防止、定例会議の記録、次回提案の準備。「録音は取っているが活用できていない」状態を、そのまま使える資産に変えます。
+    </div>
+  </div>
+</body>
+</html>
