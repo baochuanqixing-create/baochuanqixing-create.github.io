@@ -158,6 +158,21 @@ h1 { font-size: 27px; }
 
 <div class="card">
 <div class="card-top">
+<h3>会議・商談の録音をAIが分析し、次アクションまで整理する仕組み</h3>
+<span class="badge">自社開発・運用中</span>
+</div>
+<p>会議や商談の録音を渡すだけで、文字起こしの取得から内容分析（要約・決定事項・「誰が・何を・いつまでに」のアクション整理）までをAIが自動で行う仕組みを構築しました。</p>
+<p>抽出した期限付きのタスクや次回打ち合わせの予定はGoogleカレンダーへ自動登録し、商談相手ごとの記録も時系列で蓄積されるため、対応漏れの防止と次回提案の準備に使えます。</p>
+<div class="stat-row">
+<div class="stat"><span class="num">2系統</span><span class="label">文字起こし（クラウド / ローカル）</span></div>
+<div class="stat"><span class="num">Calendar API</span><span class="label">予定・締切を自動登録</span></div>
+</div>
+<p class="caveat">録音に無い情報（金額・日付・人名・約束など）はAIに生成させず、発言に忠実に整理する設計にしています。</p>
+<p><a href="meeting_analysis_system.html" style="color:var(--accent); font-size:13.5px;">仕組みの図を見る →</a></p>
+</div>
+
+<div class="card">
+<div class="card-top">
 <h3>クラウドソーシングでの営業・応募プロセスの自動化</h3>
 <span class="badge">自社運用</span>
 </div>
@@ -194,6 +209,7 @@ h1 { font-size: 27px; }
 <span class="skill"><b>n8n</b>実案件でのワークフロー構築経験あり</span>
 <span class="skill"><b>Python</b>自動化スクリプト・サーバー実装</span>
 <span class="skill"><b>LINE Messaging API</b>公式アカウント連携の構築・運用</span>
+<span class="skill"><b>音声の文字起こし・議事録化</b>Whisper / 文字起こしAPIでの実装</span>
 <span class="skill"><b>API連携</b>複数サービスの連携実装</span>
 <span class="skill"><b>Googleスプレッドシート</b>自動化の記録先として実用</span>
 </div>
