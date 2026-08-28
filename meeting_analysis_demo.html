@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>会議・商談の録音をAIが議事録＋次アクションまで自動整理｜体験デモ</title>
+<style>
+:root{
+  --bg:#0f1115; --panel:#171a21; --panel-2:#1d222b; --border:#262b36;
+  --accent:#5ee6c4; --accent-soft:rgba(94,230,196,0.12);
+  --text:#eef1f6; --dim:#9aa3b2;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);
+  font-family:"Hiragino Kaku Gothic ProN","Yu Gothic","Segoe UI",sans-serif;line-height:1.75}
+.wrap{max-width:760px;margin:0 auto;padding:0 22px}
+header{padding:64px 0 34px;border-bottom:1px solid var(--border);
+  background:radial-gradient(circle at 12% 0%,rgba(94,230,196,0.09),transparent 55%)}
+.eyebrow{display:inline-block;font-size:12px;letter-spacing:.06em;color:var(--accent);
+  background:var(--accent-soft);border:1px solid rgba(94,230,196,.35);border-radius:999px;
+  padding:5px 13px;margin-bottom:18px}
+h1{font-size:27px;margin:0 0 12px;line-height:1.5}
+h1 span{color:var(--accent)}
+.lead{font-size:15px;color:var(--dim);margin:0}
+section{padding:40px 0;border-bottom:1px solid var(--border)}
+section:last-of-type{border-bottom:none}
+h2{font-size:17px;margin:0 0 8px}
+.sub{color:var(--dim);font-size:13.5px;margin:0 0 18px}
+.flow{display:flex;flex-wrap:wrap;gap:8px;font-size:12.5px;color:var(--dim)}
+.flow span{background:var(--panel);border:1px solid var(--border);border-radius:7px;padding:6px 10px}
+.flow b{color:var(--accent);font-weight:600}
+textarea{width:100%;min-height:190px;background:var(--panel);color:var(--text);
+  border:1px solid var(--border);border-radius:10px;padding:13px 14px;font-size:13.5px;
+  line-height:1.7;font-family:inherit;resize:vertical}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;align-items:center}
+button{font-family:inherit;font-size:14px;border-radius:9px;cursor:pointer;border:1px solid var(--border)}
+.btn-primary{background:var(--accent);color:#06231c;font-weight:700;border:none;padding:11px 22px}
+.btn-primary:disabled{opacity:.5;cursor:default}
+.btn-ghost{background:var(--panel);color:var(--text);padding:10px 16px}
+.count{color:var(--dim);font-size:12px;margin-left:auto}
+.result{margin-top:22px;background:var(--panel);border:1px solid var(--border);border-radius:12px;
+  padding:6px 22px 18px;display:none}
+.result.show{display:block}
+.result h3{font-size:15px;border-bottom:1px solid var(--border);padding-bottom:6px;margin:20px 0 10px;color:var(--accent)}
+.result ul{padding-left:20px;margin:8px 0}
+.result li{margin:3px 0;font-size:14px;color:#cdd3de}
+.result p{font-size:14px;color:#cdd3de;margin:8px 0}
+.result table{border-collapse:collapse;width:100%;margin:10px 0;font-size:13px}
+.result th,.result td{border:1px solid var(--border);padding:6px 9px;text-align:left;vertical-align:top}
+.result th{background:var(--panel-2);color:var(--text)}
+.err{color:#ff9b9b;font-size:13.5px;margin-top:12px;display:none}
+.err.show{display:block}
+.note{background:var(--panel);border-left:3px solid var(--border);padding:10px 14px;
+  color:var(--dim);font-size:13px;border-radius:0 6px 6px 0;margin-top:14px}
+.skill{font-size:12.5px;color:var(--dim);border:1px solid var(--border);border-radius:6px;
+  padding:5px 10px;background:var(--panel);display:inline-block;margin:3px 4px 0 0}
+.cta{display:inline-block;margin-top:8px;padding:11px 24px;border-radius:10px;background:var(--accent);
+  color:#06231c;font-weight:700;font-size:14px;text-decoration:none}
+a{color:var(--accent)}
+footer{padding:38px 0 60px;text-align:center;color:var(--dim);font-size:12.5px}
+.spin{display:inline-block;width:14px;height:14px;border:2px solid rgba(6,35,28,.35);
+  border-top-color:#06231c;border-radius:50%;animation:sp .7s linear infinite;vertical-align:-2px;margin-right:7px}
+@keyframes sp{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+
+<header>
+<div class="wrap">
+<span class="eyebrow">AI自動化 ／ 体験デモ</span>
+<h1>会議・商談の録音を渡すだけで、<span>AIが議事録と「次にやること」</span>まで整理します</h1>
+<p class="lead">文字起こしを貼るだけで、要約・決定事項・「誰が・何を・いつまでに」のアクション整理を自動生成。下で実際に試せます。</p>
+</div>
+</header>
+
+<section>
+<div class="wrap">
+<h2>実サービスの流れ</h2>
+<p class="sub">このページで体験できるのは②〜③の部分です。</p>
+<div class="flow">
+<span>① 会議を録音</span>
+<span>→ <b>② 文字起こしを自動取得</b>（クラウド / ローカルの2系統）</span>
+<span>→ <b>③ AIが議事録・アクション整理</b></span>
+<span>→ ④ 期限・次回予定を Googleカレンダーへ自動登録</span>
+<span>→ ⑤ 相手ごとの台帳に時系列で記録</span>
+</div>
+</div>
+</section>
+
+<section>
+<div class="wrap">
+<h2>試してみる</h2>
+<p class="sub">会議・商談の文字起こしを貼り付けて「議事録を生成」を押してください。ダミーの会話でOKです。</p>
+<textarea id="ta" placeholder="例）
+田中: では定例を始めます。まず先週のA社の件、進捗どうですか。
+佐藤: 提案書のドラフトは出来ました。金額はまだ入れてません。
+田中: 金額は今週水曜までに私が詰めます。佐藤さんは先方に打ち合わせ候補日を3つ送っておいてください。
+..."></textarea>
+<div class="row">
+<button class="btn-primary" id="go">議事録を生成</button>
+<button class="btn-ghost" id="sample">サンプルを入れる</button>
+<span class="count"><span id="cnt">0</span> 文字</span>
+</div>
+<div class="err" id="err"></div>
+<div class="result" id="res"></div>
+<div class="note">
+体験版は貼り付けテキスト8,000文字まで／混雑時は少しお待ちいただくことがあります。入力した内容はサーバーに保存していません。<br>
+実サービスでは、音声ファイルからの自動文字起こし、Googleカレンダーへの予定・締切の自動登録、商談相手ごとの記録の蓄積まで含みます。
+</div>
+</div>
+</section>
+
+<section>
+<div class="wrap">
+<h2>使用技術・設計</h2>
+<p class="sub">
+<span class="skill">Claude / Claude Code</span>
+<span class="skill">Python</span>
+<span class="skill">Whisper・文字起こしAPI（2系統）</span>
+<span class="skill">Google Calendar API</span>
+<span class="skill">MCP連携</span>
+</p>
+<p style="color:#cdd3de;font-size:14px">
+金額・日付・人名・約束など、録音に無い情報はAIに生成させず、発言に忠実に整理する制約をかけています。文字起こしはクラウドとローカル（Whisper）の2系統に対応し、録音条件に応じて精度の高い方を採用します。
+</p>
+</div>
+</section>
+
+<section>
+<div class="wrap">
+<h2>導入・カスタマイズのご相談</h2>
+<p class="sub">「録音は取っているけど活用できていない」「議事録づくりに毎回時間がかかる」といった状態の自動化に対応します。</p>
+<a class="cta" href="booking.html">相談の予約をする</a>
+</div>
+</section>
+
+<footer>
+<div class="wrap">
+保川七星（NANASE）｜ AI自動化エンジニア ｜ <a href="./">ポートフォリオ</a>
+</div>
+</footer>
+
+<script>
+const API = "https://mannish-seventeen-haste.ngrok-free.dev/meeting-demo/analyze";
+const ta = document.getElementById('ta');
+const cnt = document.getElementById('cnt');
+const go = document.getElementById('go');
+const err = document.getElementById('err');
+const res = document.getElementById('res');
+
+const SAMPLE = `田中: では定例を始めます。まず先週のA社の件、進捗どうですか。
+佐藤: 提案書のドラフトは出来ました。ただ金額はまだ入れていません。
+田中: 金額は今週水曜までに私が詰めます。佐藤さんは先方に打ち合わせ候補日を3つ送っておいてください。
+佐藤: 了解です。明日中に送ります。
+田中: あとB社ですが、先方の予算がまだ固まっていないので、今月は様子見にしましょう。
+佐藤: わかりました。あと、新しく問い合わせのあったC社、どう対応しますか。
+田中: C社は来週こちらから一次回答をします。担当は佐藤さんでお願いできますか。
+佐藤: はい、大丈夫です。次回の定例は来週月曜10時でいいですか。
+田中: はい、それでお願いします。`;
+
+document.getElementById('sample').onclick = () => { ta.value = SAMPLE; upd(); };
+ta.addEventListener('input', upd);
+function upd(){ cnt.textContent = ta.value.length; }
+
+function esc(s){ return s.replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }
+
+// 軽量 markdown -> HTML（見出し / 箇条書き / 表 のみ）
+function render(md){
+  const lines = md.split('\n');
+  let html = '', i = 0, inList = false;
+  const closeList = () => { if(inList){ html += '</ul>'; inList = false; } };
+  while(i < lines.length){
+    let ln = lines[i];
+    const t = ln.trim();
+    if(/^#{1,6}\s/.test(t)){
+      closeList();
+      html += '<h3>' + esc(t.replace(/^#{1,6}\s/,'')) + '</h3>';
+      i++; continue;
+    }
+    if(/^\|(.+)\|$/.test(t) && i+1 < lines.length && /^\|[\s:|-]+\|$/.test(lines[i+1].trim())){
+      closeList();
+      const header = t.slice(1,-1).split('|').map(s => s.trim());
+      i += 2;
+      let rows = [];
+      while(i < lines.length && /^\|(.+)\|$/.test(lines[i].trim())){
+        rows.push(lines[i].trim().slice(1,-1).split('|').map(s => s.trim()));
+        i++;
+      }
+      html += '<table><thead><tr>' + header.map(h => '<th>'+esc(h)+'</th>').join('') + '</tr></thead><tbody>';
+      html += rows.map(r => '<tr>' + r.map(c => '<td>'+esc(c)+'</td>').join('') + '</tr>').join('');
+      html += '</tbody></table>';
+      continue;
+    }
+    if(/^[-*]\s/.test(t)){
+      if(!inList){ html += '<ul>'; inList = true; }
+      html += '<li>' + esc(t.replace(/^[-*]\s/,'')) + '</li>';
+      i++; continue;
+    }
+    if(t === ''){ closeList(); i++; continue; }
+    closeList();
+    html += '<p>' + esc(t) + '</p>';
+    i++;
+  }
+  closeList();
+  return html;
+}
+
+go.onclick = async () => {
+  const transcript = ta.value.trim();
+  err.className = 'err'; res.className = 'result';
+  if(transcript.length < 40){ err.textContent = '会議のやり取りを40文字以上貼り付けてください。'; err.className = 'err show'; return; }
+  go.disabled = true;
+  const orig = go.textContent;
+  go.innerHTML = '<span class="spin"></span>生成中…';
+  try{
+    const r = await fetch(API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'ngrok-skip-browser-warning': '1' },
+      body: JSON.stringify({ transcript })
+    });
+    const d = await r.json();
+    if(!r.ok || d.error){
+      err.textContent = d.error || '生成に失敗しました。時間をおいてお試しください。';
+      err.className = 'err show';
+    } else {
+      res.innerHTML = render(d.minutes);
+      res.className = 'result show';
+      res.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  } catch(e){
+    err.textContent = '通信エラーが発生しました。時間をおいてお試しください。';
+    err.className = 'err show';
+  }
+  go.disabled = false;
+  go.textContent = orig;
+};
+</script>
+
+</body>
+</html>
