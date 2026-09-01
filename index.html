@@ -113,17 +113,17 @@ h1 { font-size: 27px; }
 <div class="wrap">
 <img class="avatar" src="avatar.png" alt="保川七星" width="84" height="84">
 <span class="eyebrow">AI自動化エンジニア</span>
-<h1>LINEひとつで、<span>AIが実務を代行する</span>仕組みを作ります</h1>
+<h1><span>毎回おなじ手作業</span>を、AIに肩代わりさせます</h1>
 <p class="lead">
-実店舗・小売業を中心に、LINE公式アカウント×AI（Claude）×自動化ツールで
-「電話・手作業でやっていたこと」を仕組み化する開発者です。
-実際に自分自身の営業・運用も、この仕組みで動かしています。
+請求書の入力、予約の電話対応、日報の転記、問い合わせへの返信——
+時間を取られている手作業をAIで減らす仕組みを、個人事業主・中小企業の方向けに作ります。
+「AIを入れてみたいけれど、勝手におかしなことをされないか不安」という方こそ、お役に立てます。
 </p>
 <div class="tags">
-<span class="tag">LINE公式アカウント連携</span>
-<span class="tag">n8n / 業務自動化</span>
-<span class="tag">Claude / Claude Code</span>
-<span class="tag">実店舗・小売特化</span>
+<span class="tag">間違えると困る項目は人が最終確認</span>
+<span class="tag">AIに"それらしい嘘"をつかせない設計</span>
+<span class="tag">担当者が社内で回せる状態まで見届ける</span>
+<span class="tag">平日は1時間以内に一次返信</span>
 </div>
 </div>
 </header>
@@ -131,78 +131,76 @@ h1 { font-size: 27px; }
 <section>
 <div class="wrap">
 <div class="section-head"><span class="section-num">01</span><h2>実績</h2></div>
-<p class="section-note">誇張のない範囲で、実際にやったことだけを書いています。</p>
+<p class="section-note">それぞれ「どんな手間が省けるか」まで書いています。数字は計測できた範囲だけ載せています。</p>
 
 <div class="card">
 <div class="card-top">
-<h3>ガソリンスタンドの来店予約・記録の自動化</h3>
-<span class="badge">実店舗・小売</span>
-</div>
-<p>知人が経営するガソリンスタンドで、LINE公式アカウント×n8nを使い、来店予約の自動応答・記録システムを構築（無償対応）。</p>
-<p>それまで電話のみで受けていた予約対応を自動化し、日次の記録・売上管理もLINE経由に一本化しました。</p>
-<div class="stat-row">
-<div class="stat"><span class="num">約3ヶ月</span><span class="label">実運用期間</span></div>
-<div class="stat"><span class="num">LINE × n8n</span><span class="label">使用技術</span></div>
-</div>
-<p class="caveat">体感ベースで対応工数の削減は実感できましたが、正確な計測はしておらず数値化した削減率はありません。導入から約3ヶ月後、先方の事業状況により運用終了しています。</p>
-</div>
-
-<div class="card">
-<div class="card-top">
-<h3>LINE常駐AIエージェント基盤</h3>
+<h3>会議・商談の録音を、AIに"嘘をつかせず"議事録と次アクションに整理</h3>
 <span class="badge">自社開発・運用中</span>
 </div>
-<p>LINEでメッセージを送るだけで、AI（Claude）が実務システム（クラウドソーシングの案件確認・応募、メール確認、各種調査など）を直接操作して代行する仕組みを、ゼロから設計・構築しました。</p>
-<p>24時間の監視・障害発生時の自動復旧を組み込み、稼働開始から無停止で安定運用しています。YouTube新着動画の自動チェックなど、必要な情報だけを能動的に通知する機能も統合しています。</p>
-<div class="stat-row">
-<div class="stat"><span class="num">26日間+</span><span class="label">無停止運用</span></div>
-<div class="stat"><span class="num">6時間おき</span><span class="label">動画新着監視</span></div>
-</div>
-<p class="caveat">本番のAIエージェントは実データにフルアクセスしているため非公開ですが、実データに一切アクセスしない隔離環境のデモ版で、実際の会話体験だけをお試しいただけます。</p>
-<p><a href="https://line.me/R/ti/p/@364hixkh" target="_blank" rel="noopener" style="color:var(--accent); font-size:13.5px;">実際にLINEで体験する →</a></p>
-</div>
-
-<div class="card">
-<div class="card-top">
-<h3>会議・商談の録音をAIが分析し、次アクションまで整理する仕組み</h3>
-<span class="badge">自社開発・運用中</span>
-</div>
-<p>会議や商談の録音を渡すだけで、文字起こしの取得から内容分析（要約・決定事項・「誰が・何を・いつまでに」のアクション整理）までをAIが自動で行う仕組みを構築しました。</p>
-<p>抽出した期限付きのタスクや次回打ち合わせの予定はGoogleカレンダーへ自動登録し、商談相手ごとの記録も時系列で蓄積されるため、対応漏れの防止と次回提案の準備に使えます。</p>
+<p>録音を渡すだけで、文字起こし→要約・決定事項・「誰が・何を・いつまでに」の整理までをAIが行い、期限付きタスクや次回予定をGoogleカレンダーへ登録、相手ごとの記録も時系列で蓄積します。</p>
+<p>徹底しているのは、録音に無い情報（金額・日付・人名・約束）はAIに推測・生成させず、発言に忠実な範囲だけを整理し、曖昧な箇所は人が確認できる形で残す設計です。</p>
 <div class="stat-row">
 <div class="stat"><span class="num">2系統</span><span class="label">文字起こし（クラウド / ローカル）</span></div>
 <div class="stat"><span class="num">Calendar API</span><span class="label">予定・締切を自動登録</span></div>
 </div>
-<p class="caveat">録音に無い情報（金額・日付・人名・約束など）はAIに生成させず、発言に忠実に整理する設計にしています。</p>
+<p class="caveat">→ 議事録づくりと「言った言わない」の確認、次回準備の時間がなくなり、対応漏れも防げます。AI導入に不安のある現場でも、"AIが勝手に事実を作らない"前提で使い始められます。</p>
 <p><a href="meeting_analysis_demo.html" style="color:var(--accent); font-size:13.5px;">ブラウザで実際に試す →</a></p>
 </div>
 
 <div class="card">
 <div class="card-top">
-<h3>クラウドソーシングでの営業・応募プロセスの自動化</h3>
-<span class="badge">自社運用</span>
+<h3>手書きの帳票を読み取ってExcelへ。自信のない項目は人が確認</h3>
+<span class="badge">運送・物流向け／デモ公開中</span>
 </div>
-<p>CrowdWorks・ランサーズでの案件リサーチ、クライアント審査、提案文の作成、案件ごとのデモ作成、提出、フォローアップまでを、AIエージェントが一貫して代行する仕組みを構築・運用しています。</p>
-<p>加えて、CrowdWorks・ランサーズのメッセージや応募ステータス、Gmailの新着メールを毎日定時（朝8時・昼13時）に自動チェックし、変化があった時だけ知らせる仕組みも統合し、対応漏れを防いでいます。</p>
+<p>運行日報などの手書き帳票の写真から、日付・車番・走行距離・時間・手当などをAIが抽出し、読み取りに自信がない項目・訂正のある項目を色付きで「ここは人が確認」と示します。担当者はその項目だけ直して承認すれば、Excel／スプレッドシートに反映されます。</p>
 <div class="stat-row">
-<div class="stat"><span class="num">57件</span><span class="label">応募・追跡件数</span></div>
-<div class="stat"><span class="num">4件</span><span class="label">有償契約完了</span></div>
-<div class="stat"><span class="num">複数件</span><span class="label">面談・選考進行中</span></div>
+<div class="stat"><span class="num">項目別</span><span class="label">確信度をつけてフラグ</span></div>
+<div class="stat"><span class="num">人が確認</span><span class="label">してから反映（推測で埋めない）</span></div>
 </div>
+<p class="caveat">→ 手書き伝票を1件ずつ手入力・転記していた時間が、"確認だけ"の時間に変わります。OCRが100%にならない前提で、間違いを取りこぼさない運用まで設計します。</p>
+<p><a href="nippo_ocr_demo.html" style="color:var(--accent); font-size:13.5px;">サンプル日報で実際に試す →</a></p>
 </div>
 
 <div class="card">
 <div class="card-top">
-<h3>問い合わせ〜予約〜確認メール送信までの一貫自動化</h3>
+<h3>電話でしか受けられなかった予約を、LINEで自動受付に</h3>
+<span class="badge">実店舗・小売</span>
+</div>
+<p>知人が経営するガソリンスタンドで、来店予約をすべて電話で受けており、対応のたびに作業が中断していました。LINE公式アカウントで予約を自動受付し、内容をスプレッドシートに記録、日次の記録・売上管理もLINE上で完結する形にしました。</p>
+<div class="stat-row">
+<div class="stat"><span class="num">約3ヶ月</span><span class="label">実運用</span></div>
+<div class="stat"><span class="num">LINE × n8n</span><span class="label">使用技術</span></div>
+</div>
+<p class="caveat">→ 予約のたびに手を止める必要がなくなり、記録が1か所にまとまります。店舗の「電話が鳴りやまない」「記録がバラバラ」の解消に直結します。</p>
+</div>
+
+<div class="card">
+<div class="card-top">
+<h3>問い合わせ→予約確定→確認メールまでを、人が触らずに回す</h3>
 <span class="badge">自社開発・運用中</span>
 </div>
-<p>クライアントからの問い合わせをGmail自動チェックで検知する仕組みと連動する形で、Web上で日時を選ぶだけでその場で予約が確定するシステムを構築しました。</p>
-<p>Googleカレンダーの実際の空き状況と営業時間設定から予約可能枠を自動計算し、予約が確定するとカレンダーへの登録・クライアントへの確認メール送信・自分への通知までを自動で行います。二重予約防止のチェック機能も実装しています。</p>
+<p>問い合わせをGmailで自動検知し、Web上で日時を選ぶだけでその場で予約が確定する仕組みです。Googleカレンダーの実際の空き状況と営業時間設定から予約可能枠を自動計算し、予約確定時にカレンダー登録・確認メール送信・担当者への通知まで自動で行います。二重予約防止のチェックも実装しています。</p>
 <div class="stat-row">
 <div class="stat"><span class="num">Calendar API</span><span class="label">空き枠自動計算</span></div>
 <div class="stat"><span class="num">Gmail API</span><span class="label">確認メール自動送信</span></div>
 </div>
+<p class="caveat">→ 問い合わせ対応、日程調整メールの往復、カレンダーへの転記、確認メールの作成——この一連の作業がなくなります。</p>
 <p><a href="booking.html" style="color:var(--accent); font-size:13.5px;">実際の予約ページを見る →</a></p>
+</div>
+
+<div class="card">
+<div class="card-top">
+<h3>LINEにメッセージを送るだけで、AIが定型業務を代行する基盤</h3>
+<span class="badge">自社開発・運用中</span>
+</div>
+<p>LINEでメッセージを送るだけで、AI（Claude）が実際の業務システムを操作して定型作業を代行する仕組みを、設計から24時間の監視・障害時の自動復旧まで一人で構築しました。稼働開始から大きな停止なく運用しています。メールや通知の新着を毎日定時にチェックし、変化があった時だけ知らせる仕組みも統合しています。</p>
+<div class="stat-row">
+<div class="stat"><span class="num">1ヶ月+</span><span class="label">無停止運用</span></div>
+<div class="stat"><span class="num">定時チェック</span><span class="label">変化があった時だけ通知</span></div>
+</div>
+<p class="caveat">→ 「毎日決まった時間にこれを確認する」「この条件のときはこう処理する」といった定型業務を、担当者がスマホから指示するだけで回せます。対応漏れも防げます。</p>
+<p><a href="https://line.me/R/ti/p/@364hixkh" target="_blank" rel="noopener" style="color:var(--accent); font-size:13.5px;">隔離デモをLINEで体験する →</a></p>
 </div>
 </div>
 </section>
@@ -216,6 +214,7 @@ h1 { font-size: 27px; }
 <span class="skill"><b>Python</b>自動化スクリプト・サーバー実装</span>
 <span class="skill"><b>LINE Messaging API</b>公式アカウント連携の構築・運用</span>
 <span class="skill"><b>音声の文字起こし・議事録化</b>Whisper / 文字起こしAPIでの実装</span>
+<span class="skill"><b>帳票・画像の読み取り</b>AIの画像認識で項目抽出＋確信度によるフラグ</span>
 <span class="skill"><b>API連携</b>複数サービスの連携実装</span>
 <span class="skill"><b>Googleスプレッドシート</b>自動化の記録先として実用</span>
 </div>
@@ -227,8 +226,11 @@ h1 { font-size: 27px; }
 <div class="section-head"><span class="section-num">03</span><h2>対応スタイル</h2></div>
 <p style="color:#cdd3de; font-size:14.5px; max-width:620px;">
 専門用語を使わずに説明することを心がけています。まずは「今どこに時間がかかっているか」をヒアリングし、
-本当にAIで解決すべき課題かどうかを見極めたうえで、必要な分だけ自動化します。
-小さなご相談からでも構いません。
+本当にAIで解決すべき課題かどうかを見極めたうえで、必要な分だけ自動化します。いきなり全部を自動化せず、
+一番時間のかかっている作業から小さく始めて、効果を確認しながら広げます。
+</p>
+<p style="color:#cdd3de; font-size:14.5px; max-width:620px; margin-top:12px;">
+ご連絡には、平日は1時間以内に一次返信します。小さなご相談からでも構いません。
 </p>
 </div>
 </section>
