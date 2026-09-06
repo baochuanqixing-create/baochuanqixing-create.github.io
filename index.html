@@ -80,6 +80,8 @@ white-space: nowrap;
 .card p { color: #cdd3de; font-size: 14.5px; margin: 0 0 10px; }
 .card p:last-child { margin-bottom: 0; }
 .card .caveat { color: var(--text-dim); font-size: 13px; border-left: 2px solid var(--panel-border); padding-left: 12px; margin-top: 14px; }
+.card .usecase { color: #cdd3de; font-size: 13.5px; border-left: 2px solid rgba(94,230,196,0.4); padding-left: 12px; margin-top: 10px; }
+.card .usecase b { color: var(--accent); font-weight: 600; }
 .stat-row { display: flex; gap: 22px; flex-wrap: wrap; margin-top: 16px; }
 .stat { min-width: 120px; }
 .stat .num { font-size: 20px; color: var(--accent); font-weight: 700; display: block; }
@@ -131,7 +133,7 @@ h1 { font-size: 27px; }
 <section>
 <div class="wrap">
 <div class="section-head"><span class="section-num">01</span><h2>実績</h2></div>
-<p class="section-note">それぞれ「どんな手間が省けるか」まで書いています。数字は計測できた範囲だけ載せています。</p>
+<p class="section-note">それぞれ「どんな手間が省けるか」と「どんな場面で役立てるか」まで書いています。数字は計測できた範囲だけ載せています。</p>
 
 <div class="card">
 <div class="card-top">
@@ -145,6 +147,7 @@ h1 { font-size: 27px; }
 <div class="stat"><span class="num">Calendar API</span><span class="label">予定・締切を自動登録</span></div>
 </div>
 <p class="caveat">→ 議事録づくりと「言った言わない」の確認、次回準備の時間がなくなり、対応漏れも防げます。AI導入に不安のある現場でも、"AIが勝手に事実を作らない"前提で使い始められます。</p>
+<p class="usecase"><b>こんな場面で：</b>営業の商談記録・社内会議の議事録・顧客との打合せログなど、「言った・言わない」が起きやすい場面。議事録担当者を専任で置けない小規模チームでの活用に向いています。</p>
 <p><a href="meeting_analysis_demo.html" style="color:var(--accent); font-size:13.5px;">ブラウザで実際に試す →</a></p>
 </div>
 
@@ -159,7 +162,38 @@ h1 { font-size: 27px; }
 <div class="stat"><span class="num">人が確認</span><span class="label">してから反映（推測で埋めない）</span></div>
 </div>
 <p class="caveat">→ 手書き伝票を1件ずつ手入力・転記していた時間が、"確認だけ"の時間に変わります。OCRが100%にならない前提で、間違いを取りこぼさない運用まで設計します。</p>
+<p class="usecase"><b>こんな場面で：</b>運送・物流の日報だけでなく、手書きの受発注伝票・検収書・現場記録など、紙とデジタルが混在している事務作業の転記工数を減らしたい場面。</p>
 <p><a href="nippo_ocr_demo.html" style="color:var(--accent); font-size:13.5px;">サンプル日報で実際に試す →</a></p>
+</div>
+
+<div class="card">
+<div class="card-top">
+<h3>メールで届く案件情報を、AIが読み取って台帳へ自動反映</h3>
+<span class="badge">建設・工事業向け</span>
+</div>
+<p>設備工事会社のバックオフィス業務を対象に、メールで届く案件依頼をAIが読み取り、案件名・依頼主・希望日程などの項目を抽出してスプレッドシート台帳へ自動登録する仕組みを設計。見積書PDFの金額チェック、Google Driveでのファイル自動分類も含めて提案しました。</p>
+<p>「全部自動化しない・要所で人の承認を挟む・誤送信や金額間違いを防ぐ」ことを重視した設計にしています。</p>
+<div class="stat-row">
+<div class="stat"><span class="num">メール→台帳</span><span class="label">AIが項目抽出して自動登録</span></div>
+<div class="stat"><span class="num">PDF照合</span><span class="label">見積書の金額を自動チェック</span></div>
+</div>
+<p class="caveat">→ 案件メールを開いて内容を台帳に転記する作業、見積書の金額を目視で照合する作業が減ります。書類・現場情報のやり取りが多い建設・工事業のような業種で、入力ミス・転記漏れを防ぎながら事務作業の時間を圧縮できます。</p>
+<p class="usecase"><b>こんな場面で：</b>営業・案件管理の一次受付（メール・フォームで届く依頼の台帳化）、請求書・見積書の金額チェックのような、"間違えると困るが定型的な"事務作業の整理・自動化。</p>
+<p><a href="y0201_email_extract_demo.html" style="color:var(--accent); font-size:13.5px;">案件メール抽出のデモを試す →</a></p>
+</div>
+
+<div class="card">
+<div class="card-top">
+<h3>フォームの回答を、スプレッドシート記録とSlack通知まで自動でつなぐ</h3>
+<span class="badge">社内業務効率化</span>
+</div>
+<p>社内業務の効率化を目的に、Googleフォームの回答をトリガーとしてスプレッドシートへの記録とSlack通知を自動化する構成を設計。二重処理を防ぐ冪等キー、API呼び出し失敗時の自動リトライと管理者通知、通知先や条件をコードでなく設定シートで管理する保守性重視の設計にしています。</p>
+<div class="stat-row">
+<div class="stat"><span class="num">二重防止</span><span class="label">同じ回答を再実行しても一度きり</span></div>
+<div class="stat"><span class="num">設定シート</span><span class="label">ルール変更にコードを触らず対応</span></div>
+</div>
+<p class="caveat">→ 問い合わせや依頼が来るたびに内容をコピーして台帳に転記し、担当チームに個別連絡する作業がなくなります。ルールが変わっても、非エンジニアの担当者がシートの行を直すだけで運用を続けられます。</p>
+<p class="usecase"><b>こんな場面で：</b>社内からの依頼・問い合わせの受付窓口を一本化したい場面、部署ごとに散らばっている「フォーム→転記→連絡」の作業をまとめたい場面。</p>
 </div>
 
 <div class="card">
@@ -173,6 +207,7 @@ h1 { font-size: 27px; }
 <div class="stat"><span class="num">LINE × n8n</span><span class="label">使用技術</span></div>
 </div>
 <p class="caveat">→ 予約のたびに手を止める必要がなくなり、記録が1か所にまとまります。店舗の「電話が鳴りやまない」「記録がバラバラ」の解消に直結します。</p>
+<p class="usecase"><b>こんな場面で：</b>実店舗の予約・来店受付、営業担当が外出中でも予約を取りこぼしたくない場面。</p>
 </div>
 
 <div class="card">
@@ -186,6 +221,7 @@ h1 { font-size: 27px; }
 <div class="stat"><span class="num">Gmail API</span><span class="label">確認メール自動送信</span></div>
 </div>
 <p class="caveat">→ 問い合わせ対応、日程調整メールの往復、カレンダーへの転記、確認メールの作成——この一連の作業がなくなります。</p>
+<p class="usecase"><b>こんな場面で：</b>営業・面談・相談の日程調整、士業や個人事業主の予約受付のように、日程調整メールの往復が積み重なっている場面。</p>
 <p><a href="booking.html" style="color:var(--accent); font-size:13.5px;">実際の予約ページを見る →</a></p>
 </div>
 
@@ -200,6 +236,7 @@ h1 { font-size: 27px; }
 <div class="stat"><span class="num">定時チェック</span><span class="label">変化があった時だけ通知</span></div>
 </div>
 <p class="caveat">→ 「毎日決まった時間にこれを確認する」「この条件のときはこう処理する」といった定型業務を、担当者がスマホから指示するだけで回せます。対応漏れも防げます。</p>
+<p class="usecase"><b>こんな場面で：</b>営業の案件確認・メール/メッセージのチェックなど、"毎日決まった時間にやる確認作業"を担当者に代わって回したい場面。</p>
 <p><a href="https://line.me/R/ti/p/@364hixkh" target="_blank" rel="noopener" style="color:var(--accent); font-size:13.5px;">隔離デモをLINEで体験する →</a></p>
 </div>
 </div>
