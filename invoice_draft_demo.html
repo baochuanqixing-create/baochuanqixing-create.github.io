@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Excelの納品データから請求書の下書きを作る｜体験デモ</title>
+<style>
+:root{
+  --bg:#0f1115; --panel:#171a21; --panel-2:#1d222b; --border:#262b36;
+  --accent:#6fb4ff; --accent-soft:rgba(111,180,255,0.12);
+  --text:#eef1f6; --dim:#9aa3b2;
+  --warn:#ffcf6b; --warn-soft:rgba(255,207,107,.12);
+  --bad:#ff9b9b; --bad-soft:rgba(255,155,155,.12);
+  --ok:#5ee6c4;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);
+  font-family:"Hiragino Kaku Gothic ProN","Yu Gothic","Segoe UI",sans-serif;line-height:1.75}
+.wrap{max-width:900px;margin:0 auto;padding:0 22px}
+header{padding:56px 0 30px;border-bottom:1px solid var(--border);
+  background:radial-gradient(circle at 12% 0%,rgba(111,180,255,0.10),transparent 55%)}
+.eyebrow{display:inline-block;font-size:12px;letter-spacing:.06em;color:var(--accent);
+  background:var(--accent-soft);border:1px solid rgba(111,180,255,.35);border-radius:999px;
+  padding:5px 13px;margin-bottom:16px}
+h1{font-size:25px;margin:0 0 12px;line-height:1.5}
+h1 span{color:var(--accent)}
+.lead{font-size:15px;color:var(--dim);margin:0}
+section{padding:36px 0;border-bottom:1px solid var(--border)}
+section:last-of-type{border-bottom:none}
+h2{font-size:17px;margin:0 0 8px}
+.sub{color:var(--dim);font-size:13.5px;margin:0 0 16px}
+.flow{display:flex;flex-wrap:wrap;gap:8px;font-size:12.5px;color:var(--dim)}
+.flow span{background:var(--panel);border:1px solid var(--border);border-radius:7px;padding:6px 10px}
+.flow b{color:var(--accent);font-weight:600}
+button{font-family:inherit;font-size:14px;border-radius:9px;cursor:pointer;border:1px solid var(--border)}
+.btn-primary{background:var(--accent);color:#05203f;font-weight:700;border:none;padding:11px 22px}
+.btn-primary:disabled{opacity:.45;cursor:default}
+.btn-ghost{background:var(--panel);color:var(--text);padding:10px 16px}
+.btn-mini{background:var(--panel-2);color:var(--text);padding:4px 10px;font-size:12px}
+.btn-mini.on{background:var(--accent);color:#05203f;font-weight:700;border-color:transparent}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px;align-items:center}
+.note{background:var(--panel);border-left:3px solid var(--border);padding:10px 14px;
+  color:var(--dim);font-size:13px;border-radius:0 6px 6px 0;margin-top:16px}
+.tablewrap{overflow-x:auto;border:1px solid var(--border);border-radius:10px;background:var(--panel)}
+table{border-collapse:collapse;width:100%;font-size:13px;min-width:620px}
+th,td{padding:8px 11px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap}
+th{color:var(--dim);font-weight:600;font-size:12px;background:var(--panel-2)}
+tr:last-child td{border-bottom:none}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+tr.flagged td{background:var(--warn-soft)}
+tr.dropped td{opacity:.42;text-decoration:line-through}
+.tag{font-size:10.5px;padding:2px 7px;border-radius:999px;border:1px solid var(--border);white-space:nowrap}
+.tag.warn{color:var(--warn);background:var(--warn-soft);border-color:rgba(255,207,107,.3)}
+.tag.ok{color:var(--ok);background:rgba(94,230,196,.12);border-color:rgba(94,230,196,.3)}
+.panel{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-top:18px;display:none}
+.panel.show{display:block}
+.inv{border:1px solid var(--border);border-radius:12px;background:var(--panel);padding:16px 18px;margin-top:16px}
+.inv h3{margin:0 0 2px;font-size:15.5px}
+.inv .meta{color:var(--dim);font-size:12.5px;margin:0 0 12px}
+.totals{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;font-size:13px}
+.totals div{background:var(--panel-2);border:1px solid var(--border);border-radius:8px;padding:7px 13px}
+.totals b{font-size:15px;font-variant-numeric:tabular-nums}
+.totals .grand b{color:var(--accent)}
+.check{border:1px solid rgba(255,207,107,.3);background:var(--warn-soft);border-radius:10px;
+  padding:12px 14px;margin-top:12px;font-size:13px}
+.check .why{color:var(--dim);font-size:12.5px;margin:4px 0 8px}
+.check .q{color:var(--warn);font-weight:600}
+.log{font-size:12.5px;color:var(--dim);margin:0;padding-left:18px}
+.log li{margin:3px 0}
+.summary{display:flex;gap:12px;flex-wrap:wrap;font-size:13px;margin-bottom:6px}
+.summary .pill{border-radius:8px;padding:6px 12px;border:1px solid var(--border);background:var(--panel-2)}
+.summary .pill b{font-size:16px;font-variant-numeric:tabular-nums}
+.summary .chk b{color:var(--warn)} .summary .ok b{color:var(--ok)}
+footer{padding:30px 0 60px;color:var(--dim);font-size:12.5px}
+footer a{color:var(--accent)}
+.disc{font-size:12px;color:var(--dim);margin-top:10px}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="eyebrow">体験デモ｜サンプルデータで実際に動きます</div>
+    <h1>Excelの納品データから<span>請求書の下書き</span>を作り、<br>人が確認して確定するまで</h1>
+    <p class="lead">金額の計算は数式とコードで行い、AIは「怪しい行を見つけて理由を書く」役だけを担当します。最終確定は必ず人が押します。</p>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <h2>1｜処理の流れ</h2>
+    <p class="sub">いまExcelでやっている手順を、そのまま分解した形です。</p>
+    <div class="flow">
+      <span>納品データ（Excel/CSV）</span><b>→</b>
+      <span>取引先マスタと突合（締め日・単価・税・端数）</span><b>→</b>
+      <span>請求書の下書き＋<b>要確認フラグ</b></span><b>→</b>
+      <span>人が1件ずつ判断</span><b>→</b>
+      <span>確定してCSV出力＋変更履歴</span>
+    </div>
+    <div class="note">このデモのデータは架空のものです。実データ・取引先名は一切含みません。</div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>2｜入力：今月の納品データ</h2>
+    <p class="sub">出荷担当が入力したExcelを想定。行の並び・表記ゆれ・入力ミスも含めてあります。</p>
+    <div class="tablewrap"><table id="src"></table></div>
+
+    <h2 style="margin-top:26px">取引先マスタ</h2>
+    <p class="sub">締め日・端数処理・税区分・契約単価。請求ルールはここに持たせ、コードで適用します。</p>
+    <div class="tablewrap"><table id="mst"></table></div>
+
+    <div class="row" style="margin-top:20px">
+      <button class="btn-primary" id="run">請求書の下書きを作る</button>
+      <span class="sub" style="margin:0">請求月：2026年9月</span>
+    </div>
+  </div>
+</section>
+
+<section id="out" style="display:none">
+  <div class="wrap">
+    <h2>3｜出力：請求書の下書きと、要確認フラグ</h2>
+    <p class="sub" id="outsub"></p>
+    <div class="summary" id="sum"></div>
+    <div id="invs"></div>
+
+    <div class="row" style="margin-top:22px">
+      <button class="btn-primary" id="fix" disabled>確認した内容で確定する</button>
+      <span class="sub" style="margin:0" id="fixhint">要確認の行を1件ずつ選ぶと押せます</span>
+    </div>
+
+    <div class="panel" id="done">
+      <h2 style="margin-top:0">4｜確定後：出力と変更履歴</h2>
+      <p class="sub">確定したものだけを請求データとして書き出します。誰がいつ何を変えたかは別に残します。</p>
+      <div class="row"><button class="btn-ghost" id="dl">請求データ（CSV）をダウンロード</button></div>
+      <div style="margin-top:16px"><b style="font-size:13.5px">変更履歴</b>
+        <ul class="log" id="logs"></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>設計で決めていること</h2>
+    <p class="sub">請求は金額が動くので、AIに任せる範囲をはっきり切ります。</p>
+    <div class="tablewrap"><table>
+      <tr><th>担当</th><th>やること</th></tr>
+      <tr><td>数式・コード</td><td>数量×単価、値引き、消費税、端数処理、合計。取引先マスタの単価との突合と差額計算</td></tr>
+      <tr><td>AI</td><td>表記ゆれの寄せ（「A式ダンボール」と「A式段ボール」）、未登録品目の候補出し、要確認の理由文</td></tr>
+      <tr><td>人</td><td>特別単価か入力ミスかの判断、締め日またぎの扱い、返品の相殺、そして確定</td></tr>
+    </table></div>
+    <div class="note">AIの文章生成だけで金額を確定させません。AIが金額を「作る」箇所はゼロです。</div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    保川七星｜AI業務自動化（Claude / Claude Code・Python・Excel/CSV連携）<br>
+    ポートフォリオ：<a href="https://baochuanqixing-create.github.io/">https://baochuanqixing-create.github.io/</a>
+    <div class="disc">本デモはブラウザ内だけで動作します。入力したデータは外部に送信されません。</div>
+  </div>
+</footer>
+
+<script>
+const yen = n => "¥" + n.toLocaleString("ja-JP");
+
+const master = {
+  "山下パッケージ販売": {closing:"20日", round:"切り捨て", tax:"10%", prices:{"A式ダンボール 320×230×160":38, "PEクッション封筒 M":24}},
+  "みのり食品工業":     {closing:"末日", round:"四捨五入", tax:"10%", prices:{"food-tray 白 20枚入":115, "OPP袋 130×270":6}},
+  "ケイズ物流":         {closing:"末日", round:"切り捨て", tax:"10%", prices:{"A式ダンボール 320×230×160":36}}
+};
+
+const rows = [
+  {no:"D-1041", date:"2026-09-03", cl:"山下パッケージ販売", item:"A式ダンボール 320×230×160", qty:500, price:38},
+  {no:"D-1044", date:"2026-09-05", cl:"みのり食品工業",     item:"food-tray 白 20枚入",        qty:120, price:115},
+  {no:"D-1047", date:"2026-09-08", cl:"ケイズ物流",         item:"A式段ボール 320×230×160",   qty:300, price:36, note:"表記ゆれ"},
+  {no:"D-1050", date:"2026-09-10", cl:"山下パッケージ販売", item:"PEクッション封筒 M",         qty:800, price:24},
+  {no:"D-1053", date:"2026-09-11", cl:"みのり食品工業",     item:"OPP袋 130×270",              qty:5000, price:6},
+  {no:"D-1056", date:"2026-09-12", cl:"山下パッケージ販売", item:"A式ダンボール 320×230×160", qty:200, price:42, flag:"price"},
+  {no:"D-1056", date:"2026-09-12", cl:"山下パッケージ販売", item:"A式ダンボール 320×230×160", qty:200, price:42, flag:"dup"},
+  {no:"D-1060", date:"2026-09-16", cl:"ケイズ物流",         item:"特寸ダンボール（試作）",      qty:60,  price:null, flag:"nomaster"},
+  {no:"D-1063", date:"2026-09-18", cl:"みのり食品工業",     item:"food-tray 白 20枚入",        qty:-20, price:115, flag:"return"},
+  {no:"D-1066", date:"2026-09-22", cl:"山下パッケージ販売", item:"PEクッション封筒 M",         qty:400, price:24, flag:"closing"}
+];
+
+const decisions = {};   // key -> "include" | "next" | "fix"
+let result = null;
+
+function drawSrc(){
+  const t = document.getElementById("src");
+  t.innerHTML = "<tr><th>伝票No</th><th>納品日</th><th>取引先</th><th>品目</th><th class='num'>数量</th><th class='num'>単価</th></tr>" +
+    rows.map(r=>`<tr><td>${r.no}</td><td>${r.date.slice(5).replace("-","/")}</td><td>${r.cl}</td><td>${r.item}</td>`+
+      `<td class="num">${r.qty.toLocaleString()}</td><td class="num">${r.price===null?"—":yen(r.price)}</td></tr>`).join("");
+  const m = document.getElementById("mst");
+  m.innerHTML = "<tr><th>取引先</th><th>締め日</th><th>端数処理</th><th>税</th><th>契約単価</th></tr>" +
+    Object.entries(master).map(([k,v])=>`<tr><td>${k}</td><td>${v.closing}</td><td>${v.round}</td><td>${v.tax}</td>`+
+      `<td>${Object.entries(v.prices).map(([i,p])=>i+" "+yen(p)).join("／")}</td></tr>`).join("");
+}
+drawSrc();
+
+const REASON = {
+  price:   {q:"契約単価と違います",  why:"マスタの単価は¥38ですが、納品データは¥42です。特別単価の取り決めか、入力ミスかは、データからは判断できません。差額は200個ぶんで¥800です。",
+            opts:[["include","¥42で請求する（特別単価）"],["fix","¥38に直して請求する"],["next","保留にして今回は請求しない"]]},
+  dup:     {q:"同じ伝票が2行あります",why:"伝票No・納品日・品目・数量がすべて同じ行が2行あります。分納で伝票を分けた実態があるのか、二重入力かで扱いが変わります。そのまま請求すると¥8,400の二重請求になります。",
+            opts:[["next","重複として今回は請求しない"],["include","実際に2回納品したので両方請求する"]]},
+  nomaster:{q:"マスタに単価がありません",why:"「特寸ダンボール（試作）」はマスタ未登録で、単価が空欄です。金額を推測して埋めることはしません。",
+            opts:[["next","単価を確認するまで次回請求に回す"],["fix","今回は¥180で請求し、マスタにも登録する"]]},
+  return:  {q:"数量がマイナス（返品）です",why:"9/18に20枚の返品が入っています。今月の請求から相殺するか、赤伝を別に起こすかは運用によって変わります。",
+            opts:[["include","今月の請求から相殺する"],["next","赤伝を別に起こす（今回は含めない）"]]},
+  closing: {q:"締め日をまたいでいます",why:"山下パッケージ販売様は20日締めです。9/22の納品は本来10月請求ぶんになります。",
+            opts:[["next","10月請求に回す"],["include","今回にまとめて請求する"]]}
+};
+
+function calc(){
+  const byClient = {};
+  rows.forEach((r,i)=>{
+    const key = r.flag ? r.flag : null;
+    const d = key ? decisions[key] : "include";
+    const cl = r.cl;
+    byClient[cl] = byClient[cl] || {lines:[], cl};
+    let price = r.price, qty = r.qty, dropped = false, label = "";
+    if(key){
+      if(d === undefined){ dropped = false; label = "判断待ち"; }
+      else if(d === "next"){ dropped = true; label = "今回は請求しない"; }
+      else if(d === "fix"){
+        if(key==="price"){ price = 38; label = "単価を¥38に修正"; }
+        if(key==="nomaster"){ price = 180; label = "単価¥180で登録"; }
+      } else { label = "このまま請求"; }
+    }
+    const amount = (price===null || (d===undefined&&key)) ? null : price*qty;
+    byClient[cl].lines.push({...r, idx:i, price, qty, amount, dropped, label, key, pending:(key&&d===undefined)});
+  });
+
+  Object.values(byClient).forEach(c=>{
+    const m = master[c.cl];
+    const sub = c.lines.filter(l=>!l.dropped && l.amount!==null).reduce((a,l)=>a+l.amount,0);
+    const raw = sub * 0.1;
+    c.sub = sub;
+    c.tax = m.round === "切り捨て" ? Math.floor(raw) : Math.round(raw);
+    c.total = c.sub + c.tax;
+    c.round = m.round;
+    c.closing = m.closing;
+  });
+  return byClient;
+}
+
+function render(){
+  result = calc();
+  const pend = rows.filter(r=>r.flag && decisions[r.flag]===undefined).length;
+  const flags = new Set(rows.filter(r=>r.flag).map(r=>r.flag)).size;
+  document.getElementById("outsub").textContent =
+    `納品データ ${rows.length} 行を取引先ごとに集計しました。うち ${flags} 件は、データだけでは判断できないので確定せずに止めてあります。`;
+  document.getElementById("sum").innerHTML =
+    `<div class="pill ok">自動で確定できた行 <b>${rows.length - rows.filter(r=>r.flag).length}</b></div>`+
+    `<div class="pill chk">人の判断が要る箇所 <b>${flags}</b></div>`+
+    `<div class="pill">未判断 <b>${pend}</b></div>`;
+
+  const shown = new Set();
+  document.getElementById("invs").innerHTML = Object.values(result).map(c=>{
+    const lines = c.lines.map(l=>{
+      const cls = l.dropped ? "dropped" : (l.key ? "flagged" : "");
+      return `<tr class="${cls}"><td>${l.no}</td><td>${l.date.slice(5).replace("-","/")}</td><td>${l.item}</td>`+
+        `<td class="num">${l.qty.toLocaleString()}</td><td class="num">${l.price===null?"—":yen(l.price)}</td>`+
+        `<td class="num">${l.amount===null?"—":yen(l.amount)}</td>`+
+        `<td>${l.key?`<span class="tag warn">${l.label||"要確認"}</span>`:(l.note?`<span class="tag ok">確定（${l.note}をAIが寄せた）</span>`:`<span class="tag ok">確定</span>`)}</td></tr>`;
+    }).join("");
+    const checks = c.lines.filter(l=>l.key && !shown.has(l.key) && shown.add(l.key)).map(l=>{
+      const R = REASON[l.key];
+      return `<div class="check"><div class="q">${l.no}：${R.q}</div><div class="why">${R.why}</div>`+
+        R.opts.map(([v,t])=>`<button class="btn-mini ${decisions[l.key]===v?"on":""}" data-k="${l.key}" data-v="${v}">${t}</button>`).join(" ")+
+        `</div>`;
+    }).join("");
+    return `<div class="inv"><h3>${c.cl} 様</h3><p class="meta">${c.closing}締め／消費税10%・端数は${c.round}</p>`+
+      `<div class="tablewrap"><table><tr><th>伝票No</th><th>納品日</th><th>品目</th><th class="num">数量</th><th class="num">単価</th><th class="num">金額</th><th>状態</th></tr>${lines}</table></div>`+
+      `<div class="totals"><div>小計 <b>${yen(c.sub)}</b></div><div>消費税 <b>${yen(c.tax)}</b></div>`+
+      `<div class="grand">請求合計 <b>${yen(c.total)}</b></div></div>${checks}</div>`;
+  }).join("");
+
+  document.querySelectorAll("[data-k]").forEach(b=>b.onclick=()=>{
+    decisions[b.dataset.k] = b.dataset.v; render();
+  });
+
+  const ok = rows.filter(r=>r.flag).every(r=>decisions[r.flag]!==undefined);
+  document.getElementById("fix").disabled = !ok;
+  document.getElementById("fixhint").textContent = ok ? "5件すべて判断済みです" : `残り ${pend} 件の判断待ちがあります`;
+}
+
+document.getElementById("run").onclick = ()=>{
+  document.getElementById("out").style.display = "block";
+  render();
+  document.getElementById("out").scrollIntoView({behavior:"smooth"});
+};
+
+document.getElementById("fix").onclick = ()=>{
+  const now = new Date().toLocaleString("ja-JP");
+  const names = {include:"そのまま請求",next:"今回は請求しない",fix:"修正して請求"};
+  document.getElementById("logs").innerHTML = Object.entries(decisions).map(([k,v])=>{
+    const r = rows.find(x=>x.flag===k);
+    return `<li>${now}　${r.no}（${r.cl}）　${REASON[k].q} → <b style="color:var(--text)">${names[v]}</b>　確認者：担当者</li>`;
+  }).join("") + `<li>${now}　請求データを確定・出力（3社／合計 ${yen(Object.values(result).reduce((a,c)=>a+c.total,0))}）</li>`;
+  document.getElementById("done").classList.add("show");
+  document.getElementById("done").scrollIntoView({behavior:"smooth"});
+};
+
+document.getElementById("dl").onclick = ()=>{
+  let csv = "取引先,伝票No,納品日,品目,数量,単価,金額,状態\n";
+  Object.values(result).forEach(c=>{
+    c.lines.filter(l=>!l.dropped && l.amount!==null).forEach(l=>{
+      csv += [c.cl,l.no,l.date,l.item,l.qty,l.price,l.amount,l.label||"自動確定"].join(",") + "\n";
+    });
+    csv += [c.cl,"","","小計","","",c.sub,""].join(",") + "\n";
+    csv += [c.cl,"","","消費税（"+c.round+"）","","",c.tax,""].join(",") + "\n";
+    csv += [c.cl,"","","請求合計","","",c.total,""].join(",") + "\n";
+  });
+  const blob = new Blob(["﻿"+csv],{type:"text/csv;charset=utf-8"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob); a.download = "請求データ_2026-09_サンプル.csv"; a.click();
+};
+</script>
+</body>
+</html>
