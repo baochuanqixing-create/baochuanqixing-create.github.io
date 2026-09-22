@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>現場メモから見積もり案をつくる｜体験デモ</title>
+<style>
+:root{
+  --bg:#101319; --panel:#181c24; --panel2:#1f242e; --line:#2a303c;
+  --key:#ffb454; --key-soft:rgba(255,180,84,.12);
+  --ok:#5ee6c4; --ok-soft:rgba(94,230,196,.12);
+  --warn:#ffcf6b; --warn-soft:rgba(255,207,107,.12);
+  --bad:#ff9b9b; --bad-soft:rgba(255,155,155,.12);
+  --text:#eef1f6; --dim:#98a1b0;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);
+  font-family:"Hiragino Kaku Gothic ProN","Yu Gothic","Segoe UI",sans-serif;line-height:1.75}
+.wrap{max-width:900px;margin:0 auto;padding:0 20px}
+header{padding:54px 0 28px;border-bottom:1px solid var(--line);
+  background:radial-gradient(circle at 10% 0%,rgba(255,180,84,.09),transparent 55%)}
+.eyebrow{display:inline-block;font-size:12px;letter-spacing:.06em;color:var(--key);
+  background:var(--key-soft);border:1px solid rgba(255,180,84,.35);border-radius:999px;padding:5px 13px;margin-bottom:15px}
+h1{font-size:25px;margin:0 0 11px;line-height:1.5}
+h1 span{color:var(--key)}
+.lead{font-size:15px;color:var(--dim);margin:0}
+section{padding:34px 0;border-bottom:1px solid var(--line)}
+section:last-of-type{border-bottom:none}
+h2{font-size:17px;margin:0 0 6px}
+.sub{color:var(--dim);font-size:13.5px;margin:0 0 16px}
+button{font-family:inherit;cursor:pointer;border-radius:9px}
+.btn{background:var(--key);color:#2a1a04;font-weight:700;border:none;padding:12px 22px;font-size:14.5px}
+.btn:disabled{opacity:.45;cursor:default}
+.btn2{background:var(--panel2);color:var(--text);border:1px solid var(--line);padding:10px 16px;font-size:14px}
+.mini{background:var(--panel2);color:var(--text);border:1px solid var(--line);padding:5px 11px;font-size:12.5px}
+.mini.on{background:var(--key);color:#2a1a04;font-weight:700;border-color:transparent}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:10px}
+.memo{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--key);
+  border-radius:0 10px 10px 0;padding:14px 16px;font-size:14px;color:#dfe4ec}
+.memo .who{font-size:12px;color:var(--dim);margin-bottom:6px}
+.cond{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:9px;margin-top:14px}
+.cond div{background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:9px 12px;font-size:13px}
+.cond span{display:block;font-size:11.5px;color:var(--dim)}
+.cond b{font-size:14.5px}
+.cond .empty b{color:var(--dim);font-weight:400}
+.miss{margin-top:12px;background:var(--warn-soft);border:1px solid rgba(255,207,107,.3);
+  border-radius:9px;padding:11px 14px;font-size:13px;color:#f0dcae}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-top:16px}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--panel);margin-top:14px}
+table{border-collapse:collapse;width:100%;font-size:13px;min-width:640px}
+th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}
+th{background:var(--panel2);color:var(--dim);font-size:12px;font-weight:600}
+tr:last-child td{border-bottom:none}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+tr.chk td{background:var(--warn-soft)}
+tr.tot td{font-weight:700;background:var(--panel2)}
+.why{font-size:11.5px;color:var(--dim);white-space:normal;max-width:300px}
+.tag{font-size:10.5px;padding:2px 8px;border-radius:999px;border:1px solid var(--line);white-space:nowrap}
+.tag.past{color:var(--ok);background:var(--ok-soft);border-color:rgba(94,230,196,.3)}
+.tag.rule{color:var(--key);background:var(--key-soft);border-color:rgba(255,180,84,.3)}
+.tag.ask{color:var(--warn);background:var(--warn-soft);border-color:rgba(255,207,107,.3)}
+.sim{display:grid;grid-template-columns:1fr;gap:10px;margin-top:14px}
+@media(min-width:720px){.sim{grid-template-columns:repeat(3,1fr)}}
+.sim div{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-size:13px}
+.sim b{display:block;font-size:14px;margin-bottom:2px}
+.sim .d{color:var(--dim);font-size:12px}
+.check{border:1px solid rgba(255,207,107,.3);background:var(--warn-soft);border-radius:10px;padding:13px 15px;margin-top:12px}
+.check .q{color:var(--warn);font-weight:700;font-size:13.5px}
+.check .t{color:var(--dim);font-size:12.5px;margin:4px 0 9px}
+.totals{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;font-size:13px}
+.totals div{background:var(--panel2);border:1px solid var(--line);border-radius:9px;padding:8px 14px}
+.totals b{font-size:16px;font-variant-numeric:tabular-nums}
+.totals .g b{color:var(--key)}
+.alert{margin-top:12px;border-radius:9px;padding:11px 14px;font-size:13px}
+.alert.ok{background:var(--ok-soft);border:1px solid rgba(94,230,196,.3);color:#bdf0e2}
+.alert.bad{background:var(--bad-soft);border:1px solid rgba(255,155,155,.3);color:#ffd2d2}
+.note{background:var(--panel);border-left:3px solid var(--line);padding:11px 15px;color:var(--dim);font-size:13px;border-radius:0 8px 8px 0;margin-top:16px}
+.log{font-size:12.5px;color:var(--dim);padding-left:18px;margin:6px 0 0}
+footer{padding:30px 0 60px;color:var(--dim);font-size:12.5px}
+footer a{color:var(--key)}
+.hide{display:none}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="eyebrow">体験デモ｜架空の現場データで実際に動きます</div>
+    <h1>現場のメモから<span>見積もりの案</span>を組み立て、<br>1行ずつ根拠を出して、人が決める</h1>
+    <p class="lead">AIがやるのは、メモを項目に振り分けること、似た過去案件を探すこと、根拠を文章にすることの3つだけです。金額の計算はコード、最終的な金額はお客様が決めます。</p>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <h2>1｜現場からのメモを取り込む</h2>
+    <p class="sub">移動中に吹き込んだ音声を文字にしたもの、という想定です。書き起こしをそのまま入れます。</p>
+    <div class="memo">
+      <div class="who">現場メモ（音声を文字にしたもの）</div>
+      えー、◯◯ビルの2階、事務所の内装改修ね。広さはだいたい130平米くらい。エレベーターないから階段で上げることになる。既存の間仕切りと床は撤去。着工は12月のあたま希望って言ってた。現場までは35キロくらいかな。あとブラインドも替えたいって話が出たけど、これはまだ決まってない。
+    </div>
+    <div class="row"><button class="btn" id="parse">メモから条件を取り出す</button></div>
+
+    <div id="condwrap" class="hide">
+      <div class="cond" id="cond"></div>
+      <div class="miss" id="miss"></div>
+      <div class="row"><button class="btn" id="make">見積もりの案を作る</button></div>
+    </div>
+  </div>
+</section>
+
+<section id="out" class="hide">
+  <div class="wrap">
+    <h2>2｜似ている過去の見積もりを並べる</h2>
+    <p class="sub">いきなり金額を出さず、まず「何を参考にしたか」を先に見せます。</p>
+    <div class="sim" id="sim"></div>
+
+    <h2 style="margin-top:30px">3｜明細の案と、1行ごとの根拠</h2>
+    <p class="sub">どの数字がどこから来たのかを、行ごとに出します。根拠が弱い行は黄色で止めてあります。</p>
+    <div class="tablewrap"><table id="tbl"></table></div>
+    <div class="totals" id="tot"></div>
+    <div id="margin"></div>
+
+    <div id="checks"></div>
+
+    <div class="row" style="margin-top:20px">
+      <button class="btn" id="fix" disabled>確認した内容で見積もり案を確定する</button>
+      <span class="sub" style="margin:0" id="hint">黄色の3件を1件ずつ選ぶと押せます</span>
+    </div>
+
+    <div class="panel hide" id="done">
+      <h2 style="margin-top:0">4｜確定したもの</h2>
+      <p class="sub" style="margin-bottom:6px">お客様が判断した内容と、その根拠をそのまま残します。次に似た現場が来たとき、この判断が参考になります。</p>
+      <ul class="log" id="logs"></ul>
+      <div class="row"><button class="btn2" id="dl">見積もり明細（CSV）をダウンロード</button></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>どこまでをAIにやらせないか</h2>
+    <div class="tablewrap"><table>
+      <tr><th style="width:120px">担当</th><th>やること</th></tr>
+      <tr><td>AI</td><td>メモを項目に振り分ける／似た過去案件を探す／「なぜこの数字か」を日本語にする。拾えなかった言葉は捨てずに残し、勝手に項目へ入れない</td></tr>
+      <tr><td>コード</td><td>数量×単価、割増、諸経費、消費税、合計。過去単価の平均や幅の算出。粗利率と値引き可能額の計算</td></tr>
+      <tr><td>人</td><td>どの過去案件を基準にするか／実測が要るか／仮置きの数量を使うか／最終的な金額</td></tr>
+    </table></div>
+    <div class="note">AIに「だいたいこのくらい」と金額を言わせません。根拠のない数字は、根拠がないまま黄色で止まります。埋めるのは人です。</div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    保川七星｜AI業務自動化（Claude / Claude Code・Python・スプレッドシート連携）<br>
+    ポートフォリオ：<a href="https://baochuanqixing-create.github.io/">https://baochuanqixing-create.github.io/</a>
+    <div style="margin-top:9px">このデモの過去見積もり・単価・ルールはすべて架空です。実在の事業者のデータは使っていません。ブラウザ内だけで動き、入力は外部に送信されません。</div>
+  </div>
+</footer>
+
+<script>
+const yen=n=>"¥"+Math.round(n).toLocaleString("ja-JP");
+const COND=[["工事種別","事務所の内装改修"],["面積","130 ㎡"],["階数","2階"],["エレベーター","なし（階段搬入）"],
+  ["既存撤去","あり（間仕切り・床）"],["着工希望","12月上旬"],["現場までの距離","35 km"],["壁面の実測値",""]];
+const PAST=[
+ {no:"#2024-118",t:"事務所 内装改修",m:"120㎡・2階・EVなし",amt:1840000,unit:15333},
+ {no:"#2025-077",t:"事務所 内装改修",m:"150㎡・3階・EVあり",amt:2430000,unit:16200},
+ {no:"#2025-034",t:"店舗 内装改修",m:"95㎡・1階",amt:1290000,unit:13578}];
+
+const decisions={};
+const LINES=[
+ {k:"kaitai",n:"解体・既存撤去",q:130,u:"㎡",p:1800,c:.75,src:"past",why:"過去 #2024-118 の単価（同じ事務所・2階・EVなし）"},
+ {k:"shobun",n:"廃材処分費",q:1,u:"式",p:85000,c:.85,src:"ask",why:"過去3件の平均で仮置き。今回の撤去量が分かっていません"},
+ {k:"keiten",n:"軽鉄下地・ボード",q:130,u:"㎡",p:6400,c:.70,src:"past",why:"過去3件の平均単価（¥6,100〜¥6,700）"},
+ {k:"cloth",n:"クロス張替",q:338,u:"㎡",p:1250,c:.68,src:"ask",why:"壁面積はメモに無いため 床130㎡×2.6 で自動計算。実測が要ります"},
+ {k:"yuka",n:"床材張替",q:130,u:"㎡",p:4200,c:.72,src:"past",why:"過去 #2025-077 の単価"},
+ {k:"unpan",n:"運搬費",q:1,u:"式",p:35000,c:.80,src:"rule",why:"ルール：基本¥30,000＋片道30kmを超えた5km×¥500×往復"}];
+const RULES=[
+ {k:"kaidan",n:"階段搬入の割増（2階・EVなし）",rate:.15,base:["kaitai","keiten","yuka"],why:"ルール：エレベーターが無い2階以上は、対象工種に15%"},
+ {k:"hanki",n:"繁忙期の割増（12月）",rate:.10,base:["kaitai","keiten","yuka"],why:"ルール：12〜3月着工は、対象工種に10%"}];
+const CHECKS={
+ shobun:{q:"廃材処分費の数量に根拠がありません",t:"過去3件の平均で¥85,000と置いてあります。撤去する間仕切りと床の量が分かれば、ここは実数に変えられます。",
+   opts:[["keep","このまま仮置きで出す（備考に『現地確認後に変動』と明記）"],["site","現地確認まで保留にして、この行を外す"]]},
+ cloth:{q:"クロスの数量が自動計算です",t:"床面積×2.6という社内の目安で338㎡としています。窓や建具が多い現場だと実際とずれます。",
+   opts:[["keep","目安のまま出す（注記つき）"],["measure","実測して入れ直す（今回は数量を保留）"]]},
+ unit:{q:"どの過去案件を単価の基準にしますか",t:"似た3件で単価に幅があります（¥13,578〜¥16,200/㎡）。今回は条件が最も近い #2024-118 を基準にしていますが、直近の値上がりを見るなら #2025-077 です。",
+   opts:[["a","#2024-118 を基準にする（条件が近い）"],["b","#2025-077 を基準にする（直近・単価は高め）"]]}};
+
+document.getElementById('parse').onclick=()=>{
+  document.getElementById('cond').innerHTML=COND.map(([k,v])=>
+    `<div class="${v?'':'empty'}"><span>${k}</span><b>${v||'メモになし'}</b></div>`).join('');
+  document.getElementById('miss').innerHTML=
+    '<b>拾えなかった言葉：</b>「ブラインドも替えたい（まだ決まっていない）」<br>未確定のご要望として別に残しました。決まっていないものを勝手に見積もりへ入れません。次回の打合せで確認する項目として持っておきます。';
+  document.getElementById('condwrap').classList.remove('hide');
+};
+
+function calc(){
+  const mul=decisions.unit==='b'?1.057:1;   // #2025-077 基準にすると単価が約5.7%高い
+  const rows=LINES.map(l=>{
+    const drop=(l.k==='shobun'&&decisions.shobun==='site')||(l.k==='cloth'&&decisions.cloth==='measure');
+    const p=(l.src==='past')?Math.round(l.p*mul):l.p;
+    return {...l,p,amount:drop?0:p*l.q,drop};
+  });
+  const base=k=>rows.find(r=>r.k===k).amount;
+  const adds=RULES.map(r=>({...r,amount:Math.round(r.base.reduce((a,k)=>a+base(k),0)*r.rate)}));
+  const direct=rows.reduce((a,r)=>a+r.amount,0)+adds.reduce((a,r)=>a+r.amount,0);
+  const shokei=Math.round(direct*0.12);
+  const sub=direct+shokei, tax=Math.floor(sub*0.1);
+  // 原価は行ごとに持たせる（割増はほぼ人件費なので0.85）
+  const cost=Math.round(rows.reduce((a,r)=>a+r.amount*r.c,0)+adds.reduce((a,r)=>a+r.amount*0.85,0));
+  return {rows,adds,direct,shokei,sub,tax,total:sub+tax,cost};
+}
+
+function render(){
+  const c=calc();
+  document.getElementById('sim').innerHTML=PAST.map((p,i)=>
+    `<div><b>${p.no}</b><div>${p.t}</div><div class="d">${p.m}</div>
+     <div style="margin-top:6px">${yen(p.amt)}　<span class="d">${yen(p.unit)}/㎡</span></div>
+     <div class="d" style="margin-top:4px">${i===0?'条件がいちばん近い':(i===1?'面積が近い・直近':'規模と用途が違う')}</div></div>`).join('');
+
+  const tagOf=s=>s==='past'?'<span class="tag past">過去実績</span>':s==='rule'?'<span class="tag rule">ルール</span>':'<span class="tag ask">要確認</span>';
+  let html='<tr><th>項目</th><th class="num">数量</th><th class="num">単価</th><th class="num">金額</th><th>根拠</th></tr>';
+  c.rows.forEach(r=>{
+    html+=`<tr class="${r.src==='ask'&&decisions[r.k]===undefined?'chk':''}">
+      <td>${r.n}${r.drop?'<span class="tag ask" style="margin-left:6px">保留</span>':''}</td>
+      <td class="num">${r.drop?'—':r.q.toLocaleString()+' '+r.u}</td>
+      <td class="num">${r.drop?'—':yen(r.p)}</td>
+      <td class="num">${r.drop?'—':yen(r.amount)}</td>
+      <td class="why">${tagOf(r.src)} ${r.why}</td></tr>`;
+  });
+  c.adds.forEach(a=>{html+=`<tr><td>${a.n}</td><td class="num">${(a.rate*100)}%</td><td class="num">—</td>
+      <td class="num">${yen(a.amount)}</td><td class="why"><span class="tag rule">ルール</span> ${a.why}</td></tr>`;});
+  html+=`<tr class="tot"><td>直接工事費</td><td></td><td></td><td class="num">${yen(c.direct)}</td><td class="why">上の合計</td></tr>`;
+  html+=`<tr><td>諸経費</td><td class="num">12%</td><td class="num">—</td><td class="num">${yen(c.shokei)}</td><td class="why"><span class="tag rule">ルール</span> 直接工事費の12%</td></tr>`;
+  document.getElementById('tbl').innerHTML=html;
+
+  document.getElementById('tot').innerHTML=
+    `<div>小計 <b>${yen(c.sub)}</b></div><div>消費税 <b>${yen(c.tax)}</b></div><div class="g">見積もり案 <b>${yen(c.total)}</b></div>`;
+  const gp=(c.direct-c.cost)/c.direct, room=Math.max(0,Math.round(c.direct-c.cost/0.8));
+  document.getElementById('margin').innerHTML= gp>=0.2
+    ? `<div class="alert ok">粗利は約${(gp*100).toFixed(1)}%です。社内の下限（20%）までなら、あと <b>${yen(room)}</b> ほど値引きできます。値引きの判断はお客様が行ってください。</div>`
+    : `<div class="alert bad">粗利が社内の下限（20%）を下回っています。この金額では出せません。</div>`;
+
+  document.getElementById('checks').innerHTML=Object.entries(CHECKS).map(([k,v])=>
+    `<div class="check"><div class="q">${v.q}</div><div class="t">${v.t}</div>`+
+    v.opts.map(([val,label])=>`<button class="mini ${decisions[k]===val?'on':''}" data-k="${k}" data-v="${val}">${label}</button>`).join(' ')+
+    `</div>`).join('');
+  document.querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>{decisions[b.dataset.k]=b.dataset.v;render();});
+
+  const left=Object.keys(CHECKS).filter(k=>decisions[k]===undefined).length;
+  document.getElementById('fix').disabled=left>0;
+  document.getElementById('hint').textContent=left>0?`残り ${left} 件の判断待ちがあります`:'3件とも判断済みです';
+  window.__c=c;
+}
+
+document.getElementById('make').onclick=()=>{
+  document.getElementById('out').classList.remove('hide'); render();
+  document.getElementById('out').scrollIntoView({behavior:'smooth'});
+};
+document.getElementById('fix').onclick=()=>{
+  const now=new Date().toLocaleString('ja-JP');
+  const label={keep:'仮置きのまま採用（注記つき）',site:'現地確認まで保留',measure:'実測してから入れ直す',
+    a:'#2024-118 を単価の基準にする',b:'#2025-077 を単価の基準にする'};
+  document.getElementById('logs').innerHTML=Object.entries(decisions).map(([k,v])=>
+    `<li>${now}　${CHECKS[k].q} → <b style="color:var(--text)">${label[v]}</b>　判断：お客様</li>`).join('')
+    +`<li>${now}　見積もり案を確定（${yen(window.__c.total)}）。金額の最終決定はお客様が行いました。</li>`;
+  document.getElementById('done').classList.remove('hide');
+  document.getElementById('done').scrollIntoView({behavior:'smooth'});
+};
+document.getElementById('dl').onclick=()=>{
+  const c=window.__c;
+  let csv="項目,数量,単位,単価,金額,根拠\n";
+  c.rows.filter(r=>!r.drop).forEach(r=>csv+=[r.n,r.q,r.u,r.p,r.amount,'"'+r.why+'"'].join(",")+"\n");
+  c.adds.forEach(a=>csv+=[a.n,(a.rate*100)+"%","","",a.amount,'"'+a.why+'"'].join(",")+"\n");
+  csv+=["直接工事費","","","",c.direct,""].join(",")+"\n";
+  csv+=["諸経費","12%","","",c.shokei,""].join(",")+"\n";
+  csv+=["消費税","10%","","",c.tax,""].join(",")+"\n";
+  csv+=["見積もり案 合計","","","",c.total,'"最終判断はお客様"'].join(",")+"\n";
+  const b=new Blob(["﻿"+csv],{type:"text/csv;charset=utf-8"});
+  const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="見積もり明細_サンプル.csv";a.click();
+};
+</script>
+</body>
+</html>
