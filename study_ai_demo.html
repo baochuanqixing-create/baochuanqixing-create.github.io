@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>調理師試験の用語を調べるAI｜体験デモ</title>
+<style>
+:root{
+  --bg:#fbf9f5; --card:#fff; --ink:#1f1d1a; --dim:#6d675d; --line:#e3ddd0;
+  --key:#1c6b4a; --key-soft:#e7f2ec;
+  --warn:#9a5a10; --warn-soft:#fdf3e5;
+  --stop:#a33227; --stop-soft:#fbeceb;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Hiragino Kaku Gothic ProN","Yu Gothic","Segoe UI",sans-serif;line-height:1.8;font-size:16px}
+.wrap{max-width:720px;margin:0 auto;padding:0 18px}
+header{padding:46px 0 26px;border-bottom:1px solid var(--line)}
+.eyebrow{display:inline-block;font-size:12px;letter-spacing:.06em;color:#fff;background:var(--key);
+  border-radius:4px;padding:4px 11px;margin-bottom:14px}
+h1{font-size:24px;margin:0 0 10px;line-height:1.5}
+.lead{font-size:15px;color:var(--dim);margin:0}
+section{padding:30px 0;border-bottom:1px solid var(--line)}
+section:last-of-type{border-bottom:none}
+h2{font-size:17px;margin:0 0 6px}
+.sub{color:var(--dim);font-size:14px;margin:0 0 16px}
+
+.phone{background:var(--card);border:1px solid var(--line);border-radius:18px;
+  padding:18px 16px 20px;box-shadow:0 3px 16px rgba(0,0,0,.06);max-width:420px;margin:0 auto}
+.phone .bar{font-size:12px;color:var(--dim);text-align:center;margin-bottom:12px}
+.ask{font-size:18px;font-weight:700;margin:0 0 10px}
+input[type=text]{width:100%;font-family:inherit;font-size:18px;padding:13px 14px;border-radius:11px;
+  border:2px solid var(--line);background:#fff;color:var(--ink)}
+input[type=text]:focus{outline:none;border-color:var(--key)}
+.go{width:100%;margin-top:10px;font-family:inherit;font-size:18px;font-weight:700;padding:14px;
+  border:none;border-radius:11px;background:var(--key);color:#fff;cursor:pointer}
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}
+.chips button{font-family:inherit;font-size:14px;padding:8px 13px;border-radius:999px;
+  border:1px solid var(--line);background:#fff;color:var(--ink);cursor:pointer}
+.chips button:hover{border-color:var(--key);color:var(--key)}
+.chips .hint{font-size:12.5px;color:var(--dim);width:100%;margin-bottom:2px}
+
+.ans{margin-top:18px;display:none}
+.ans.show{display:block}
+.badge{display:inline-block;font-size:12.5px;padding:4px 11px;border-radius:999px;margin-bottom:10px}
+.badge.ok{background:var(--key-soft);color:var(--key)}
+.badge.none{background:var(--stop-soft);color:var(--stop)}
+.badge.no{background:var(--warn-soft);color:var(--warn)}
+.term{font-size:21px;font-weight:800;margin:0 0 4px}
+.read{font-size:13.5px;color:var(--dim);margin:0 0 10px}
+.body{font-size:17px;margin:0 0 14px}
+.src{background:#f6f3ec;border-radius:10px;padding:12px 14px;font-size:14px}
+.src b{display:block;font-size:12.5px;color:var(--dim);font-weight:600;margin-bottom:3px}
+.next{margin-top:12px;font-size:15px;background:#fff;border:1px dashed var(--line);border-radius:10px;padding:12px 14px}
+.next b{display:block;font-size:13px;color:var(--dim);margin-bottom:4px}
+
+.grid{display:grid;grid-template-columns:1fr;gap:14px}
+@media(min-width:760px){.grid{grid-template-columns:1fr 1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+.card h3{margin:0 0 6px;font-size:15px}
+.card p,.card li{font-size:14px;margin:0 0 6px}
+.card ul{margin:0;padding-left:19px}
+.stopnote{background:var(--stop-soft);border-left:4px solid var(--stop);padding:12px 15px;
+  font-size:14px;border-radius:0 8px 8px 0;color:#6d2019}
+table{border-collapse:collapse;width:100%;font-size:14px;background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+th,td{padding:10px 13px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:#f1ece0;font-size:12.5px;color:#4a4539;font-weight:600}
+tr:last-child td{border-bottom:none}
+footer{padding:28px 0 60px;color:var(--dim);font-size:13px}
+footer a{color:var(--key)}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="eyebrow">体験デモ｜スマホでそのまま触れます</div>
+    <h1>分からない用語を、その場で調べられるようにする</h1>
+    <p class="lead">教材に書いてあることだけを答えます。書いていないことは「見つかりませんでした」と正直に返し、AIに作り話をさせません。出題の予想もしません。</p>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <h2>1｜使う人の画面</h2>
+    <p class="sub">文字を大きく、入力は1か所だけ。よく調べる言葉はボタンで押せるようにしてあります。</p>
+    <div class="phone">
+      <div class="bar">調理師試験 用語じてん</div>
+      <p class="ask">分からない言葉を入れてください</p>
+      <input type="text" id="q" placeholder="例：ハサップ" autocomplete="off">
+      <button class="go" id="go">調べる</button>
+      <div class="chips">
+        <span class="hint">押すだけでも試せます</span>
+        <button data-q="ハサップ">ハサップ</button>
+        <button data-q="食中毒の予防">食中毒の予防</button>
+        <button data-q="五大栄養素">五大栄養素</button>
+        <button data-q="うま味調味料の適量">うま味調味料の適量</button>
+        <button data-q="今年出るところを教えて">今年出るところを教えて</button>
+      </div>
+      <div class="ans" id="ans"></div>
+    </div>
+    <div class="stopnote" style="margin-top:18px">
+      このデモに入っている用語は3語だけです。実際にお使いいただくときは、<b>お手元の教科書・公式の案内など、参照してよい資料だけ</b>を読み込ませます。そこに無いことは答えない設定にします。
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>2｜答えを3種類に分けています</h2>
+    <p class="sub">「分からない」と言えることが、この道具のいちばん大事な機能だと考えています。</p>
+    <table>
+      <tr><th style="width:150px">場面</th><th>返し方</th></tr>
+      <tr><td><b>教材に書いてある</b></td><td>やさしい言葉で説明し、<b>どの資料の何ページに書いてあるか</b>を必ず一緒に出します。本人が原文を確認できる状態にします。</td></tr>
+      <tr><td><b>教材に書いていない</b></td><td>推測で答えず「見つかりませんでした」と返します。そのうえで、どこを見ればよいか（公式の案内・別の資料・先生に聞く）を案内します。</td></tr>
+      <tr><td><b>予想を聞かれた</b></td><td>出題予測はお断りします。代わりに、公表されている出題範囲の一覧を出して「どの分野がまだ手つかずか」を整理する使い方に寄せます。</td></tr>
+    </table>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>3｜答えの正しさをどう確かめるか</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>参照先を先に決める</h3>
+        <ul>
+          <li>お使いの教科書・問題集、試験を実施する団体の公式案内、公的機関の資料。この3つ以外は見に行かせません。</li>
+          <li>教材を読み込ませる前に、<b>その使い方が許された資料か</b>を確認します（市販教材の全文を勝手に取り込まない）。</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>出典を必ず画面に出す</h3>
+        <ul>
+          <li>資料名とページ・見出しを添えます。本人が紙の原文を開いて確かめられる形にします。</li>
+          <li>出典を出せない答えは、そもそも画面に出しません。</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>公開前に人が確かめる</h3>
+        <ul>
+          <li>よく出る用語を30語ほど選び、教材の原文と<b>1語ずつ突き合わせ</b>てから使い始めます。</li>
+          <li>ズレた答えが出たら、その用語を参照先に追記して直します。直した記録も残します。</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>試験の日程と範囲は一次情報で</h3>
+        <ul>
+          <li>試験日・受験資格・出題範囲は、AIにも私にも聞かず<b>公式の案内を一緒に開いて確認</b>します。</li>
+          <li>資料に書かれていた日付も、初回に必ず公式で確かめ直します。</li>
+        </ul>
+      </div>
+    </div>
+    <div class="stopnote" style="margin-top:16px">
+      合格を保証する道具ではありません。できるのは「調べる時間を短くすること」と「間違った思い込みのまま覚えてしまうのを防ぐこと」までです。
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    保川七星｜AI業務自動化・導入支援<br>
+    ポートフォリオ：<a href="https://baochuanqixing-create.github.io/">https://baochuanqixing-create.github.io/</a>
+    <div style="margin-top:8px">※このデモは動きを見ていただくためのもので、収録している用語は3語だけです。出典の表記もサンプルです。</div>
+  </div>
+</footer>
+
+<script>
+const DB = {
+  "ハサップ": {term:"HACCP（ハサップ）", read:"きけんを見つけて、大事なところを見張るやり方",
+    body:"食べ物を作る流れを書き出して、食中毒などの危険が入りこむところを先に見つけます。そのうえで、とくに大事な工程（加熱の温度と時間など）を決めて、毎回はかって記録します。何かあったときに、どこが原因かをさかのぼって調べられるようにする考え方です。",
+    src:"厚生労働省「HACCP（ハサップ）」の解説ページ（※このデモでは出典の見せ方のサンプルです）"},
+  "食中毒の予防": {term:"食中毒予防の三原則", read:"つけない・ふやさない・やっつける",
+    body:"1つめは「つけない」。手を洗い、生の肉や魚を使った包丁・まな板をそのまま他の食材に使わないことです。2つめは「ふやさない」。作ったものを室温に置きっぱなしにせず、早く冷やすか温かいまま保つこと。3つめは「やっつける」。中心までしっかり加熱することです。",
+    src:"厚生労働省「家庭でできる食中毒予防の6つのポイント」（※このデモでは出典の見せ方のサンプルです）"},
+  "五大栄養素": {term:"五大栄養素", read:"からだに必要な5つのなかま",
+    body:"炭水化物・脂質・たんぱく質・ビタミン・無機質（ミネラル）の5つです。前の3つは主にエネルギーやからだを作るもとになり、あとの2つはからだの調子を整えるはたらきをします。",
+    src:"お手元の教科書 第◯章「栄養に関する科目」（※このデモでは出典の見せ方のサンプルです）"}
+};
+const q=document.getElementById('q'), ans=document.getElementById('ans');
+const esc=s=>s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+
+function answer(text){
+  const t=(text||'').trim();
+  if(!t){ans.className='ans';return;}
+  let html;
+  if(/予想|出る|的中|ヤマ|やま/.test(t)){
+    html=`<div class="badge no">この質問には答えません</div>
+      <p class="term">出題の予想はお出しできません</p>
+      <p class="body">どこが出るかを当てることはできませんし、当たったように見える答えを出すと、かえって勉強の順番をまちがえてしまいます。</p>
+      <div class="next"><b>かわりにできること</b>公表されている出題範囲を一覧にして、まだ手をつけていない分野を一緒に洗い出します。過去に出された範囲の整理までなら、根拠のある形でお手伝いできます。</div>`;
+  } else {
+    const key=Object.keys(DB).find(k=>t.includes(k)||k.includes(t));
+    if(key){
+      const d=DB[key];
+      html=`<div class="badge ok">教材に書いてありました</div>
+        <p class="term">${esc(d.term)}</p><p class="read">${esc(d.read)}</p>
+        <p class="body">${esc(d.body)}</p>
+        <div class="src"><b>どこに書いてあるか</b>${esc(d.src)}</div>
+        <div class="next"><b>次にすること</b>この説明だけで終わらせず、上の資料の場所を開いて、ご自身の目で1度読んでみてください。</div>`;
+    } else {
+      html=`<div class="badge none">見つかりませんでした</div>
+        <p class="term">「${esc(t)}」は、いま読み込んでいる資料の中にありませんでした</p>
+        <p class="body">ここで思いつきの答えを出すことはしません。まちがったまま覚えてしまうほうが困るからです。</p>
+        <div class="next"><b>次にすること</b>①お手元の教科書の索引でこの言葉を引いてみる　②試験を実施している団体の公式ページを見る　③それでも分からなければ、この画面をそのまま私に送ってください。資料を足して、次から答えられるようにします。</div>`;
+    }
+  }
+  ans.innerHTML=html; ans.className='ans show';
+  ans.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+document.getElementById('go').onclick=()=>answer(q.value);
+q.addEventListener('keydown',e=>{if(e.key==='Enter')answer(q.value)});
+document.querySelectorAll('.chips button').forEach(b=>b.onclick=()=>{q.value=b.dataset.q;answer(b.dataset.q)});
+</script>
+</body>
+</html>

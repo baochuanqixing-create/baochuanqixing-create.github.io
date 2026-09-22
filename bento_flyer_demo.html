@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>配食のチラシ 2種｜制作サンプルと、書かなかった表現の理由</title>
+<style>
+:root{
+  --bg:#f4f1ea; --ink:#22201c; --dim:#6b665c; --line:#ddd7ca;
+  --hos:#0f6ea8; --hos-soft:#e6f1f8;
+  --care:#2f7a4d; --care-soft:#e8f3ec;
+  --warn:#a8520f; --warn-soft:#fbf0e6;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Hiragino Kaku Gothic ProN","Yu Gothic","Segoe UI",sans-serif;line-height:1.7}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+header{padding:48px 0 26px;border-bottom:1px solid var(--line)}
+.eyebrow{display:inline-block;font-size:12px;letter-spacing:.06em;color:#fff;background:var(--ink);
+  border-radius:4px;padding:4px 11px;margin-bottom:14px}
+h1{font-size:25px;margin:0 0 10px;line-height:1.5}
+.lead{font-size:14.5px;color:var(--dim);margin:0;max-width:760px}
+.disc{margin-top:16px;background:var(--warn-soft);border-left:4px solid var(--warn);
+  padding:11px 15px;font-size:13px;color:#5d3410}
+section{padding:34px 0;border-bottom:1px solid var(--line)}
+h2{font-size:18px;margin:0 0 6px}
+.sub{color:var(--dim);font-size:13.5px;margin:0 0 20px}
+.split{display:grid;grid-template-columns:1fr;gap:22px}
+@media(min-width:900px){.split{grid-template-columns:520px 1fr}}
+
+/* ---- flyer ---- */
+.sheet{background:#fff;border:1px solid var(--line);box-shadow:0 2px 14px rgba(0,0,0,.07);
+  width:100%;max-width:520px;aspect-ratio:210/297;position:relative;overflow:hidden}
+.sheet .inner{position:absolute;top:0;left:0;width:560px;height:792px;padding:34px 32px;
+  display:flex;flex-direction:column;transform-origin:top left;transform:scale(var(--s,1))}
+.sheet .bleed{position:absolute;inset:0;border:6px dashed rgba(0,0,0,.05);pointer-events:none}
+.kicker{font-size:11.5px;letter-spacing:.08em}
+.sheet h3{margin:6px 0 4px;line-height:1.35;font-size:26px;letter-spacing:.01em}
+.sheet h3 em{font-style:normal;padding:0 3px}
+.sheet .say{font-size:12.5px;color:var(--dim);margin:0 0 14px}
+.band{border-radius:8px;padding:11px 13px;font-size:12.5px;margin-bottom:12px}
+.steps{display:flex;gap:7px;margin-bottom:13px}
+.steps div{flex:1;border:1px solid var(--line);border-radius:7px;padding:8px 6px;text-align:center;font-size:11.5px}
+.steps b{display:block;font-size:15px;margin-bottom:2px}
+.menu{display:flex;gap:8px;margin-bottom:12px}
+.menu div{flex:1;background:#f7f4ee;border-radius:7px;padding:9px;font-size:11.5px;text-align:center}
+.menu b{display:block;font-size:13px;margin-bottom:2px}
+.rows{font-size:12px;border-top:1px solid var(--line);margin-bottom:auto}
+.rows div{display:flex;gap:8px;padding:6px 0;border-bottom:1px solid var(--line)}
+.rows span:first-child{color:var(--dim);width:82px;flex:none}
+.cta{margin-top:12px;border-radius:9px;padding:13px 14px;color:#fff;text-align:center}
+.cta .lbl{font-size:11.5px;opacity:.9}
+.cta .tel{font-size:31px;font-weight:800;letter-spacing:.02em;line-height:1.2;margin:2px 0}
+.cta .hours{font-size:11px;opacity:.92}
+.qr{display:flex;align-items:center;gap:10px;margin-top:9px;font-size:11px;color:var(--dim)}
+.qr i{width:46px;height:46px;flex:none;border:1px solid var(--line);border-radius:5px;
+  background:repeating-conic-gradient(#2b2b2b 0 25%, #fff 0 50%) 0 0/12px 12px}
+.foot{font-size:10px;color:var(--dim);margin-top:9px;line-height:1.5}
+.hos .kicker,.hos h3 em{color:var(--hos)} .hos .band{background:var(--hos-soft)} .hos .cta{background:var(--hos)}
+.care .kicker,.care h3 em{color:var(--care)} .care .band{background:var(--care-soft)} .care .cta{background:var(--care)}
+.fax{border:1px dashed var(--line);border-radius:7px;padding:9px 11px;font-size:11.5px;margin-top:10px}
+.fax b{font-size:12.5px}
+
+/* ---- notes ---- */
+.note h4{margin:0 0 4px;font-size:14.5px}
+.note{background:#fff;border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:14px}
+.note p{margin:0 0 8px;font-size:13.5px}
+.note ul{margin:0;padding-left:20px;font-size:13.5px}
+.note li{margin:4px 0}
+.tag{display:inline-block;font-size:11px;border-radius:999px;padding:2px 9px;margin-right:6px;
+  border:1px solid var(--line);color:var(--dim)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;background:#fff;
+  border:1px solid var(--line);border-radius:10px;overflow:hidden}
+th,td{padding:10px 13px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:#efeade;font-size:12.5px;color:#4a4539;font-weight:600}
+tr:last-child td{border-bottom:none}
+td.ng{color:var(--warn);font-weight:600;white-space:nowrap}
+footer{padding:30px 0 60px;color:var(--dim);font-size:12.5px}
+footer a{color:var(--hos)}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="eyebrow">制作サンプル（架空の事業者）</div>
+    <h1>同じお弁当を、読む人を変えて2枚に作り分ける</h1>
+    <p class="lead">病院に置く1枚は「退院後の食事が不安な家族」が手に取ります。ケアマネージャーさんに郵送する1枚は「担当している利用者さんに紹介できるか」を判断するために読まれます。同じ商品でも、先頭に置く情報と申し込みの導線が変わります。</p>
+    <div class="disc"><b>これはサンプルです。</b>事業者名・電話番号・価格・配達条件はすべて架空で、実在の事業者や病院とは関係ありません。数字が入るべき箇所は、根拠を確認してから入れる前提であえて「◯」にしてあります。</div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <h2>1｜病院に置く1枚（患者さん・ご家族向け）</h2>
+    <p class="sub">置きチラシは、立ったまま数秒で見られます。文字を大きく、連絡先を一番大きく。</p>
+    <div class="split">
+      <div class="sheet hos">
+        <div class="bleed"></div>
+        <div class="inner">
+        <div class="kicker">ご自宅にお届けするお弁当</div>
+        <h3>退院したあとの食事、<br><em>どうしよう</em>と思ったら</h3>
+        <p class="say">買い物と調理をいったんお休みしたい方へ。1食から、週1回からご利用いただけます。</p>
+        <div class="band">やわらかめ・きざみのご用意があります。かかりつけの先生から食事の指示が出ている方は、その内容にあわせてご相談ください。</div>
+        <div class="steps">
+          <div><b>1</b>お電話</div>
+          <div><b>2</b>お試し1食</div>
+          <div><b>3</b>翌週から</div>
+        </div>
+        <div class="menu">
+          <div><b>朝</b>◯円</div>
+          <div><b>昼</b>◯円</div>
+          <div><b>夕</b>◯円</div>
+        </div>
+        <div class="rows">
+          <div><span>お届け</span><span>◯◯市内　毎日◯時〜◯時</span></div>
+          <div><span>回数</span><span>週1回から。お休みは前日◯時まで</span></div>
+          <div><span>容器</span><span>次回お届け時に回収します</span></div>
+          <div><span>お支払い</span><span>現金・口座振替</span></div>
+        </div>
+        <div class="cta">
+          <div class="lbl">ご注文・ご相談はお電話で</div>
+          <div class="tel">0000-00-0000</div>
+          <div class="hours">毎日 9:00〜17:00／ご家族からのお電話も承ります</div>
+        </div>
+        <div class="qr"><i></i><span>スマホの方はこちらから。<br>お名前とご住所だけで、折り返しお電話します。</span></div>
+        <div class="foot">まごころ弁当 みなみ（架空のサンプルです）／◯◯市◯◯町0-0-0<br>このチラシの設置について、病院の許可をいただいた上で置かせていただいています。</div>
+        </div>
+      </div>
+      <div>
+        <div class="note">
+          <h4>なぜこの順番にしたか</h4>
+          <ul>
+            <li>手に取る人はご本人よりも<b>ご家族</b>であることが多いので、見出しを「退院したあとの食事」という<b>場面</b>から始めました。商品名から始めると自分ごとになりません。</li>
+            <li>いちばん大きいのは<b>電話番号</b>です。この層はQRよりも電話が早い。QRは補助として小さく置いています。</li>
+            <li>「1食から」「週1回から」を早い位置に置いたのは、<b>やめられるか</b>が最初の不安だからです。</li>
+            <li>試食を2番目のステップに入れて、いきなり契約にならない見せ方にしています。</li>
+          </ul>
+        </div>
+        <div class="note">
+          <h4>この1枚で、開始前に確定しておきたいこと</h4>
+          <ul>
+            <li>価格（税込か税抜か、配達料込みか）、お届け範囲と時間帯、休止・キャンセルの締切</li>
+            <li>やわらか食・きざみ食の<b>実際の対応範囲</b>（どこまで対応できて、どこからは対応できないか）</li>
+            <li>病院にチラシを置く許可の有無と、置ける場所・枚数・掲載してよい表現</li>
+            <li>写真の用意（実際の盛り付け写真か、素材写真か。素材写真なら「イメージです」の表記が要ります）</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>2｜ケアマネージャーさんへ郵送する1枚</h2>
+    <p class="sub">読み手は仕事として読みます。感情に訴えるより、紹介できる条件が揃っているかを先に出します。</p>
+    <div class="split">
+      <div class="sheet care">
+        <div class="bleed"></div>
+        <div class="inner">
+        <div class="kicker">居宅介護支援事業所 ご担当者さま</div>
+        <h3>利用者さんに<em>紹介しやすい</em><br>配食をお探しでしたら</h3>
+        <p class="say">◯◯市内で配食をしています。新規のご紹介を受け付けております。</p>
+        <div class="rows" style="border-top:none">
+          <div><span>対応エリア</span><span>◯◯市全域／◯◯町は応相談</span></div>
+          <div><span>受け入れ</span><span>現在 新規◯件まで（◯月◯日時点）</span></div>
+          <div><span>お届け</span><span>毎日◯時〜◯時。日曜・年末年始は◯</span></div>
+          <div><span>対応食</span><span>やわらか・きざみ。医師の食事指示がある方は内容を確認のうえご相談</span></div>
+          <div><span>見守り</span><span>手渡しが原則。ご不在時のご連絡先を事前に伺います</span></div>
+          <div><span>料金</span><span>1食◯円（税込・配達料込）／お支払いは現金・口座振替</span></div>
+          <div><span>紹介料</span><span>いただいておりません</span></div>
+        </div>
+        <div class="band"><b>ご紹介の流れ</b>　ご連絡（電話・FAX）→ 当方からご本人・ご家族へご連絡 → お試し1食 → 開始。ご連絡から開始まで、最短で◯日ほどです。</div>
+        <div class="fax">
+          <b>FAXでのお問い合わせ用紙</b>（0000-00-0000）<br>
+          事業所名／ご担当者名／ご連絡先／利用者さんのお住まいの地区／ご希望の開始時期／食事形態のご希望
+        </div>
+        <div class="cta">
+          <div class="lbl">担当者に直接つながります</div>
+          <div class="tel">0000-00-0000</div>
+          <div class="hours">平日 9:00〜18:00／担当：◯◯　資料・見本の郵送も承ります</div>
+        </div>
+        <div class="foot">まごころ弁当 みなみ（架空のサンプルです）／◯◯市◯◯町0-0-0<br>ご訪問してのご説明も可能です。ご都合のよい曜日・時間帯をお知らせください。</div>
+        </div>
+      </div>
+      <div>
+        <div class="note">
+          <h4>病院設置用と変えたところ</h4>
+          <ul>
+            <li>見出しを「紹介しやすい」に変えました。読み手が欲しいのは自分の食事ではなく、<b>担当している利用者さんに出せる選択肢</b>です。</li>
+            <li>いちばん上を<b>条件の一覧</b>にしました。エリア・空き状況・料金・支払い方法が揃っていないと、そもそも候補に入りません。</li>
+            <li><b>今どれだけ受け入れられるか</b>を日付つきで書きました。ここが不明なチラシは、紹介する側にとって使いづらいためです。</li>
+            <li>申し込み導線を<b>FAX</b>にしました。紙でやり取りする事業所がまだ多く、その場で書いて送れる形が確実です。</li>
+            <li>紹介料をいただかないことを明記しました。金銭が絡むと紹介しにくくなるためです。</li>
+          </ul>
+        </div>
+        <div class="note">
+          <h4>この1枚で、開始前に確定しておきたいこと</h4>
+          <ul>
+            <li>郵送先リストの入手方法（事業所名簿の出どころと、郵送してよい範囲）</li>
+            <li>受け入れ可能件数を<b>誰が・どのくらいの頻度で更新するか</b>（古い数字が載っていると信用を落とします）</li>
+            <li>担当者名・直通番号を出してよいか、訪問営業を受けるかどうか</li>
+            <li>FAX用紙に利用者さんの氏名欄を作らない方針でよいか（個人情報を先に集めない形にしています）</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>3｜書かなかった表現と、その理由</h2>
+    <p class="sub">配食のチラシは、書き方によって景品表示法・健康増進法にふれます。根拠を確認できないものは、最初から書かない方針で作りました。</p>
+    <table>
+      <tr><th style="width:230px">よく見るが、今回は書かなかった表現</th><th>理由と、書くなら何が必要か</th></tr>
+      <tr><td class="ng">栄養バランス満点／健康的</td><td>何をもって満点かの基準がありません。書くなら、献立ごとの栄養計算値（熱量・たんぱく質・食塩相当量）を出し、誰が計算したかまで示します。</td></tr>
+      <tr><td class="ng">塩分控えめ</td><td>比較対象がないと意味を持ちません。「1食あたり食塩相当量◯g」と実数で書き、その数字の出どころ（献立表・計算者）を先に確認します。</td></tr>
+      <tr><td class="ng">低栄養の改善に／血圧が気になる方に</td><td>食品で身体の改善をうたう表現にあたる可能性があります。医師の指示がある方は「その内容にあわせてご相談ください」という案内にとどめました。</td></tr>
+      <tr><td class="ng">管理栄養士監修</td><td>監修者が実在し、実際に献立を見ている場合のみ書けます。氏名・資格の確認が取れてから入れます。</td></tr>
+      <tr><td class="ng">◯◯病院おすすめ／認定</td><td>病院の許可が要ります。今回は「設置の許可をいただいています」という事実だけを小さく書きました。</td></tr>
+      <tr><td class="ng">地域No.1／人気No.1</td><td>調査の出典が必要です。出せないなら書きません。</td></tr>
+    </table>
+    <div class="note" style="margin-top:16px">
+      <h4>確認のしかた</h4>
+      <p>初稿の段階で、<b>本文の1行ずつに「事実／方針／未確認」の印をつけた確認用シート</b>をお渡しします。未確認のものは、根拠が出るまで文面に入れません。「この表現は根拠が要ります」と口頭で言うだけだと流れてしまうので、書面で潰す形にします。</p>
+      <p style="margin:0"><span class="tag">事実</span>価格・エリア・電話番号など、確認済みで載せてよいもの　<span class="tag">方針</span>「1食から」など事業者が決めること　<span class="tag">未確認</span>栄養値・監修・病院名など、根拠が出るまで空欄</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>4｜納品するデータ</h2>
+    <p class="sub">刷って終わりにせず、あとからご自身で直せる状態までを納品物に含めます。</p>
+    <div class="note">
+      <ul>
+        <li><b>印刷用PDF</b>（A4・塗り足し3mm・CMYK・文字のアウトライン化）。ネット印刷にそのまま入稿できる形にします。</li>
+        <li><b>編集できるデータ</b>（Canvaの編集リンク、またはIllustrator/PowerPointのファイル）。価格や受け入れ件数が変わったとき、ご自身で数字だけ直せるようにします。</li>
+        <li><b>画面用の軽いPDF・PNG</b>。メール添付やLINEでの送付用です。</li>
+        <li><b>差し替え手順書</b>（どこを触ると何が変わるか、触らないほうがよい箇所はどこか）。</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    保川七星｜AI業務自動化・制作支援<br>
+    ポートフォリオ：<a href="https://baochuanqixing-create.github.io/">https://baochuanqixing-create.github.io/</a>
+    <div style="margin-top:10px">※チラシの実務制作・配布実績はまだありません。このページは、今回の募集内容に合わせて新しく作った制作サンプルです。</div>
+  </div>
+</footer>
+<script>
+function fit(){document.querySelectorAll('.sheet').forEach(s=>s.style.setProperty('--s',(s.clientWidth/560).toFixed(4)));}
+fit(); addEventListener('resize',fit);
+</script>
+</body>
+</html>
