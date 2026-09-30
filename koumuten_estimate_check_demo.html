@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>打ち合わせメモから見積書の下書き｜工務店向け体験デモ</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+:root{
+  --bg:#f6f4ef; --panel:#ffffff; --panel2:#f0ede6; --line:#ddd7cb;
+  --key:#2f6f4f; --key-soft:#e4f0e9;
+  --warn:#8a5a00; --warn-bg:#fff4d6; --warn-line:#f0cf7a;
+  --bad:#a33a2a; --bad-bg:#fde8e4; --bad-line:#f1b4a8;
+  --ok:#2f6f4f; --ok-bg:#e4f0e9;
+  --text:#23201b; --dim:#6e675c;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#16140f; --panel:#1f1c16; --panel2:#29251d; --line:#3a352b;
+    --key:#7fd1a4; --key-soft:#1f3328;
+    --warn:#ffd27a; --warn-bg:#3a2e12; --warn-line:#6b5420;
+    --bad:#ffb0a2; --bad-bg:#3d1e18; --bad-line:#6e3328;
+    --ok:#7fd1a4; --ok-bg:#1f3328;
+    --text:#efeae0; --dim:#aaa293;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);
+  font-family:"Hiragino Kaku Gothic ProN","Yu Gothic","Segoe UI",sans-serif;line-height:1.8;font-size:15px}
+.wrap{max-width:920px;margin:0 auto;padding:0 16px}
+header{padding:48px 0 26px;border-bottom:1px solid var(--line)}
+.eyebrow{display:inline-block;font-size:12px;color:var(--key);background:var(--key-soft);border-radius:999px;padding:4px 12px;margin-bottom:12px}
+h1{font-size:24px;margin:0 0 10px;line-height:1.5}
+.lead{color:var(--dim);margin:0}
+section{padding:32px 0;border-bottom:1px solid var(--line)}
+h2{font-size:18px;margin:0 0 4px}
+h2 .n{display:inline-block;background:var(--key);color:var(--bg);border-radius:6px;padding:0 8px;margin-right:8px;font-size:14px}
+.sub{color:var(--dim);font-size:13.5px;margin:0 0 14px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-top:12px}
+.memo{white-space:pre-wrap;font-size:14.5px;border-left:4px solid var(--key)}
+.memo .who{font-size:12px;color:var(--dim);display:block;margin-bottom:6px;white-space:normal}
+button{font-family:inherit;cursor:pointer;border-radius:9px;font-size:14.5px}
+.btn{background:var(--key);color:var(--bg);border:none;padding:12px 22px;font-weight:700}
+.btn:disabled{opacity:.4;cursor:default}
+.btn2{background:var(--panel);color:var(--text);border:1px solid var(--line);padding:9px 15px;font-size:13.5px}
+.btn2.on{background:var(--key);color:var(--bg);border-color:transparent;font-weight:700}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--panel);margin-top:12px}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:700px}
+th,td{padding:8px 11px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--panel2);color:var(--dim);font-size:12px;font-weight:600;white-space:nowrap}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+tr.w td{background:var(--warn-bg)}
+tr.m td{background:var(--bad-bg)}
+tr.tot td{font-weight:700;background:var(--panel2)}
+.why{font-size:12px;color:var(--dim)}
+td:last-child{min-width:260px}
+.tag{display:inline-block;font-size:11px;padding:1px 8px;border-radius:999px;white-space:nowrap;border:1px solid var(--line)}
+.tag.ok{color:var(--ok);background:var(--ok-bg);border-color:transparent}
+.tag.w{color:var(--warn);background:var(--warn-bg);border-color:var(--warn-line)}
+.tag.m{color:var(--bad);background:var(--bad-bg);border-color:var(--bad-line)}
+.q{border:1px solid var(--warn-line);background:var(--warn-bg);border-radius:10px;padding:13px 15px;margin-top:10px}
+.q.m{border-color:var(--bad-line);background:var(--bad-bg)}
+.q .t{font-weight:700}
+.q .d{font-size:13px;color:var(--dim);margin:3px 0 8px}
+.q input{font:inherit;font-size:14px;padding:6px 9px;border:1px solid var(--line);border-radius:7px;width:130px;background:var(--panel);color:var(--text)}
+.q.done{opacity:.6}
+.pill{font-size:12px;color:var(--dim)}
+.rules{margin:0;padding-left:20px;font-size:14px}
+.rules li{margin:4px 0}
+.rules code{font-size:12px;background:var(--panel2);padding:1px 6px;border-radius:5px}
+.grid2{display:grid;grid-template-columns:1fr;gap:12px}
+@media(min-width:760px){.grid2{grid-template-columns:1fr 1fr}}
+.before b,.after b{display:block;margin-bottom:4px}
+.after{border-color:var(--key)}
+.note{font-size:13px;color:var(--dim);border-left:3px solid var(--line);padding:6px 12px;margin-top:14px}
+.alert{margin-top:12px;border-radius:9px;padding:10px 14px;font-size:14px}
+.alert.ok{background:var(--ok-bg);color:var(--ok)}
+.alert.w{background:var(--warn-bg);color:var(--warn)}
+ol.steps{padding-left:22px;margin:6px 0 0}
+ol.steps li{margin:6px 0}
+footer{padding:28px 0 60px;color:var(--dim);font-size:12.5px}
+.hidden{display:none}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <span class="eyebrow">体験デモ｜架空の工務店・架空のお客様</span>
+  <h1>打ち合わせメモから、見積書の下書きと「要確認リスト」をつくる</h1>
+  <p class="lead">AIが下書きを出し、<b>項目の抜け</b>と<b>単価が分からない行</b>を黄色・赤で止めます。金額を決めるのは代表者様、計算はExcelの数式です。AIには金額を1円も考えさせません。</p>
+</div></header>
+
+<main class="wrap">
+
+<section>
+  <h2><span class="n">0</span>このデモで使っているもの</h2>
+  <p class="sub">新しいシステムは入れません。いまお使いの<b>Excelの見積書</b>と<b>Claude</b>の2つだけで回る形を想定しています。</p>
+  <div class="grid2">
+    <div class="card"><b>御社の単価表（Excel）</b><br><span class="pill">架空・改定日つき。AIはここに載っている単価しか使えない</span>
+      <div class="tablewrap"><table style="min-width:0"><thead><tr><th>コード</th><th>品名</th><th class="num">単価</th><th>改定日</th></tr></thead><tbody id="mastertb"></tbody></table></div>
+    </div>
+    <div class="card"><b>決まりごと（チェックルール初版）</b><br><span class="pill">代表者様の「いつも入れているもの」を文章にしたもの。Claudeへの指示にそのまま入る</span>
+      <ol class="rules" id="rules"></ol>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2><span class="n">1</span>打ち合わせのメモを貼る</h2>
+  <p class="sub">手書きメモの写真でも、スマホの音声メモの文字起こしでも構いません。整っていなくて大丈夫です。</p>
+  <div class="card memo"><span class="who">打ち合わせメモ（架空）｜木造2階建て・築32年・1階水回り</span>・1階の在来のお風呂をユニットバスに。サイズは1616、グレードは普通でいい
+・冬が寒いので浴室暖房乾燥機をつけたい
+・洗面台も一緒に替えたい。幅75
+・洗面所の床がふかふかしてる。クロスも替えたい
+・母が高齢なので浴室に手すりがほしい
+・お風呂が使えない期間はなるべく短く</div>
+  <div class="row"><button class="btn" id="go1">Claudeで下書きをつくる</button><span class="pill" id="st1"></span></div>
+</section>
+
+<section id="s2" class="hidden">
+  <h2><span class="n">2</span>下書き（AIが出した状態）</h2>
+  <p class="sub">メモにあったものだけを行にしています。<span class="tag ok">単価表どおり</span> <span class="tag w">要確認</span> <span class="tag m">抜けの候補</span></p>
+  <div class="tablewrap"><table><thead><tr><th>#</th><th>工種・品名</th><th class="num">数量</th><th>単位</th><th class="num">単価</th><th class="num">金額</th><th>根拠・止めた理由</th></tr></thead><tbody id="drafttb"></tbody></table></div>
+  <div class="note">金額の列はExcelの <code>=数量×単価</code> の数式です。単価表に無いものは<b>空欄のまま</b>止めます。AIが「だいたいこのくらい」で埋めることはしません。</div>
+</section>
+
+<section id="s3" class="hidden">
+  <h2><span class="n">3</span>決まりごとで「抜け」を探す</h2>
+  <p class="sub">下書きに入っていないけれど、決まりごとから見て入るはずの項目を赤で出します。</p>
+  <div id="misslist"></div>
+</section>
+
+<section id="s4" class="hidden">
+  <h2><span class="n">4</span>代表者様が黄色と赤だけ見る</h2>
+  <p class="sub">全部を見直す必要はありません。止まっている行だけ判断してください。全部片づくまで「確定」は押せません。</p>
+  <div id="qs"></div>
+  <div class="row"><button class="btn" id="fix" disabled>確定してExcelで出す</button><span class="pill" id="left"></span></div>
+  <div id="result"></div>
+</section>
+
+<section>
+  <h2>入れると、何が変わるか</h2>
+  <div class="grid2">
+    <div class="card before"><b>いま（想定）</b>打ち合わせの後、代表者様が過去の見積書をコピーして行を足し引きし、単価表を見ながら1行ずつ入力。抜けに気づくのは現場に入ってから、ということもある。</div>
+    <div class="card after"><b>入れた後</b>メモを貼ると下書きが出て、<b>見るのは黄色と赤の行だけ</b>。「解体したのに産廃が無い」「浴室暖房を入れたのに電気工事が無い」といった抜けが、お客様に出す前に止まる。判断の記録が残るので、次の見積でも同じ判断がそのまま使える。</div>
+  </div>
+  <div class="note">「何時間短くなります」という数字は、御社の実際の見積で測ってからお伝えします。いまの段階で数字は出しません。</div>
+</section>
+
+<section>
+  <h2>AIが初めての方への渡し方</h2>
+  <ol class="steps">
+    <li><b>手順書は1枚だけ。</b>「メモを貼る → 下書きが出る → 黄色と赤だけ見る」の3手順を、画面写真つきで紙1枚に。</li>
+    <li><b>最初は私が画面を共有して1件、次は代表者様が操作して私が横で見る。</b>見てもらうだけで終わらせません。</li>
+    <li><b>決まりごとは代表者様の言葉のまま残す。</b>「解体したら産廃」のように普段の言い方で書くので、直したいときにご自身で直せます。</li>
+  </ol>
+</section>
+
+</main>
+<footer><div class="wrap">架空のデータを使った体験デモです。実在の会社・お客様・価格とは関係ありません。作成：保川七星 ／ <a href="https://baochuanqixing-create.github.io/">ポートフォリオ</a></div></footer>
+
+<script>
+const TODAY = new Date('2026-10-01');
+const MASTER = [
+  {c:'U01', n:'ユニットバス 1616 普及グレード', u:'式', p:680000, d:'2026-04-01'},
+  {c:'U02', n:'既存浴室 解体撤去（在来）', u:'式', p:85000, d:'2026-04-01'},
+  {c:'U03', n:'産業廃棄物 処分費（浴室分）', u:'式', p:45000, d:'2026-04-01'},
+  {c:'U04', n:'給排水 配管切替', u:'式', p:60000, d:'2026-04-01'},
+  {c:'U05', n:'電気工事（換気扇・照明）', u:'式', p:38000, d:'2026-04-01'},
+  {c:'U06', n:'洗面化粧台 W750', u:'台', p:98000, d:'2024-06-01'},
+  {c:'U07', n:'洗面所 床 CF張替', u:'㎡', p:4800, d:'2026-04-01'},
+  {c:'U08', n:'洗面所 クロス張替', u:'㎡', p:1300, d:'2026-04-01'},
+  {c:'U09', n:'養生・清掃', u:'式', p:25000, d:'2026-04-01'},
+];
+const RULES = [
+  '解体・撤去がある → <b>産廃処分</b>を必ず入れる <code>R1</code>',
+  '浴室を替える → <b>給排水切替</b>と<b>電気工事</b>をセットで入れる <code>R2</code>',
+  '浴室暖房乾燥機を付ける → <b>専用回路の電気工事</b>が要るか確認 <code>R3</code>',
+  'メモに「ふかふか」「きしむ」「におう」→ <b>床下地の補修</b>を候補に出す <code>R4</code>',
+  '築25年を超える水回り → 土台の傷みは開けるまで分からない。<b>「別途」の但し書き</b>を入れる <code>R5</code>',
+  '単価表に無い品目 → <b>単価は空欄</b>。AIに埋めさせない <code>R6</code>',
+  '単価表の改定から<b>1年以上</b> → 仕入れ値を確認 <code>R7</code>',
+  'メモに寸法が無い → <b>数量は空欄</b>（採寸待ち） <code>R8</code>',
+  '毎回入れる：<b>養生・清掃</b>、<b>諸経費10%</b> <code>R9</code>',
+];
+const M = Object.fromEntries(MASTER.map(x=>[x.c,x]));
+const yen = v => v==null||v==='' ? '' : '¥'+Math.round(v).toLocaleString('ja-JP');
+const monthsOld = d => (TODAY - new Date(d))/(1000*60*60*24*30.4);
+
+document.getElementById('mastertb').innerHTML = MASTER.map(x=>`<tr><td>${x.c}</td><td>${x.n}</td><td class="num">${yen(x.p)}</td><td>${x.d.slice(0,7)}</td></tr>`).join('');
+document.getElementById('rules').innerHTML = RULES.map(r=>`<li>${r}</li>`).join('');
+
+// AIがメモから拾った行（メモにあるものだけ）
+let lines = [
+  {id:'a1', n:'ユニットバス 1616 普及グレード', code:'U01', q:1, from:'メモ「1616、グレードは普通」'},
+  {id:'a2', n:'既存浴室 解体撤去（在来）', code:'U02', q:1, from:'メモ「在来のお風呂を」'},
+  {id:'a3', n:'浴室暖房乾燥機', code:null, q:1, u:'台', from:'メモ「浴室暖房乾燥機をつけたい」'},
+  {id:'a4', n:'洗面化粧台 W750', code:'U06', q:1, from:'メモ「幅75」'},
+  {id:'a5', n:'洗面所 床 CF張替', code:'U07', q:null, from:'メモ「床がふかふか」'},
+  {id:'a6', n:'洗面所 クロス張替', code:'U08', q:null, from:'メモ「クロスも替えたい」'},
+  {id:'a7', n:'浴室 手すり取付', code:null, q:1, u:'箇所', from:'メモ「手すりがほしい」'},
+];
+lines.forEach(l=>{
+  if(l.code){ const m=M[l.code]; l.u=m.u; l.p=m.p; l.src=`${l.code}（${m.d.slice(0,7)}改定）`;
+    if(monthsOld(m.d)>=12){ l.flag='w'; l.why=`単価表の改定から${Math.floor(monthsOld(m.d)/12)}年以上たっています（R7）`; l.need='price'; }
+  } else { l.p=null; l.flag='w'; l.why='単価表に無い品目です。単価は空欄のまま止めました（R6）'; l.need='price'; }
+  if(l.q==null){ l.flag='w'; l.why=(l.why?l.why+'／':'')+'メモに寸法がありません。数量は採寸待ち（R8）'; l.need = l.need?'both':'qty'; }
+});
+
+// 決まりごとから出す「抜けの候補」
+const MISS = [
+  {id:'m1', code:'U03', n:'産業廃棄物 処分費（浴室分）', rule:'R1', why:'解体撤去（#2）があるのに、産廃処分が入っていません'},
+  {id:'m2', code:'U04', n:'給排水 配管切替', rule:'R2', why:'浴室を替えるのに、給排水の切替が入っていません'},
+  {id:'m3', code:'U05', n:'電気工事（換気扇・照明）', rule:'R2・R3', why:'浴室交換の電気工事が入っていません。浴室暖房乾燥機（#3）を付けるなら専用回路が要るか、あわせて確認してください'},
+  {id:'m4', code:null, n:'洗面所 床下地の補修', u:'式', rule:'R4', why:'メモに「床がふかふか」とあります。CFの張替だけで済むか、下地から直すかは現地で見ないと分かりません'},
+  {id:'m5', code:'U09', n:'養生・清掃', rule:'R9', why:'毎回入れる項目が入っていません'},
+];
+const NOTE_R5 = '築32年の水回りです。土台・柱の傷みは解体するまで分からないため、見積書に「解体後に腐食が見つかった場合の補修は別途お見積り」の但し書きを入れる候補です（R5）';
+
+const state = {}; // id -> {done, add, p, q}
+let drafted=false;
+
+document.getElementById('go1').onclick = ()=>{
+  const b=document.getElementById('go1'); b.disabled=true; document.getElementById('st1').textContent='下書き中…';
+  setTimeout(()=>{ document.getElementById('st1').textContent='下書きができました（7行）';
+    renderDraft(); ['s2','s3','s4'].forEach(s=>document.getElementById(s).classList.remove('hidden'));
+    renderMiss(); renderQs(); document.getElementById('s2').scrollIntoView({behavior:'smooth'});
+  },900);
+};
+
+function renderDraft(){
+  document.getElementById('drafttb').innerHTML = lines.map((l,i)=>{
+    const amt = (l.p!=null && l.q!=null) ? l.p*l.q : null;
+    const tag = l.flag ? '<span class="tag w">要確認</span>' : '<span class="tag ok">単価表どおり</span>';
+    return `<tr class="${l.flag?'w':''}"><td>${i+1}</td><td>${l.n}</td><td class="num">${l.q??'—'}</td><td>${l.u}</td><td class="num">${l.p!=null?yen(l.p):'—'}</td><td class="num">${amt!=null?yen(amt):'—'}</td>
+    <td>${tag}<div class="why">${l.from}${l.src?'／単価：'+l.src:''}${l.why?'<br>'+l.why:''}</div></td></tr>`;
+  }).join('');
+}
+function renderMiss(){
+  document.getElementById('misslist').innerHTML = MISS.map(m=>`<div class="q m"><div class="t"><span class="tag m">抜けの候補</span> ${m.n}</div><div class="d">${m.why}（${m.rule}）${m.code?'<br>単価表：'+m.code+' '+yen(M[m.code].p):'<br>単価表に無いので、入れる場合は金額を代表者様が決めます'}</div></div>`).join('')
+   + `<div class="q"><div class="t"><span class="tag w">但し書きの候補</span> 解体後の補修は別途</div><div class="d">${NOTE_R5}</div></div>`;
+}
+
+function qCard(id, title, desc, kind, opts){
+  // kind: price / qty / both / miss / missNoPrice / note
+  let ctrl='';
+  if(kind==='price'||kind==='both') ctrl+=`単価 <input type="number" min="0" id="p_${id}" value="${opts.p??''}" placeholder="円"> `;
+  if(kind==='qty'||kind==='both') ctrl+=`数量 <input type="number" min="0" step="0.1" id="q_${id}" placeholder="${opts.u}"> `;
+  if(kind==='price'||kind==='qty'||kind==='both') ctrl+=`<button class="btn2" data-ok="${id}">この内容で決める</button>`;
+  if(kind==='miss') ctrl+=`<button class="btn2" data-add="${id}">入れる</button> <button class="btn2" data-skip="${id}">今回は入れない</button>`;
+  if(kind==='missNoPrice') ctrl+=`金額 <input type="number" min="0" id="p_${id}" placeholder="円"> <button class="btn2" data-add="${id}">入れる</button> <button class="btn2" data-skip="${id}">現地確認まで入れない</button>`;
+  if(kind==='note') ctrl+=`<button class="btn2" data-add="${id}">但し書きを入れる</button> <button class="btn2" data-skip="${id}">入れない</button>`;
+  const cls = kind.startsWith('miss')?'q m':'q';
+  return `<div class="${cls}" id="c_${id}"><div class="t">${title}</div><div class="d">${desc}</div><div>${ctrl}</div><div class="pill" id="r_${id}"></div></div>`;
+}
+function renderQs(){
+  let h='';
+  lines.filter(l=>l.flag).forEach(l=>{ state[l.id]={done:false};
+    h+=qCard(l.id, `#${lines.indexOf(l)+1} ${l.n}`, l.why, l.need, {p:l.p, u:l.u}); });
+  MISS.forEach(m=>{ state[m.id]={done:false}; h+=qCard(m.id, `抜け？ ${m.n}`, m.why, m.code?'miss':'missNoPrice', {}); });
+  state.note={done:false}; h+=qCard('note','但し書き：解体後の補修は別途', NOTE_R5,'note',{});
+  document.getElementById('qs').innerHTML=h; updateLeft();
+}
+document.addEventListener('click',e=>{
+  const t=e.target, ok=t.dataset.ok, add=t.dataset.add, skip=t.dataset.skip;
+  if(ok){ const l=lines.find(x=>x.id===ok); const pi=document.getElementById('p_'+ok), qi=document.getElementById('q_'+ok);
+    const p = pi? Number(pi.value) : l.p, q = qi? Number(qi.value) : l.q;
+    if(pi && !(pi.value!=='' && p>0)){ msg(ok,'単価を入れてください'); return; }
+    if(qi && !(qi.value!=='' && q>0)){ msg(ok,'数量を入れてください（採寸後の値）'); return; }
+    l.p=p; l.q=q; l.decided=true; done(ok, `決定：単価 ${yen(p)} × ${q}${l.u}`); }
+  if(add){ const m=MISS.find(x=>x.id===add);
+    if(add==='note'){ state.note.add=true; done('note','見積書の下に但し書きを入れます'); return; }
+    if(!m.code){ const pi=document.getElementById('p_'+add); if(!(pi.value!==''&&Number(pi.value)>0)){ msg(add,'金額を入れてください'); return; } m.p=Number(pi.value); }
+    else m.p=M[m.code].p;
+    state[add].add=true; done(add, `入れる：${yen(m.p)}`); }
+  if(skip){ if(skip!=='note') state[skip].add=false; else state.note.add=false; done(skip,'今回は入れない（判断メモに記録）'); }
+});
+function msg(id,t){ document.getElementById('r_'+id).textContent='⚠ '+t; }
+function done(id,t){ state[id].done=true; state[id].t=t; const c=document.getElementById('c_'+id); c.classList.add('done');
+  c.querySelectorAll('button,input').forEach(x=>x.disabled=true); document.getElementById('r_'+id).textContent='✓ '+t; updateLeft(); }
+function updateLeft(){ const n=Object.values(state).filter(s=>!s.done).length;
+  document.getElementById('left').textContent = n? `残り ${n} 件` : 'すべて判断済み';
+  document.getElementById('fix').disabled = n>0; }
+
+function finalRows(){
+  const rows = lines.map(l=>({n:l.n,q:l.q,u:l.u,p:l.p,src:l.code?l.code:'代表者様が入力'}));
+  MISS.forEach(m=>{ if(state[m.id].add) rows.push({n:m.n,q:1,u:m.code?M[m.code].u:m.u,p:m.p,src:m.code?m.code+'（抜けを補完）':'代表者様が入力（抜けを補完）'}); });
+  return rows;
+}
+document.getElementById('fix').onclick=()=>{
+  const rows=finalRows(); const sub=rows.reduce((s,r)=>s+r.p*r.q,0); const exp=Math.round(sub*0.1); const tot=sub+exp;
+  let h=`<div class="tablewrap"><table><thead><tr><th>#</th><th>工種・品名</th><th class="num">数量</th><th>単位</th><th class="num">単価</th><th class="num">金額</th><th>単価の出どころ</th></tr></thead><tbody>`;
+  rows.forEach((r,i)=>h+=`<tr><td>${i+1}</td><td>${r.n}</td><td class="num">${r.q}</td><td>${r.u}</td><td class="num">${yen(r.p)}</td><td class="num">${yen(r.p*r.q)}</td><td class="why">${r.src}</td></tr>`);
+  h+=`<tr><td></td><td>諸経費（10%）</td><td></td><td></td><td></td><td class="num">${yen(exp)}</td><td class="why">R9</td></tr>`;
+  h+=`<tr class="tot"><td></td><td>合計（税抜）</td><td></td><td></td><td></td><td class="num">${yen(tot)}</td><td></td></tr></tbody></table></div>`;
+  if(state.note.add) h+=`<div class="note">※解体後に土台・下地の腐食が見つかった場合の補修は、別途お見積りいたします。</div>`;
+  h+=`<div class="alert ok">確定しました。Excelには金額を数式（数量×単価、諸経費＝小計×10%）で書き出すので、あとで単価を直せば合計も自動で直ります。</div>
+      <div class="row"><button class="btn" id="dl">Excelファイルをダウンロード</button></div>`;
+  document.getElementById('result').innerHTML=h;
+  document.getElementById('dl').onclick=()=>downloadXlsx(rows);
+};
+function downloadXlsx(rows){
+  if(typeof XLSX==='undefined'){ alert('Excel出力用の部品が読み込めませんでした。通信環境をご確認ください。'); return; }
+  const aoa=[['御見積書（下書き）','','','','',''],['工種・品名','数量','単位','単価','金額','単価の出どころ']];
+  rows.forEach(r=>aoa.push([r.n,r.q,r.u,r.p,null,r.src]));
+  const ws=XLSX.utils.aoa_to_sheet(aoa); const first=3, last=2+rows.length;
+  for(let r=first;r<=last;r++) ws['E'+r]={t:'n',f:`B${r}*D${r}`};
+  const s=last+1, e=last+2, t=last+3;
+  XLSX.utils.sheet_add_aoa(ws,[['小計','','','',null,''],['諸経費（10%）','','','',null,'R9'],['合計（税抜）','','','',null,'']],{origin:'A'+s});
+  ws['E'+s]={t:'n',f:`SUM(E${first}:E${last})`}; ws['E'+e]={t:'n',f:`ROUND(E${s}*0.1,0)`}; ws['E'+t]={t:'n',f:`E${s}+E${e}`};
+  if(state.note.add) XLSX.utils.sheet_add_aoa(ws,[['※解体後に土台・下地の腐食が見つかった場合の補修は、別途お見積りいたします。']],{origin:'A'+(t+2)});
+  ws['!cols']=[{wch:32},{wch:7},{wch:6},{wch:11},{wch:12},{wch:28}];
+  const log=[['判断メモ（誰が・何を決めたか）'],['項目','判断']];
+  Object.entries(state).forEach(([id,s])=>{ const l=lines.find(x=>x.id===id), m=MISS.find(x=>x.id===id);
+    log.push([l?l.n:m?m.n:'但し書き（解体後の補修は別途）', s.t]); });
+  const ws2=XLSX.utils.aoa_to_sheet(log); ws2['!cols']=[{wch:34},{wch:50}];
+  const wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,ws,'見積書'); XLSX.utils.book_append_sheet(wb,ws2,'判断メモ');
+  XLSX.writeFile(wb,'見積書_下書き_デモ.xlsx');
+}
+</script>
+</body>
+</html>
