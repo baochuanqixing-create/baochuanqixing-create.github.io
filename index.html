@@ -209,6 +209,51 @@ h1 { font-size: 27px; }
 
 <div class="card">
 <div class="card-top">
+<h3>Excelの納品データから、請求書の下書きをつくる</h3>
+<span class="badge">経理・事務向け／デモ公開中</span>
+</div>
+<p>納品内容・数量・単価のExcelから請求書の下書きを作ります。金額の計算は数式とコードで行い、AIの役割は「怪しい行を見つけて理由を書く」だけ。最終確定は必ず人が押します。いまExcelでやっている手順をそのまま分解した形で、新しいシステムは入れません。</p>
+<div class="stat-row">
+<div class="stat"><span class="num">計算はコード</span><span class="label">AIは異常行の指摘だけ</span></div>
+<div class="stat"><span class="num">人が確定</span><span class="label">下書き→確認→確定の3段</span></div>
+</div>
+<p class="caveat">→ 請求書づくりが「ゼロから作る」から「下書きを確認して直す」時間に変わります。計算ミスと転記ミスが減ります。</p>
+<p class="usecase"><b>こんな場面で：</b>月末にExcelで請求書を手作業でまとめている事務・経理担当。担当者以外でも下書きまで出せる状態にしたい場面。</p>
+<p><a href="invoice_draft_demo.html" style="color:var(--accent); font-size:13.5px;">サンプルデータで実際に試す →</a></p>
+</div>
+
+<div class="card">
+<div class="card-top">
+<h3>現場メモ・打ち合わせメモから、見積書の下書きと「要確認リスト」をつくる</h3>
+<span class="badge">建設・工務店向け／デモ2本公開中</span>
+</div>
+<p>移動中に吹き込んだ音声の書き起こしや打ち合わせメモから、AIが項目を振り分け、似た過去案件を探し、根拠を文章にします。金額の計算はコード、最終的な金額はお客様が決めます。工務店向けには、抜けやすい項目を「要確認リスト」として先に出す形にしました。</p>
+<div class="stat-row">
+<div class="stat"><span class="num">AIは3役だけ</span><span class="label">振り分け・類似案件・根拠文</span></div>
+<div class="stat"><span class="num">要確認リスト</span><span class="label">抜け・矛盾を先に出す</span></div>
+</div>
+<p class="caveat">→ 見積の作成が「一から積み上げる」から「下書きを直す」時間に変わります。担当者の頭の中にある判断基準を、少しずつ形にしていけます。</p>
+<p class="usecase"><b>こんな場面で：</b>見積が属人化していて、担当者が不在だと出せない工務店・設備・内装などの現場仕事。</p>
+<p><a href="estimate_draft_demo.html" style="color:var(--accent); font-size:13.5px;">現場メモから試す →</a>　<a href="koumuten_estimate_check_demo.html" style="color:var(--accent); font-size:13.5px;">工務店向けを試す →</a></p>
+</div>
+
+<div class="card">
+<div class="card-top">
+<h3>領収書・請求書を読み取って、仕訳の下書きを自動作成</h3>
+<span class="badge">経理向け／8パターンで検証済み</span>
+</div>
+<p>領収書・請求書のテキストから複式簿記の仕訳の下書きを作ります。OCR崩れ・電子マネー・サブスク請求・返金・軽減税率の混在・情報不足・外貨・交際費と会議費の判断分岐、の8パターンで検証。判断に迷う項目は科目を断定せず「要確認」にして人に返します。税務の判断や申告は行いません。</p>
+<div class="stat-row">
+<div class="stat"><span class="num">8パターン</span><span class="label">読み取りにくい実データで検証</span></div>
+<div class="stat"><span class="num">要確認フラグ</span><span class="label">迷う科目は断定しない</span></div>
+</div>
+<p class="caveat">→ 領収書の束を1枚ずつ入力する時間が、確認だけの時間になります。</p>
+<p class="usecase"><b>こんな場面で：</b>月次の経費入力を担当者1人で抱えている小規模事業者・バックオフィス。</p>
+<p><a href="accounting_ai_automation_v2.html" style="color:var(--accent); font-size:13.5px;">検証内容を見る →</a></p>
+</div>
+
+<div class="card">
+<div class="card-top">
 <h3>メールで届く案件情報を、AIが読み取って台帳へ自動反映</h3>
 <span class="badge">建設・工事業向け</span>
 </div>
