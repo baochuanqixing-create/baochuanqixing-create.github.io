@@ -114,16 +114,18 @@ h1 { font-size: 27px; }
 <header class="hero">
 <div class="wrap">
 <img class="avatar" src="avatar.png" alt="保川七星" width="84" height="84">
-<span class="eyebrow">AI自動化エンジニア</span>
+<span class="eyebrow">AI自動化エンジニア／個人開発</span>
 <h1><span>毎回おなじ手作業</span>を、AIに肩代わりさせます</h1>
 <p class="lead">
 請求書の入力、予約の電話対応、日報の転記、問い合わせへの返信——
 時間を取られている手作業をAIで減らす仕組みを作ります。
 ポイントは、AIに何をさせるかだけでなく、AIが安心して動ける環境（データの整理の仕方＋人の確認を挟む仕組み）まで含めて設計することです。
 「AIを入れてみたいけれど、勝手におかしなことをされないか不安」という方こそ、お役に立てます。
+受託と並行して、自分のアプリ（<a href="#indie-dev" style="color:var(--accent);">個人開発</a>）でも同じ設計で「作る前に需要を測る」ところから進めています。
 </p>
 <div class="tags">
 <a href="#workspace-design" class="tag" style="color:var(--accent); border-color:var(--accent); background:var(--accent-soft); font-weight:600; text-decoration:none;">「作業場設計」も対応しています →</a>
+<a href="#indie-dev" class="tag" style="color:var(--accent); border-color:var(--accent); background:var(--accent-soft); font-weight:600; text-decoration:none;">個人開発中：ライブ通知アプリ Liv Drop →</a>
 <span class="tag">間違えると困る項目は人が最終確認</span>
 <span class="tag">AIに"それらしい嘘"をつかせない設計</span>
 <span class="tag">担当者が社内で回せる状態まで見届ける</span>
@@ -162,22 +164,6 @@ h1 { font-size: 27px; }
 
 <div class="card">
 <div class="card-top">
-<h3>「何から相談すればいいか分からない」を、雑談形式のAIチャットで言語化する窓口</h3>
-<span class="badge">自社開発・運用中</span>
-</div>
-<p>初回相談で一番のハードルは「何から話せばいいか分からない」ことです。専用のAIチャット窓口を作り、今めんどうに感じている作業やAIエージェント活用の悩みを、雑談感覚で話しかけるだけで引き出せるようにしました。頻度や時間を確認しないまま断定的な数字を計算しない、押し売りしないなど、安心して話せる会話ルールを設計しています。</p>
-<p>十分に具体化できた段階でだけ、AIを使った解決の方向性をまとめて伝え、希望があればDM相談につなげます。提案は会話全体を通して1回だけです。</p>
-<div class="stat-row">
-<div class="stat"><span class="num">相談内容は記録</span><span class="label">回答の改善に使うため保存。個人情報は入力しないでください</span></div>
-<div class="stat"><span class="num">完全に隔離</span><span class="label">本番の業務システムには一切アクセスしない</span></div>
-</div>
-<p class="caveat">→ 「何を相談すればいいか分からない」段階の人でも、雑談から自然にニーズを言語化できます。話してみてピンとこなければ、それだけで終えても大丈夫な設計です。相談内容は本人が読み返して回答の質を上げるために記録しますが、他の業務システムやAIの学習には使いません。</p>
-<p class="usecase"><b>こんな場面で：</b>初回相談のハードルを下げたい場面、DMや商談の前に「何がめんどくさいか」を本人に言語化してもらいたい場面。</p>
-<p><a href="https://sagyoba-shindan.pages.dev/" target="_blank" rel="noopener" style="color:var(--accent); font-size:13.5px;">実際にチャットで相談してみる →</a></p>
-</div>
-
-<div class="card">
-<div class="card-top">
 <h3>会議・商談の録音を、AIに"嘘をつかせず"議事録と次アクションに整理</h3>
 <span class="badge">自社開発・運用中</span>
 </div>
@@ -190,6 +176,22 @@ h1 { font-size: 27px; }
 <p class="caveat">→ 議事録づくりと「言った言わない」の確認、次回準備の時間がなくなり、対応漏れも防げます。AI導入に不安のある現場でも、"AIが勝手に事実を作らない"前提で使い始められます。</p>
 <p class="usecase"><b>こんな場面で：</b>営業の商談記録・社内会議の議事録・顧客との打合せログなど、「言った・言わない」が起きやすい場面。議事録担当者を専任で置けない小規模チームでの活用に向いています。</p>
 <p><a href="meeting_analysis_demo.html" style="color:var(--accent); font-size:13.5px;">ブラウザで実際に試す →</a></p>
+</div>
+
+<div class="card">
+<div class="card-top">
+<h3>「何から相談すればいいか分からない」を、雑談形式のAIチャットで言語化する窓口</h3>
+<span class="badge">自社開発・公開中</span>
+</div>
+<p>初回相談で一番のハードルは「何から話せばいいか分からない」ことです。専用のAIチャット窓口を作り、今めんどうに感じている作業やAIエージェント活用の悩みを、雑談感覚で話しかけるだけで引き出せるようにしました。頻度や時間を確認しないまま断定的な数字を計算しない、押し売りしないなど、安心して話せる会話ルールを設計しています。</p>
+<p>十分に具体化できた段階でだけ、AIを使った解決の方向性をまとめて伝え、希望があればDM相談につなげます。提案は会話全体を通して1回だけです。</p>
+<div class="stat-row">
+<div class="stat"><span class="num">相談内容は記録</span><span class="label">回答の改善に使うため保存。個人情報は入力しないでください</span></div>
+<div class="stat"><span class="num">完全に隔離</span><span class="label">本番の業務システムには一切アクセスしない</span></div>
+</div>
+<p class="caveat">→ 「何を相談すればいいか分からない」段階の人でも、雑談から自然にニーズを言語化できます。話してみてピンとこなければ、それだけで終えても大丈夫な設計です。相談内容は本人が読み返して回答の質を上げるために記録しますが、他の業務システムやAIの学習には使いません。</p>
+<p class="usecase"><b>こんな場面で：</b>初回相談のハードルを下げたい場面、DMや商談の前に「何がめんどくさいか」を本人に言語化してもらいたい場面。</p>
+<p><a href="https://sagyoba-shindan.pages.dev/" target="_blank" rel="noopener" style="color:var(--accent); font-size:13.5px;">実際にチャットで相談してみる →</a></p>
 </div>
 
 <div class="card">
@@ -328,9 +330,33 @@ h1 { font-size: 27px; }
 </div>
 </section>
 
+<section id="indie-dev">
+<div class="wrap">
+<div class="section-head"><span class="section-num">02</span><h2>個人開発</h2></div>
+<p class="section-note">受託とは別に、自分のプロダクトも作っています。「作る前に需要を測る」ところから、受託と同じ設計（ナレッジ×ハーネス）で進めています。</p>
+
+<div class="card">
+<div class="card-top">
+<h3>Liv Drop：好きなラッパーのライブ・チケット情報を見逃さないための通知アプリ（iOS先行）</h3>
+<span class="badge">個人開発／需要検証中（2026年10月）</span>
+</div>
+<p>日本語ラップのライブ告知は、アーティストごとのInstagramやチケットサイトに散らばっていて、気づいた時には売り切れていることがあります。登録したアーティストの告知をまとめて通知するアプリを、いきなり作らずに「需要があるか」を先に測っています。</p>
+<p>いま動いているのは3つ。①LP（livdrop.app）で「使いたいか」の3択とLINE登録を計測、②少額のMeta広告でLINE登録1件あたりの費用を測定、③公開情報の自動巡回（Instagram公式API・チケットサイト）。巡回はAPIの使用率を見ながら間隔を調整し、上限に近づいたら自分で止まる設計です。利用規約で自動取得が禁止されているサイトは取りに行かず、リンクだけ通知します。</p>
+<div class="stat-row">
+<div class="stat"><span class="num">LP→広告→判定</span><span class="label">アプリ本体は判定後に着手</span></div>
+<div class="stat"><span class="num">公式APIのみ</span><span class="label">規約外の取得はしない</span></div>
+<div class="stat"><span class="num">使用率80%で停止</span><span class="label">巡回はAPI上限の手前で自動停止</span></div>
+</div>
+<p class="caveat">→ 正直に書くと、アプリ本体はまだありません。広告の結果（LINE登録1件あたりの費用）を見て、作るか・作り方を変えるかを決めます。経過と数字はX（@racin_ai_jp）で随時公開しています。</p>
+<p class="usecase"><b>使っている技術：</b>Cloudflare Workers＋D1（LP・計測）／LINE公式アカウント／Meta広告・Pixel／Instagram Graph API（Business Discovery）／Python（巡回・照合）</p>
+<p><a href="https://livdrop.app" target="_blank" rel="noopener" style="color:var(--accent); font-size:13.5px;">LPを見る →</a>　<a href="https://x.com/racin_ai_jp" target="_blank" rel="noopener" style="color:var(--accent); font-size:13.5px;">経過をXで見る →</a></p>
+</div>
+</div>
+</section>
+
 <section>
 <div class="wrap">
-<div class="section-head"><span class="section-num">02</span><h2>使えるツール・技術</h2></div>
+<div class="section-head"><span class="section-num">03</span><h2>使えるツール・技術</h2></div>
 <div class="skill-grid">
 <span class="skill"><b>Claude / Claude Code</b>日常的に使用・エージェント基盤の中核</span>
 <span class="skill"><b>n8n</b>実案件でのワークフロー構築経験あり</span>
@@ -340,13 +366,15 @@ h1 { font-size: 27px; }
 <span class="skill"><b>帳票・画像の読み取り</b>AIの画像認識で項目抽出＋確信度によるフラグ</span>
 <span class="skill"><b>API連携</b>複数サービスの連携実装</span>
 <span class="skill"><b>Googleスプレッドシート</b>自動化の記録先として実用</span>
+<span class="skill"><b>Cloudflare Workers / Pages / D1</b>LP・AIチャット・計測基盤の実装と公開</span>
+<span class="skill"><b>Meta広告・Instagram Graph API</b>Pixel計測／少額広告での需要検証／公式APIでの巡回</span>
 </div>
 </div>
 </section>
 
 <section>
 <div class="wrap">
-<div class="section-head"><span class="section-num">03</span><h2>対応スタイル</h2></div>
+<div class="section-head"><span class="section-num">04</span><h2>対応スタイル</h2></div>
 <p style="color:#cdd3de; font-size:14.5px; max-width:620px;">
 専門用語を使わずに説明することを心がけています。まずは「今どこに時間がかかっているか」をヒアリングし、
 本当にAIで解決すべき課題かどうかを見極めたうえで、必要な分だけ自動化します。いきなり全部を自動化せず、
