@@ -164,6 +164,51 @@ h1 { font-size: 27px; }
 
 <div class="card">
 <div class="card-top">
+<h3>問い合わせ→予約確定→確認メールまでを、人が触らずに回す</h3>
+<span class="badge">2026年8月から自分の業務で運用</span>
+</div>
+<p>問い合わせをGmailで自動検知し、Web上で日時を選ぶだけでその場で予約が確定する仕組みです。Googleカレンダーの実際の空き状況と営業時間設定から予約可能枠を自動計算し、予約確定時にカレンダー登録・確認メール送信・担当者への通知まで自動で行います。二重予約防止のチェックも実装しています。</p>
+<div class="stat-row">
+<div class="stat"><span class="num">Calendar API</span><span class="label">空き枠自動計算</span></div>
+<div class="stat"><span class="num">Gmail API</span><span class="label">確認メール自動送信</span></div>
+</div>
+<p class="caveat">→ 問い合わせ対応、日程調整メールの往復、カレンダーへの転記、確認メールの作成——この一連の作業がなくなります。</p>
+<p class="usecase"><b>こんな場面で：</b>説明会・面談・相談の予約受付のように、日程調整メールの往復が積み重なっている場面。</p>
+<p><a href="booking.html" style="color:var(--accent); font-size:13.5px;">実際の予約ページを見る →</a></p>
+</div>
+
+<div class="card">
+<div class="card-top">
+<h3>広告→LP→LINE登録の入口を1人で設計し、どこで人が離れるかを数える</h3>
+<span class="badge">個人開発のアプリで実施（2026年10月）</span>
+</div>
+<p>自分のアプリ（Liv Drop）の需要を測るために、Instagram広告からLP、LINE登録までの入口を自分で組みました。訪問・アンケート回答・LINEボタン・LINE登録の数を段階ごとに記録し、広告の種類ごとに出し分けて比べています。</p>
+<div class="stat-row">
+<div class="stat"><span class="num">9,356円</span><span class="label">広告費（2026年10月10日〜22日）</span></div>
+<div class="stat"><span class="num">37人</span><span class="label">LINE登録（1人あたり253円）</span></div>
+<div class="stat"><span class="num">19人</span><span class="label">登録者37人へのLINEアンケートに回答</span></div>
+</div>
+<p class="caveat">→ 「問い合わせのあと、どこで話が流れているか」を数字で見えるようにし、直す場所を1つに絞れます。審査用のアクセスが訪問数に混ざる、といった計測の落とし穴も実際に踏んで対処しました。</p>
+<p class="usecase"><b>こんな場面で：</b>問い合わせ・資料請求・説明会予約・契約のどこで人が減っているか分からない場面。新しいサービスの入口をこれから作る場面。</p>
+<p><a href="https://livdrop.app" target="_blank" rel="noopener" style="color:var(--accent); font-size:13.5px;">実際のLPを見る →</a></p>
+</div>
+
+<div class="card">
+<div class="card-top">
+<h3>LINE公式に届くメッセージに自動で返信し、答えられないものだけ人に回す</h3>
+<span class="badge">個人開発のアプリで運用</span>
+</div>
+<p>決まった質問には定型文で、それ以外はAIが「用意した事実リスト」だけを根拠に答えます。事実に無いことは答えず、人の対応待ちに回して記録します。1日の利用回数に上限を設け、保存する内容はプライバシーポリシーに明記しています。</p>
+<div class="stat-row">
+<div class="stat"><span class="num">34件中30件</span><span class="label">自動で返信（アンケートの回答を含む）</span></div>
+<div class="stat"><span class="num">4件</span><span class="label">人が対応</span></div>
+</div>
+<p class="caveat">→ 問い合わせのたびに手を止める必要がなくなり、人が見るのは判断が要るものだけになります。</p>
+<p class="usecase"><b>こんな場面で：</b>LINE公式アカウントに同じ質問が何度も届く店舗・サービス。夜間や休日の一次対応を自動にしたい場面。</p>
+</div>
+
+<div class="card">
+<div class="card-top">
 <h3>会議・商談の録音を、AIに"嘘をつかせず"議事録と次アクションに整理</h3>
 <span class="badge">自社開発・運用中</span>
 </div>
@@ -176,22 +221,6 @@ h1 { font-size: 27px; }
 <p class="caveat">→ 議事録づくりと「言った言わない」の確認、次回準備の時間がなくなり、対応漏れも防げます。AI導入に不安のある現場でも、"AIが勝手に事実を作らない"前提で使い始められます。</p>
 <p class="usecase"><b>こんな場面で：</b>営業の商談記録・社内会議の議事録・顧客との打合せログなど、「言った・言わない」が起きやすい場面。議事録担当者を専任で置けない小規模チームでの活用に向いています。</p>
 <p><a href="meeting_analysis_demo.html" style="color:var(--accent); font-size:13.5px;">ブラウザで実際に試す →</a></p>
-</div>
-
-<div class="card">
-<div class="card-top">
-<h3>「何から相談すればいいか分からない」を、雑談形式のAIチャットで言語化する窓口</h3>
-<span class="badge">自社開発・公開中</span>
-</div>
-<p>初回相談で一番のハードルは「何から話せばいいか分からない」ことです。専用のAIチャット窓口を作り、今めんどうに感じている作業やAIエージェント活用の悩みを、雑談感覚で話しかけるだけで引き出せるようにしました。頻度や時間を確認しないまま断定的な数字を計算しない、押し売りしないなど、安心して話せる会話ルールを設計しています。</p>
-<p>十分に具体化できた段階でだけ、AIを使った解決の方向性をまとめて伝え、希望があればDM相談につなげます。提案は会話全体を通して1回だけです。</p>
-<div class="stat-row">
-<div class="stat"><span class="num">相談内容は記録</span><span class="label">回答の改善に使うため保存。個人情報は入力しないでください</span></div>
-<div class="stat"><span class="num">完全に隔離</span><span class="label">本番の業務システムには一切アクセスしない</span></div>
-</div>
-<p class="caveat">→ 「何を相談すればいいか分からない」段階の人でも、雑談から自然にニーズを言語化できます。話してみてピンとこなければ、それだけで終えても大丈夫な設計です。相談内容は本人が読み返して回答の質を上げるために記録しますが、他の業務システムやAIの学習には使いません。</p>
-<p class="usecase"><b>こんな場面で：</b>初回相談のハードルを下げたい場面、DMや商談の前に「何がめんどくさいか」を本人に言語化してもらいたい場面。</p>
-<p><a href="https://sagyoba-shindan.pages.dev/" target="_blank" rel="noopener" style="color:var(--accent); font-size:13.5px;">実際にチャットで相談してみる →</a></p>
 </div>
 
 <div class="card">
@@ -241,21 +270,6 @@ h1 { font-size: 27px; }
 
 <div class="card">
 <div class="card-top">
-<h3>許認可・登録申請の準備を、出典つきの整理表にして「足りないもの」を洗い出す</h3>
-<span class="badge">設備工事・建設向け／見本公開中</span>
-</div>
-<p>第一種フロン類充塡回収業者（業務用エアコンのフロン回収に必要な都道府県登録）を例に、法律・環境省の手引き・各県の案内だけを根拠に、要件・必要書類・手数料・提出先・日程を1枚の表にしました。現状を選ぶと「そろっている／足りない／確認が要る」が判定され、足りないものリストと次の一手が出ます。県ごとに違う項目は推測で埋めず「要確認」のまま残します。申請書の作成・提出代行は行いません。</p>
-<div class="stat-row">
-<div class="stat"><span class="num">出典つき</span><span class="label">根拠のない行を置かない</span></div>
-<div class="stat"><span class="num">足りないものリスト</span><span class="label">入手先と次の一手まで</span></div>
-</div>
-<p class="caveat">→ 「何を集めればいいか分からない」が「このリストを集めるだけ」に変わります。登録後に毎回作る証明書や年度報告も、同じ項目から下書きできます。</p>
-<p class="usecase"><b>こんな場面で：</b>建設業許可・産廃・フロン回収など、行政への登録・届出の準備を自社でやりたい設備工事・建設の会社。</p>
-<p><a href="freon_registration_checklist.html" style="color:var(--accent); font-size:13.5px;">整理表を試す →</a></p>
-</div>
-
-<div class="card">
-<div class="card-top">
 <h3>領収書・請求書を読み取って、仕訳の下書きを自動作成</h3>
 <span class="badge">経理向け／8パターンで検証済み</span>
 </div>
@@ -267,6 +281,21 @@ h1 { font-size: 27px; }
 <p class="caveat">→ 領収書の束を1枚ずつ入力する時間が、確認だけの時間になります。</p>
 <p class="usecase"><b>こんな場面で：</b>月次の経費入力を担当者1人で抱えている小規模事業者・バックオフィス。</p>
 <p><a href="accounting_ai_automation_v2.html" style="color:var(--accent); font-size:13.5px;">検証内容を見る →</a></p>
+</div>
+
+<div class="card">
+<div class="card-top">
+<h3>許認可・登録申請の準備を、出典つきの整理表にして「足りないもの」を洗い出す</h3>
+<span class="badge">設備工事・建設向け／見本公開中</span>
+</div>
+<p>第一種フロン類充塡回収業者（業務用エアコンのフロン回収に必要な都道府県登録）を例に、法律・環境省の手引き・各県の案内だけを根拠に、要件・必要書類・手数料・提出先・日程を1枚の表にしました。現状を選ぶと「そろっている／足りない／確認が要る」が判定され、足りないものリストと次の一手が出ます。県ごとに違う項目は推測で埋めず「要確認」のまま残します。申請書の作成・提出代行は行いません。</p>
+<div class="stat-row">
+<div class="stat"><span class="num">出典つき</span><span class="label">根拠のない行を置かない</span></div>
+<div class="stat"><span class="num">足りないものリスト</span><span class="label">入手先と次の一手まで</span></div>
+</div>
+<p class="caveat">→ 「何を集めればいいか分からない」が「このリストを集めるだけ」に変わります。登録後に毎回作る証明書や年度報告も、同じ項目から下書きできます。</p>
+<p class="usecase"><b>こんな場面で：</b>建設業許可・産廃・フロン回収など、行政への登録・届出の準備を自社でやりたい設備工事・建設の会社。</p>
+<p><a href="freon_registration_checklist.html" style="color:var(--accent); font-size:13.5px;">整理表を試す →</a></p>
 </div>
 
 <div class="card">
@@ -301,46 +330,18 @@ h1 { font-size: 27px; }
 
 <div class="card">
 <div class="card-top">
-<h3>電話でしか受けられなかった予約を、LINEで自動受付に</h3>
-<span class="badge">実店舗・小売</span>
+<h3>「何から相談すればいいか分からない」を、雑談形式のAIチャットで言語化する窓口</h3>
+<span class="badge">自社開発・公開中</span>
 </div>
-<p>知人が経営するガソリンスタンドで、来店予約をすべて電話で受けており、対応のたびに作業が中断していました。LINE公式アカウントで予約を自動受付し、内容をスプレッドシートに記録、日次の記録・売上管理もLINE上で完結する形にしました。</p>
+<p>初回相談で一番のハードルは「何から話せばいいか分からない」ことです。専用のAIチャット窓口を作り、今めんどうに感じている作業やAIエージェント活用の悩みを、雑談感覚で話しかけるだけで引き出せるようにしました。頻度や時間を確認しないまま断定的な数字を計算しない、押し売りしないなど、安心して話せる会話ルールを設計しています。</p>
+<p>十分に具体化できた段階でだけ、AIを使った解決の方向性をまとめて伝え、希望があればDM相談につなげます。提案は会話全体を通して1回だけです。</p>
 <div class="stat-row">
-<div class="stat"><span class="num">約3ヶ月</span><span class="label">実運用</span></div>
-<div class="stat"><span class="num">LINE × n8n</span><span class="label">使用技術</span></div>
+<div class="stat"><span class="num">相談内容は記録</span><span class="label">回答の改善に使うため保存。個人情報は入力しないでください</span></div>
+<div class="stat"><span class="num">完全に隔離</span><span class="label">本番の業務システムには一切アクセスしない</span></div>
 </div>
-<p class="caveat">→ 予約のたびに手を止める必要がなくなり、記録が1か所にまとまります。店舗の「電話が鳴りやまない」「記録がバラバラ」の解消に直結します。</p>
-<p class="usecase"><b>こんな場面で：</b>実店舗の予約・来店受付、営業担当が外出中でも予約を取りこぼしたくない場面。</p>
-</div>
-
-<div class="card">
-<div class="card-top">
-<h3>問い合わせ→予約確定→確認メールまでを、人が触らずに回す</h3>
-<span class="badge">自社開発・運用中</span>
-</div>
-<p>問い合わせをGmailで自動検知し、Web上で日時を選ぶだけでその場で予約が確定する仕組みです。Googleカレンダーの実際の空き状況と営業時間設定から予約可能枠を自動計算し、予約確定時にカレンダー登録・確認メール送信・担当者への通知まで自動で行います。二重予約防止のチェックも実装しています。</p>
-<div class="stat-row">
-<div class="stat"><span class="num">Calendar API</span><span class="label">空き枠自動計算</span></div>
-<div class="stat"><span class="num">Gmail API</span><span class="label">確認メール自動送信</span></div>
-</div>
-<p class="caveat">→ 問い合わせ対応、日程調整メールの往復、カレンダーへの転記、確認メールの作成——この一連の作業がなくなります。</p>
-<p class="usecase"><b>こんな場面で：</b>営業・面談・相談の日程調整、士業や個人事業主の予約受付のように、日程調整メールの往復が積み重なっている場面。</p>
-<p><a href="booking.html" style="color:var(--accent); font-size:13.5px;">実際の予約ページを見る →</a></p>
-</div>
-
-<div class="card">
-<div class="card-top">
-<h3>LINEにメッセージを送るだけで、AIが定型業務を代行する基盤</h3>
-<span class="badge">自社開発・運用中</span>
-</div>
-<p>LINEでメッセージを送るだけで、AI（Claude）が実際の業務システムを操作して定型作業を代行する仕組みを、設計から24時間の監視・障害時の自動復旧まで一人で構築しました。稼働開始から大きな停止なく運用しています。メールや通知の新着を毎日定時にチェックし、変化があった時だけ知らせる仕組みも統合しています。</p>
-<div class="stat-row">
-<div class="stat"><span class="num">1ヶ月+</span><span class="label">無停止運用</span></div>
-<div class="stat"><span class="num">定時チェック</span><span class="label">変化があった時だけ通知</span></div>
-</div>
-<p class="caveat">→ 「毎日決まった時間にこれを確認する」「この条件のときはこう処理する」といった定型業務を、担当者がスマホから指示するだけで回せます。対応漏れも防げます。</p>
-<p class="usecase"><b>こんな場面で：</b>営業の案件確認・メール/メッセージのチェックなど、"毎日決まった時間にやる確認作業"を担当者に代わって回したい場面。</p>
-<p><a href="https://line.me/R/ti/p/@364hixkh" target="_blank" rel="noopener" style="color:var(--accent); font-size:13.5px;">隔離デモをLINEで体験する →</a></p>
+<p class="caveat">→ 「何を相談すればいいか分からない」段階の人でも、雑談から自然にニーズを言語化できます。話してみてピンとこなければ、それだけで終えても大丈夫な設計です。相談内容は本人が読み返して回答の質を上げるために記録しますが、他の業務システムやAIの学習には使いません。</p>
+<p class="usecase"><b>こんな場面で：</b>初回相談のハードルを下げたい場面、DMや商談の前に「何がめんどくさいか」を本人に言語化してもらいたい場面。</p>
+<p><a href="https://sagyoba-shindan.pages.dev/" target="_blank" rel="noopener" style="color:var(--accent); font-size:13.5px;">実際にチャットで相談してみる →</a></p>
 </div>
 </div>
 </section>
@@ -353,16 +354,16 @@ h1 { font-size: 27px; }
 <div class="card">
 <div class="card-top">
 <h3>Liv Drop：好きなラッパーのライブ・チケット情報を見逃さないための通知アプリ（iOS先行）</h3>
-<span class="badge">個人開発／需要検証中（2026年10月）</span>
+<span class="badge">個人開発／需要検証を終えて開発中</span>
 </div>
 <p>日本語ラップのライブ告知は、アーティストごとのInstagramやチケットサイトに散らばっていて、気づいた時には売り切れていることがあります。登録したアーティストの告知をまとめて通知するアプリを、いきなり作らずに「需要があるか」を先に測っています。</p>
-<p>いま動いているのは3つ。①LP（livdrop.app）で「使いたいか」の3択とLINE登録を計測、②少額のMeta広告でLINE登録1件あたりの費用を測定、③公開情報の自動巡回（Instagram公式API・チケットサイト）。巡回はAPIの使用率を見ながら間隔を調整し、上限に近づいたら自分で止まる設計です。利用規約で自動取得が禁止されているサイトは取りに行かず、リンクだけ通知します。</p>
+<p>やったことは3つ。①LP（livdrop.app）で「使いたいか」の3択とLINE登録を計測、②少額のMeta広告でLINE登録1件あたりの費用を測定、③公開情報の自動巡回（Instagram公式API・チケットサイト）。巡回はAPIの使用率を見ながら間隔を調整し、上限に近づいたら自分で止まる設計です。利用規約で自動取得が禁止されているサイトは取りに行かず、リンクだけ通知します。</p>
 <div class="stat-row">
-<div class="stat"><span class="num">LP→広告→判定</span><span class="label">アプリ本体は判定後に着手</span></div>
+<div class="stat"><span class="num">253円</span><span class="label">LINE登録1人あたりの広告費（37人）</span></div>
 <div class="stat"><span class="num">公式APIのみ</span><span class="label">規約外の取得はしない</span></div>
 <div class="stat"><span class="num">使用率80%で停止</span><span class="label">巡回はAPI上限の手前で自動停止</span></div>
 </div>
-<p class="caveat">→ 正直に書くと、アプリ本体はまだありません。広告の結果（LINE登録1件あたりの費用）を見て、作るか・作り方を変えるかを決めます。経過と数字はX（@racin_ai_jp）で随時公開しています。</p>
+<p class="caveat">→ 先に決めておいた判定の線（1人あたり100〜300円）の内側だったので、アプリ本体の開発に進みました。アプリはまだ公開していません。経過と数字はX（@racin_ai_jp）で公開しています。</p>
 <p class="usecase"><b>使っている技術：</b>Cloudflare Workers＋D1（LP・計測）／LINE公式アカウント／Meta広告・Pixel／Instagram Graph API（Business Discovery）／Python（巡回・照合）</p>
 <p><a href="https://livdrop.app" target="_blank" rel="noopener" style="color:var(--accent); font-size:13.5px;">LPを見る →</a>　<a href="https://x.com/racin_ai_jp" target="_blank" rel="noopener" style="color:var(--accent); font-size:13.5px;">経過をXで見る →</a></p>
 </div>
@@ -374,9 +375,9 @@ h1 { font-size: 27px; }
 <div class="section-head"><span class="section-num">03</span><h2>使えるツール・技術</h2></div>
 <div class="skill-grid">
 <span class="skill"><b>Claude / Claude Code</b>日常的に使用・エージェント基盤の中核</span>
-<span class="skill"><b>n8n</b>実案件でのワークフロー構築経験あり</span>
+<span class="skill"><b>n8n</b>ワークフローの構築</span>
 <span class="skill"><b>Python</b>自動化スクリプト・サーバー実装</span>
-<span class="skill"><b>LINE Messaging API</b>公式アカウント連携の構築・運用</span>
+<span class="skill"><b>LINE Messaging API</b>公式アカウントの自動返信・配信の構築と運用</span>
 <span class="skill"><b>音声の文字起こし・議事録化</b>Whisper / 文字起こしAPIでの実装</span>
 <span class="skill"><b>帳票・画像の読み取り</b>AIの画像認識で項目抽出＋確信度によるフラグ</span>
 <span class="skill"><b>API連携</b>複数サービスの連携実装</span>
