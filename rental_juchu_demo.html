@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>レンタル機械の受注と貸し出しの台帳｜体験用の見本</title>
+<style>
+:root{
+  --bg:#f6f4ef; --panel:#ffffff; --panel2:#f0ede6; --line:#ddd7cb;
+  --key:#2f6f4f; --key-soft:#e4f0e9;
+  --warn:#8a5a00; --warn-bg:#fff4d6; --warn-line:#f0cf7a;
+  --bad:#a33a2a; --bad-bg:#fde8e4; --bad-line:#f1b4a8;
+  --text:#23201b; --dim:#6e675c;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#16140f; --panel:#1f1c16; --panel2:#29251d; --line:#3a352b;
+    --key:#7fd1a4; --key-soft:#1f3328;
+    --warn:#ffd27a; --warn-bg:#3a2e12; --warn-line:#6b5420;
+    --bad:#ffb0a2; --bad-bg:#3d1e18; --bad-line:#6e3328;
+    --text:#efeae0; --dim:#aaa293;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:"Hiragino Kaku Gothic ProN","Yu Gothic","Segoe UI",sans-serif;line-height:1.8;font-size:15px}
+.wrap{max-width:920px;margin:0 auto;padding:0 16px}
+header{padding:44px 0 24px;border-bottom:1px solid var(--line)}
+.eyebrow{display:inline-block;font-size:12px;color:var(--key);background:var(--key-soft);border-radius:999px;padding:4px 12px;margin-bottom:12px}
+h1{font-size:23px;margin:0 0 10px;line-height:1.5}
+.lead{color:var(--dim);margin:0}
+section{padding:30px 0;border-bottom:1px solid var(--line)}
+h2{font-size:18px;margin:0 0 4px}
+h2 .n{display:inline-block;background:var(--key);color:var(--bg);border-radius:6px;padding:0 8px;margin-right:8px;font-size:14px}
+.sub{color:var(--dim);font-size:13.5px;margin:0 0 14px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-top:12px}
+label{display:block;font-size:13px;color:var(--dim);margin:10px 0 4px}
+input,select{width:100%;font:inherit;padding:10px 12px;border-radius:9px;border:1px solid var(--line);background:var(--panel);color:var(--text)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
+@media (max-width:600px){.grid{grid-template-columns:1fr}}
+button{font-family:inherit;cursor:pointer;border-radius:9px;font-size:14.5px}
+.btn{background:var(--key);color:var(--bg);border:none;padding:12px 22px;font-weight:700;margin-top:14px}
+.btn2{background:var(--panel);color:var(--text);border:1px solid var(--line);padding:8px 14px;font-size:13px}
+.slots{display:grid;gap:8px;margin-top:6px}
+.slot{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:10px 12px;border:1px solid var(--line);border-radius:9px;background:var(--panel);cursor:pointer}
+.slot.sel{border-color:var(--key);background:var(--key-soft)}
+.slot.full{opacity:.55;cursor:not-allowed}
+.tag{display:inline-block;font-size:11.5px;padding:1px 9px;border-radius:999px;white-space:nowrap;border:1px solid var(--line)}
+.tag.ok{color:var(--key);background:var(--key-soft);border-color:transparent}
+.tag.w{color:var(--warn);background:var(--warn-bg);border-color:var(--warn-line)}
+.tag.b{color:var(--bad);background:var(--bad-bg);border-color:var(--bad-line)}
+.msg{margin-top:12px;padding:12px 14px;border-radius:10px;font-size:14px}
+.msg.w{background:var(--warn-bg);border:1px solid var(--warn-line);color:var(--warn)}
+.msg.b{background:var(--bad-bg);border:1px solid var(--bad-line);color:var(--bad)}
+.msg.ok{background:var(--key-soft);color:var(--key)}
+.mail{white-space:pre-wrap;font-size:13.5px;border-left:4px solid var(--key)}
+.mail b{display:block;font-size:12px;color:var(--dim);font-weight:600;margin-bottom:6px}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--panel);margin-top:12px}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th,td{padding:8px 11px;text-align:left;border-bottom:1px solid var(--line)}
+th{background:var(--panel2);color:var(--dim);font-size:12px;font-weight:600;white-space:nowrap}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+.bar{height:26px;border-radius:6px;background:var(--key);min-width:2px}
+.frow{display:grid;grid-template-columns:150px 1fr 150px;gap:10px;align-items:center;margin-top:8px;font-size:13.5px}
+@media (max-width:600px){.frow{grid-template-columns:1fr}}
+.drop{color:var(--bad);font-size:12.5px}
+ul{margin:8px 0 0;padding-left:20px}
+footer{padding:26px 0 50px;color:var(--dim);font-size:12.5px}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+<span class="eyebrow">体験用の見本（架空のデータ・実際には送信されません）</span>
+<h1>電話やFAXで受けたレンタルの注文を1行入れると、在庫・返却・請求の下書きまでつながる台帳</h1>
+<p class="lead">受注を1件入れると、同じ期間の貸し出しと突き合わせて「在庫が足りるか」を確かめます。足りなければ受け付けずに止めて理由を出します。返却予定を過ぎた分と、請求の下書きも同じ台帳から出します。金額は数式で計算し、値引きや最終の金額は人が決めます。</p>
+</div></header>
+
+<section><div class="wrap">
+<h2><span class="n">1</span>受注を1件入れる</h2>
+<p class="sub">営業所・お客様・品目・台数・貸し出し期間を入れます。同じ品目がその期間にすでに出ていれば、残りの台数と照らします。</p>
+<div class="card">
+<div class="grid">
+<div><label>受けた営業所</label><select id="br"><option>本社営業所</option><option>北営業所</option><option>南営業所</option></select></div>
+<div><label>お客様</label><input id="cu" value="サンプル建設（架空）"></div>
+<div><label>品目</label><select id="it"></select></div>
+<div><label>台数</label><input id="qt" type="number" min="1" value="2"></div>
+<div><label>貸し出し開始</label><input id="d1" type="date" value="2026-12-07"></div>
+<div><label>返却予定</label><input id="d2" type="date" value="2026-12-11"></div>
+</div>
+<button class="btn" id="go">この内容で受注を入れる</button>
+<div id="result"></div>
+</div>
+</div></section>
+
+<section><div class="wrap">
+<h2><span class="n">2</span>貸し出し台帳（全営業所で同じものを見る）</h2>
+<p class="sub">黄色は返却予定を過ぎている行です。今日は 2026年12月5日 として計算しています。</p>
+<div class="tablewrap"><table><thead><tr><th>受注</th><th>営業所</th><th>お客様</th><th>品目</th><th class="num">台数</th><th>開始</th><th>返却予定</th><th>状態</th></tr></thead><tbody id="led"></tbody></table></div>
+</div></section>
+
+<section><div class="wrap">
+<h2><span class="n">3</span>品目ごとの在庫と、いま出ている台数</h2>
+<p class="sub">受注を入れるたびに、ここが変わります。</p>
+<div class="tablewrap"><table><thead><tr><th>品目</th><th class="num">保有</th><th class="num">貸し出し中</th><th class="num">残り</th><th class="num">日額</th></tr></thead><tbody id="stk"></tbody></table></div>
+</div></section>
+
+<section><div class="wrap">
+<h2><span class="n">4</span>請求の下書き（返却済みの分）</h2>
+<p class="sub">日額×台数×日数を数式で計算します。日数は開始日と返却日の両方を含めます。値引き・延長料金の扱いは決まりを伺ってから入れるため、ここでは空欄です。</p>
+<div class="tablewrap"><table><thead><tr><th>お客様</th><th>品目</th><th class="num">台数</th><th class="num">日数</th><th class="num">日額</th><th class="num">金額（税抜）</th><th>確認</th></tr></thead><tbody id="inv"></tbody></table></div>
+<div class="card">
+<b>この見本で先につぶしていること</b>
+<ul>
+<li>別の営業所がすでに貸している機械を、もう一度約束してしまう（期間の重なりと保有台数を照らして止める）</li>
+<li>返却予定を過ぎた機械に気づかない（今日の日付と比べて黄色にする）</li>
+<li>貸したのに請求が漏れる（返却済みの行は必ず請求の下書きに出る）</li>
+<li>金額をAIが作ってしまう（計算は数式だけ。単価表に無い品目は選べない）</li>
+</ul>
+</div>
+</div></section>
+
+<footer><div class="wrap">この画面はブラウザの中だけで動く見本です。入力した内容はどこにも送信・保存されません。会社名・品目・台数・単価はすべて架空です。実際の品目・単価・締め日の決まりは、お話を伺ってから入れます。</div></footer>
+
+<script>
+const TODAY='2026-12-05';
+const ITEMS=[
+ {id:'gen',name:'発電機 25kVA',own:4,rate:6000},
+ {id:'cmp',name:'コンプレッサー',own:3,rate:4500},
+ {id:'lift',name:'高所作業台 6m',own:5,rate:8000},
+ {id:'cone',name:'保安用品セット',own:20,rate:500}
+];
+const ORD=[
+ {no:'R-1041',br:'北営業所',cu:'A工務店（架空）',it:'gen',q:2,d1:'2026-12-01',d2:'2026-12-12',ret:null},
+ {no:'R-1042',br:'本社営業所',cu:'B設備（架空）',it:'gen',q:1,d1:'2026-12-03',d2:'2026-12-09',ret:null},
+ {no:'R-1038',br:'南営業所',cu:'C土木（架空）',it:'lift',q:2,d1:'2026-11-24',d2:'2026-12-03',ret:null},
+ {no:'R-1035',br:'本社営業所',cu:'D電設（架空）',it:'cmp',q:1,d1:'2026-11-20',d2:'2026-11-28',ret:'2026-11-28'},
+ {no:'R-1033',br:'北営業所',cu:'A工務店（架空）',it:'cone',q:6,d1:'2026-11-17',d2:'2026-11-30',ret:'2026-11-30'}
+];
+let seq=1043;
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const item=id=>ITEMS.find(i=>i.id===id);
+const yen=n=>n.toLocaleString('ja-JP')+'円';
+const days=(a,b)=>Math.round((new Date(b)-new Date(a))/86400000)+1;
+const md=d=>{const x=d.split('-');return Number(x[1])+'/'+Number(x[2])};
+// 期間[d1,d2]の中で、その品目が同時に一番多く出ている台数
+function peak(it,d1,d2){
+  let max=0;
+  for(let t=new Date(d1);t<=new Date(d2);t.setDate(t.getDate()+1)){
+    const day=t.toISOString().slice(0,10);
+    const out=ORD.filter(o=>o.it===it&&!o.ret&&o.d1<=day&&day<=o.d2).reduce((s,o)=>s+o.q,0);
+    if(out>max)max=out;
+  }
+  return max;
+}
+function draw(){
+  $('it').innerHTML=ITEMS.map(i=>`<option value="${i.id}">${i.name}</option>`).join('');
+  $('led').innerHTML=ORD.slice().sort((a,b)=>b.no.localeCompare(a.no)).map(o=>{
+    const late=!o.ret&&o.d2<TODAY;
+    const st=o.ret?'<span class="tag ok">返却済み</span>':late?`<span class="tag w">返却予定を${days(o.d2,TODAY)-1}日超過</span>`:o.d1>TODAY?'<span class="tag">予約</span>':'<span class="tag ok">貸し出し中</span>';
+    return `<tr${late?' style="background:var(--warn-bg)"':''}><td>${o.no}</td><td>${esc(o.br)}</td><td>${esc(o.cu)}</td><td>${item(o.it).name}</td><td class="num">${o.q}</td><td>${md(o.d1)}</td><td>${md(o.d2)}</td><td>${st}</td></tr>`;
+  }).join('');
+  $('stk').innerHTML=ITEMS.map(i=>{
+    const out=ORD.filter(o=>o.it===i.id&&!o.ret&&o.d1<=TODAY).reduce((s,o)=>s+o.q,0);
+    return `<tr><td>${i.name}</td><td class="num">${i.own}</td><td class="num">${out}</td><td class="num">${i.own-out}</td><td class="num">${yen(i.rate)}</td></tr>`;
+  }).join('');
+  let tot=0;
+  $('inv').innerHTML=ORD.filter(o=>o.ret).map(o=>{
+    const n=days(o.d1,o.ret), amt=item(o.it).rate*o.q*n; tot+=amt;
+    return `<tr><td>${esc(o.cu)}</td><td>${item(o.it).name}</td><td class="num">${o.q}</td><td class="num">${n}</td><td class="num">${yen(item(o.it).rate)}</td><td class="num">${yen(amt)}</td><td><span class="tag w">人が確認して確定</span></td></tr>`;
+  }).join('')+`<tr><td colspan="5"><b>合計（税抜）</b></td><td class="num"><b>${yen(tot)}</b></td><td></td></tr>`;
+}
+$('go').onclick=()=>{
+  const it=$('it').value, q=Number($('qt').value), d1=$('d1').value, d2=$('d2').value, cu=$('cu').value.trim(), box=$('result'), keep=it;
+  if(!cu||!q||q<1||!d1||!d2){box.innerHTML='<div class="msg w">お客様・台数・期間を入れてください。</div>';return}
+  if(d2<d1){box.innerHTML='<div class="msg w">返却予定が開始日より前になっています。</div>';return}
+  const i=item(it), p=peak(it,d1,d2), free=i.own-p;
+  if(q>free){
+    const who=ORD.filter(o=>o.it===it&&!o.ret&&o.d1<=d2&&d1<=o.d2).map(o=>`${o.no}（${o.br}・${o.q}台・${md(o.d1)}〜${md(o.d2)}）`).join('、');
+    box.innerHTML=`<div class="msg b">受け付けずに止めました。${i.name} は保有${i.own}台で、この期間は最大${p}台が出ています。空きは${free}台で、${q}台は足りません。<br>重なっている受注：${who}<br>期間をずらすか、台数を${free}台以下にするか、人が判断してください。</div>`;
+    return;
+  }
+  const no='R-'+(seq++);
+  ORD.push({no,br:$('br').value,cu,it,q,d1,d2,ret:null});
+  draw(); $('it').value=keep;
+  box.innerHTML=`<div class="msg ok">${no} として受け付けました。${i.name} のこの期間の空きは、残り${free-q}台です。</div>`;
+};
+draw();
+</script>
+</body>
+</html>
