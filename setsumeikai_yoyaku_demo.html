@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>問い合わせから合同説明会の予約まで｜体験用の見本</title>
+<style>
+:root{
+  --bg:#f6f4ef; --panel:#ffffff; --panel2:#f0ede6; --line:#ddd7cb;
+  --key:#2f6f4f; --key-soft:#e4f0e9;
+  --warn:#8a5a00; --warn-bg:#fff4d6; --warn-line:#f0cf7a;
+  --bad:#a33a2a; --bad-bg:#fde8e4; --bad-line:#f1b4a8;
+  --text:#23201b; --dim:#6e675c;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#16140f; --panel:#1f1c16; --panel2:#29251d; --line:#3a352b;
+    --key:#7fd1a4; --key-soft:#1f3328;
+    --warn:#ffd27a; --warn-bg:#3a2e12; --warn-line:#6b5420;
+    --bad:#ffb0a2; --bad-bg:#3d1e18; --bad-line:#6e3328;
+    --text:#efeae0; --dim:#aaa293;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:"Hiragino Kaku Gothic ProN","Yu Gothic","Segoe UI",sans-serif;line-height:1.8;font-size:15px}
+.wrap{max-width:920px;margin:0 auto;padding:0 16px}
+header{padding:44px 0 24px;border-bottom:1px solid var(--line)}
+.eyebrow{display:inline-block;font-size:12px;color:var(--key);background:var(--key-soft);border-radius:999px;padding:4px 12px;margin-bottom:12px}
+h1{font-size:23px;margin:0 0 10px;line-height:1.5}
+.lead{color:var(--dim);margin:0}
+section{padding:30px 0;border-bottom:1px solid var(--line)}
+h2{font-size:18px;margin:0 0 4px}
+h2 .n{display:inline-block;background:var(--key);color:var(--bg);border-radius:6px;padding:0 8px;margin-right:8px;font-size:14px}
+.sub{color:var(--dim);font-size:13.5px;margin:0 0 14px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-top:12px}
+label{display:block;font-size:13px;color:var(--dim);margin:10px 0 4px}
+input,select{width:100%;font:inherit;padding:10px 12px;border-radius:9px;border:1px solid var(--line);background:var(--panel);color:var(--text)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
+@media (max-width:600px){.grid{grid-template-columns:1fr}}
+button{font-family:inherit;cursor:pointer;border-radius:9px;font-size:14.5px}
+.btn{background:var(--key);color:var(--bg);border:none;padding:12px 22px;font-weight:700;margin-top:14px}
+.btn2{background:var(--panel);color:var(--text);border:1px solid var(--line);padding:8px 14px;font-size:13px}
+.slots{display:grid;gap:8px;margin-top:6px}
+.slot{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:10px 12px;border:1px solid var(--line);border-radius:9px;background:var(--panel);cursor:pointer}
+.slot.sel{border-color:var(--key);background:var(--key-soft)}
+.slot.full{opacity:.55;cursor:not-allowed}
+.tag{display:inline-block;font-size:11.5px;padding:1px 9px;border-radius:999px;white-space:nowrap;border:1px solid var(--line)}
+.tag.ok{color:var(--key);background:var(--key-soft);border-color:transparent}
+.tag.w{color:var(--warn);background:var(--warn-bg);border-color:var(--warn-line)}
+.tag.b{color:var(--bad);background:var(--bad-bg);border-color:var(--bad-line)}
+.msg{margin-top:12px;padding:12px 14px;border-radius:10px;font-size:14px}
+.msg.w{background:var(--warn-bg);border:1px solid var(--warn-line);color:var(--warn)}
+.msg.b{background:var(--bad-bg);border:1px solid var(--bad-line);color:var(--bad)}
+.msg.ok{background:var(--key-soft);color:var(--key)}
+.mail{white-space:pre-wrap;font-size:13.5px;border-left:4px solid var(--key)}
+.mail b{display:block;font-size:12px;color:var(--dim);font-weight:600;margin-bottom:6px}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--panel);margin-top:12px}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th,td{padding:8px 11px;text-align:left;border-bottom:1px solid var(--line)}
+th{background:var(--panel2);color:var(--dim);font-size:12px;font-weight:600;white-space:nowrap}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+.bar{height:26px;border-radius:6px;background:var(--key);min-width:2px}
+.frow{display:grid;grid-template-columns:150px 1fr 150px;gap:10px;align-items:center;margin-top:8px;font-size:13.5px}
+@media (max-width:600px){.frow{grid-template-columns:1fr}}
+.drop{color:var(--bad);font-size:12.5px}
+ul{margin:8px 0 0;padding-left:20px}
+footer{padding:26px 0 50px;color:var(--dim);font-size:12.5px}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+<span class="eyebrow">体験用の見本（架空のデータ・実際には送信されません）</span>
+<h1>問い合わせから、合同オンライン説明会の予約・案内までを、人の手を介さずに</h1>
+<p class="lead">問い合わせフォームで候補日を選ぶと、定員と重複を確かめて予約を確定し、確認とお知らせの文面を用意します。最後に「問い合わせから契約まで、どこで話が流れたか」を数えて見せます。金額や契約の判断はしません。</p>
+</div></header>
+
+<section><div class="wrap">
+<h2><span class="n">1</span>問い合わせフォーム（お客様が入力する画面）</h2>
+<p class="sub">月5回の合同説明会から1つ選びます。満席の回は選べません。同じメールアドレスで2回目の申し込みをすると、止めて知らせます。</p>
+<div class="card">
+<div class="grid">
+<div><label>会社名</label><input id="co" value="サンプル商事（架空）"></div>
+<div><label>従業員数</label><select id="size"><option>1〜9名</option><option selected>10〜29名</option><option>30〜49名</option><option>50名以上</option></select></div>
+<div><label>ご担当者名</label><input id="nm" value="見本 太郎"></div>
+<div><label>メールアドレス</label><input id="em" value="taro@example.com"></div>
+</div>
+<label>参加する説明会（1つ選ぶ）</label>
+<div class="slots" id="slots"></div>
+<button class="btn" id="go">この内容で申し込む</button>
+<div id="result"></div>
+</div>
+</div></section>
+
+<section><div class="wrap">
+<h2><span class="n">2</span>自動で用意される文面</h2>
+<p class="sub">申し込みが確定すると、すぐ送る確認と、前日に送るお知らせの2通ができます。文面の型は人が先に決めておき、差し込むのは会社名・日時・参加用URLだけです。</p>
+<div id="mails"><div class="card" style="color:var(--dim)">上のフォームで申し込むと、ここに文面が出ます。</div></div>
+</div></section>
+
+<section><div class="wrap">
+<h2><span class="n">3</span>運営側の画面：申し込みの一覧と、各回の残り枠</h2>
+<p class="sub">申し込みは1行ずつ記録されます。スプレッドシートにそのまま書き出せる形です。</p>
+<div class="tablewrap"><table><thead><tr><th>回</th><th>日時</th><th class="num">定員</th><th class="num">申込</th><th class="num">残り</th><th>状態</th></tr></thead><tbody id="cap"></tbody></table></div>
+<div class="tablewrap"><table><thead><tr><th>受付</th><th>会社名</th><th>従業員数</th><th>担当者</th><th>参加する回</th></tr></thead><tbody id="list"></tbody></table></div>
+</div></section>
+
+<section><div class="wrap">
+<h2><span class="n">4</span>どこで話が流れているかを数える</h2>
+<p class="sub">問い合わせ → 予約 → 参加 → 契約の数を並べます。下は架空の1か月分に、この画面での申し込みを足したものです。一番減っている段に印をつけます。</p>
+<div class="card" id="funnel"></div>
+<div class="card">
+<b>この見本で先につぶしていること</b>
+<ul>
+<li>定員を超えて受け付けてしまう（残り枠をその場で計算し、満席の回は選べない）</li>
+<li>同じ方が2回申し込んで人数がずれる（メールアドレスで重複を止める）</li>
+<li>前日の連絡を忘れる（確定と同時に前日分の文面まで用意する）</li>
+<li>契約までのどこで減っているか分からない（段ごとに数を残す）</li>
+</ul>
+</div>
+</div></section>
+
+<footer><div class="wrap">この画面はブラウザの中だけで動く見本です。入力した内容はどこにも送信・保存されません。会社名・人数・件数はすべて架空です。</div></footer>
+
+<script>
+const SESS=[
+ {id:1,when:'12月3日(木) 13:00〜14:00',cap:8,taken:5},
+ {id:2,when:'12月8日(火) 16:00〜17:00',cap:8,taken:8},
+ {id:3,when:'12月11日(金) 10:00〜11:00',cap:8,taken:2},
+ {id:4,when:'12月16日(水) 13:00〜14:00',cap:8,taken:7},
+ {id:5,when:'12月22日(火) 16:00〜17:00',cap:8,taken:0}
+];
+const BOOKED=[
+ {t:'11/18 09:12',co:'A工業（架空）',size:'10〜29名',nm:'—',em:'a@example.com',s:1},
+ {t:'11/18 11:40',co:'B設備（架空）',size:'1〜9名',nm:'—',em:'b@example.com',s:4},
+ {t:'11/18 15:03',co:'C運輸（架空）',size:'30〜49名',nm:'—',em:'c@example.com',s:3}
+];
+const BASE={inq:42,book:23,join:17,deal:6};
+let added=0, sel=null;
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function left(s){return s.cap-s.taken}
+function drawSlots(){
+  $('slots').innerHTML=SESS.map(s=>{
+    const l=left(s), full=l<=0;
+    const tag=full?'<span class="tag b">満席</span>':(l<=2?`<span class="tag w">残り${l}枠</span>`:`<span class="tag ok">残り${l}枠</span>`);
+    return `<div class="slot ${full?'full':''} ${sel===s.id?'sel':''}" data-id="${s.id}"><span>第${s.id}回　${s.when}</span>${tag}</div>`;
+  }).join('');
+  document.querySelectorAll('.slot').forEach(el=>el.onclick=()=>{
+    const s=SESS.find(x=>x.id==el.dataset.id); if(left(s)<=0) return; sel=s.id; drawSlots();
+  });
+}
+function drawAdmin(){
+  $('cap').innerHTML=SESS.map(s=>{const l=left(s);return `<tr><td>第${s.id}回</td><td>${s.when}</td><td class="num">${s.cap}</td><td class="num">${s.taken}</td><td class="num">${l}</td><td>${l<=0?'<span class="tag b">満席・受付停止</span>':l<=2?'<span class="tag w">残りわずか</span>':'<span class="tag ok">受付中</span>'}</td></tr>`}).join('');
+  $('list').innerHTML=BOOKED.slice().reverse().map(b=>`<tr><td>${esc(b.t)}</td><td>${esc(b.co)}</td><td>${esc(b.size)}</td><td>${esc(b.nm)}</td><td>第${b.s}回</td></tr>`).join('');
+}
+function drawFunnel(){
+  const rows=[['問い合わせ',BASE.inq+added],['説明会の予約',BASE.book+added],['説明会に参加',BASE.join],['契約',BASE.deal]];
+  const max=rows[0][1]; let worst=1, worstRate=1;
+  for(let i=1;i<rows.length;i++){const r=rows[i][1]/rows[i-1][1]; if(r<worstRate){worstRate=r;worst=i}}
+  $('funnel').innerHTML=rows.map((r,i)=>{
+    const rate=i?Math.round(r[1]/rows[i-1][1]*100):100;
+    const note=i?`前の段の${rate}%${i===worst?'　<span class="drop">← 一番減っている</span>':''}`:'';
+    return `<div class="frow"><div>${r[0]}　<b>${r[1]}件</b></div><div><div class="bar" style="width:${Math.max(2,r[1]/max*100)}%"></div></div><div>${note}</div></div>`;
+  }).join('')+`<p class="sub" style="margin-top:14px">この例では「${rows[worst-1][0]} → ${rows[worst][0]}」で一番減っています。直すのはまずここ1か所、という決め方ができます。</p>`;
+}
+$('go').onclick=()=>{
+  const co=$('co').value.trim(), nm=$('nm').value.trim(), em=$('em').value.trim().toLowerCase(), box=$('result');
+  if(!co||!nm||!em){box.innerHTML='<div class="msg w">会社名・ご担当者名・メールアドレスを入れてください。</div>';return}
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){box.innerHTML='<div class="msg w">メールアドレスの形を確かめてください。</div>';return}
+  if(!sel){box.innerHTML='<div class="msg w">参加する説明会を1つ選んでください。</div>';return}
+  const dup=BOOKED.find(b=>b.em===em);
+  if(dup){box.innerHTML=`<div class="msg b">このメールアドレスは、すでに第${dup.s}回に申し込み済みです。二重に受け付けず、ここで止めました。日程を変える場合は、運営側で1件だけ付け替えます。</div>`;return}
+  const s=SESS.find(x=>x.id===sel);
+  if(left(s)<=0){box.innerHTML='<div class="msg b">この回は満席になりました。ほかの回を選んでください。</div>';return}
+  s.taken++; added++;
+  const d=new Date(), t=`${d.getMonth()+1}/${d.getDate()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+  BOOKED.push({t,co,size:$('size').value,nm,em,s:s.id});
+  box.innerHTML=`<div class="msg ok">第${s.id}回（${s.when}）で受け付けました。残りは${left(s)}枠です。</div>`;
+  $('mails').innerHTML=`<div class="card mail"><b>① すぐ送る確認（申し込みの直後）</b>${esc(co)}　${esc(nm)} 様
+
+合同オンライン説明会にお申し込みいただき、ありがとうございます。
+日時：${s.when}
+参加用URL：（説明会ごとのURLが入ります）
+
+当日までにご覧いただける資料と3分の紹介動画を、あわせてお送りします。
+ご都合が変わった場合は、このメールにご返信ください。</div>
+<div class="card mail"><b>② 前日に送るお知らせ（自動で予約済み）</b>${esc(co)}　${esc(nm)} 様
+
+明日の合同オンライン説明会のお知らせです。
+日時：${s.when}
+参加用URL：（説明会ごとのURLが入ります）
+
+当日は、従業員数「${esc($('size').value)}」の会社でよくあるご質問からお話しします。</div>`;
+  sel=null; drawSlots(); drawAdmin(); drawFunnel();
+};
+drawSlots(); drawAdmin(); drawFunnel();
+</script>
+</body>
+</html>
